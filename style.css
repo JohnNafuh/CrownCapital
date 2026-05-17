@@ -6,7 +6,7 @@ body {
 }
 
 /* =========================
-   HEADER (CLEAN FINTECH STYLE)
+   HEADER (SIMPLE NAVBAR)
 ========================= */
 header {
   display: flex;
@@ -20,13 +20,6 @@ header {
   z-index: 1000;
 }
 
-/* MENU ICON */
-.menu-icon {
-  font-size: 26px;
-  cursor: pointer;
-  color: #1a1a1a;
-}
-
 /* BRAND */
 header h1 {
   color: #b08d2a;
@@ -35,52 +28,21 @@ header h1 {
   margin: 0;
 }
 
-/* =========================
-   SIDEBAR MENU (FIXED SYSTEM)
-========================= */
-.sidebar-hidden {
-  position: fixed;
-  top: 0;
-  left: -260px;
-  width: 260px;
-  height: 100vh;
-  background: #ffffff;
-  border-right: 1px solid #e6e0d8;
-  box-shadow: 5px 0 20px rgba(0,0,0,0.1);
-  padding: 60px 20px;
+/* NAV LINKS */
+nav {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
-  transition: 0.3s ease;
-  z-index: 2000;
+  gap: 25px;
 }
 
-.sidebar-show {
-  left: 0;
-}
-
-/* LINKS INSIDE SIDEBAR */
-.sidebar-hidden a {
+nav a {
   text-decoration: none;
   color: #1a1a1a;
   font-weight: 500;
   transition: 0.3s;
 }
 
-.sidebar-hidden a:hover {
+nav a:hover {
   color: #b08d2a;
-}
-
-/* BACKDROP EFFECT */
-body.sidebar-active::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0,0,0,0.3);
-  z-index: 1500;
 }
 
 /* =========================
