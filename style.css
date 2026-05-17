@@ -5,7 +5,9 @@ body {
   color: #1a1a1a;
 }
 
-/* HEADER */
+/* =========================
+   HEADER / NAVBAR (FIXED)
+========================= */
 header {
   display: flex;
   justify-content: space-between;
@@ -13,27 +15,55 @@ header {
   padding: 20px 40px;
   background: #ffffff;
   border-bottom: 1px solid #e6e0d8;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
 header h1 {
-  color: #b08d2a; /* gold */
+  color: #b08d2a;
   letter-spacing: 2px;
+  font-weight: bold;
 }
 
 /* NAV */
+nav {
+  display: flex;
+  gap: 25px;
+}
+
 nav a {
   color: #1a1a1a;
-  margin: 0 12px;
   text-decoration: none;
   font-weight: 500;
+  letter-spacing: 1px;
+  position: relative;
   transition: 0.3s;
 }
 
+/* hover effect */
 nav a:hover {
   color: #b08d2a;
 }
 
-/* HERO */
+nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: #b08d2a;
+  transition: 0.3s;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
 .hero {
   text-align: center;
   padding: 120px 20px;
@@ -52,7 +82,9 @@ nav a:hover {
   color: #555;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 .btn {
   display: inline-block;
   padding: 14px 26px;
@@ -70,12 +102,15 @@ nav a:hover {
   transform: scale(1.05);
 }
 
-/* FEATURES */
+/* =========================
+   FEATURES
+========================= */
 .features {
   display: flex;
   justify-content: center;
   gap: 25px;
   padding: 60px 20px;
+  flex-wrap: wrap;
 }
 
 .card {
@@ -92,13 +127,17 @@ nav a:hover {
 .card:hover {
   transform: translateY(-5px);
   border-color: #b08d2a;
+  box-shadow: 0 15px 35px rgba(176, 141, 42, 0.2);
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 footer {
   text-align: center;
   padding: 25px;
   background: #ffffff;
   border-top: 1px solid #e6e0d8;
   color: #777;
+  margin-top: 50px;
 }
