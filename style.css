@@ -8,10 +8,10 @@ body {
 /* =========================
    LOGO
 ========================= */
-.logo img{
-  height:60px;
-  display:block;
-  margin:auto;
+.logo img {
+  height: clamp(60px, 10vw, 90px);
+  width: auto;
+  display: block;
 }
 
 /* =========================
