@@ -6,7 +6,7 @@ body {
 }
 
 /* =========================
-   HEADER (SIMPLE NAVBAR)
+   HEADER
 ========================= */
 header {
   display: flex;
@@ -20,15 +20,14 @@ header {
   z-index: 1000;
 }
 
-/* BRAND */
 header h1 {
   color: #b08d2a;
   letter-spacing: 2px;
-  font-weight: bold;
   margin: 0;
+  font-weight: bold;
 }
 
-/* NAV LINKS */
+/* NAV */
 nav {
   display: flex;
   gap: 25px;
@@ -46,7 +45,7 @@ nav a:hover {
 }
 
 /* =========================
-   HERO SECTION
+   HERO
 ========================= */
 .hero {
   text-align: center;
@@ -58,7 +57,6 @@ nav a:hover {
   font-size: 48px;
   color: #b08d2a;
   margin-bottom: 10px;
-  letter-spacing: 1px;
 }
 
 .hero p {
@@ -109,9 +107,9 @@ nav a:hover {
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-8px);
   border-color: #b08d2a;
-  box-shadow: 0 15px 35px rgba(176, 141, 42, 0.2);
+  box-shadow: 0 20px 40px rgba(176, 141, 42, 0.25);
 }
 
 /* =========================
@@ -124,4 +122,23 @@ footer {
   border-top: 1px solid #e6e0d8;
   color: #777;
   margin-top: 50px;
+}
+
+/* =========================
+   MOBILE
+========================= */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  nav {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .hero h2 {
+    font-size: 32px;
+  }
 }
