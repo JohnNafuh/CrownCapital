@@ -6,7 +6,7 @@ body {
 }
 
 /* =========================
-   HEADER / NAVBAR (FIXED)
+   HEADER (HAMBURGER LAYOUT)
 ========================= */
 header {
   display: flex;
@@ -18,40 +18,70 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
-  flex-wrap: wrap;
 }
 
+/* MENU ICON (☰) */
+.menu-icon {
+  font-size: 26px;
+  cursor: pointer;
+  color: #1a1a1a;
+}
+
+/* BRAND */
 header h1 {
   color: #b08d2a;
   letter-spacing: 2px;
   font-weight: bold;
   margin: 0;
 }
-/* NAV */
+
+/* =========================
+   NAV MENU (HIDDEN BY DEFAULT)
+========================= */
 nav {
   display: flex;
-  gap: 25px;
+  gap: 20px;
 }
 
+/* hidden state */
+.nav-hidden {
+  display: none;
+  position: absolute;
+  top: 70px;
+  left: 20px;
+  background: #ffffff;
+  padding: 15px 20px;
+  border: 1px solid #e6e0d8;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  flex-direction: column;
+}
+
+/* visible state */
+.nav-show {
+  display: flex;
+}
+
+/* LINKS */
 nav a {
-  color: #1a1a1a;
   text-decoration: none;
+  color: #1a1a1a;
   font-weight: 500;
-  letter-spacing: 1px;
+  padding: 8px 0;
   position: relative;
   transition: 0.3s;
+  white-space: nowrap;
 }
 
-/* hover effect */
 nav a:hover {
   color: #b08d2a;
 }
 
+/* underline effect */
 nav a::after {
   content: "";
   position: absolute;
   left: 0;
-  bottom: -5px;
+  bottom: -4px;
   width: 0%;
   height: 2px;
   background: #b08d2a;
