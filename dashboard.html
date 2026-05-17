@@ -11,43 +11,55 @@
 <body>
 
   <!-- HEADER -->
-  <header>
-    <h1>CrownCapital</h1>
+  <header class="navbar">
+    <h1 class="logo" onclick="location.href='index.html'">CrownCapital</h1>
 
-    <nav>
-  <a href="index.html">Home</a>
-  <a href="plans.html">Investment Plans</a>
-  <a href="dashboard.html">Dashboard</a>
-  <a href="wallet.html">Wallet</a>
-</nav>
+    <nav class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="plans.html">Investment Plans</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="wallet.html">Wallet</a>
+    </nav>
   </header>
 
-  <!-- DASHBOARD -->
+  <!-- DASHBOARD HERO -->
   <section class="hero">
     <h2>Dashboard</h2>
     <p>Welcome back, your investment overview is below</p>
   </section>
 
+  <!-- DASHBOARD STATS -->
   <section class="features">
+
     <div class="card">
       <h3>Total Balance</h3>
-      <p>$0.00</p>
+      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">
+        $0.00
+      </p>
     </div>
 
     <div class="card">
       <h3>Active Investment</h3>
-      <p>$0.00</p>
+      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">
+        $0.00
+      </p>
     </div>
 
     <div class="card">
       <h3>Profit Earned</h3>
-      <p>$0.00</p>
+      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">
+        $0.00
+      </p>
     </div>
+
   </section>
 
+  <!-- FOOTER -->
   <footer>
     <p>© 2026 CrownCapital. All rights reserved.</p>
   </footer>
+
+  <script src="script.js"></script>
 
 </body>
 </html>
