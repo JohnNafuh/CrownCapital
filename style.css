@@ -91,7 +91,7 @@ body {
 }
 
 /* =========================
-   FEATURES / CARDS BASE
+   FEATURES / CARDS
 ========================= */
 .features {
   display: flex;
@@ -113,7 +113,7 @@ body {
 }
 
 /* =========================
-   🔥 INVESTMENT PLAN CARDS (UPGRADED)
+   PLAN CARDS (CLICKABLE UPGRADE)
 ========================= */
 .plan-card {
   text-decoration: none;
@@ -124,19 +124,16 @@ body {
   overflow: hidden;
 }
 
-/* hover = “investment selection feel” */
 .plan-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: #b08d2a;
   box-shadow: 0 15px 35px rgba(176, 141, 42, 0.25);
 }
 
-/* click/tap effect (mobile feel) */
 .plan-card:active {
   transform: scale(0.98);
 }
 
-/* subtle glow indicator */
 .plan-card::before {
   content: "";
   position: absolute;
@@ -144,12 +141,7 @@ body {
   left: -100%;
   width: 60%;
   height: 100%;
-  background: linear-gradient(
-    120deg,
-    transparent,
-    rgba(176, 141, 42, 0.15),
-    transparent
-  );
+  background: linear-gradient(120deg, transparent, rgba(176, 141, 42, 0.15), transparent);
   transition: 0.5s;
 }
 
@@ -157,12 +149,72 @@ body {
   left: 120%;
 }
 
-/* plan subtitle */
 .plan-card small {
   display: block;
   margin-top: 8px;
   color: #777;
   font-size: 12px;
+}
+
+/* =========================
+   📊 MARKET SECTION (NEW)
+========================= */
+.market-section {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+}
+
+.market-card {
+  background: white;
+  width: 100%;
+  max-width: 420px;
+  border-radius: 16px;
+  padding: 20px;
+  border: 1px solid #eee3d2;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+}
+
+.market-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.live-dot {
+  color: #b08d2a;
+  font-size: 12px;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 1; }
+  50% { opacity: 0.4; }
+  100% { opacity: 1; }
+}
+
+.chart {
+  font-size: 50px;
+  text-align: center;
+  margin: 20px 0;
+}
+
+.market-stats {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+}
+
+.market-stats h4 {
+  font-size: 12px;
+  color: #777;
+  margin-bottom: 5px;
+}
+
+.market-stats p {
+  font-size: 16px;
+  font-weight: bold;
+  color: #b08d2a;
 }
 
 /* =========================
