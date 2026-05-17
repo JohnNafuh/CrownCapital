@@ -113,7 +113,7 @@ body {
 }
 
 /* =========================
-   PLAN CARDS (CLICKABLE UPGRADE)
+   PLAN CARDS
 ========================= */
 .plan-card {
   text-decoration: none;
@@ -157,7 +157,7 @@ body {
 }
 
 /* =========================
-   📊 MARKET SECTION (NEW)
+   MARKET SECTION
 ========================= */
 .market-section {
   padding: 20px;
@@ -215,6 +215,19 @@ body {
   font-size: 16px;
   font-weight: bold;
   color: #b08d2a;
+}
+
+/* =========================
+   PRICE + PROFIT (UPDATED)
+========================= */
+#price {
+  font-size: 22px;
+  font-weight: bold;
+  transition: 0.3s ease;
+}
+
+#profit {
+  transition: 0.3s ease;
 }
 
 /* =========================
