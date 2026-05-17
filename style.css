@@ -18,14 +18,15 @@ header {
   position: sticky;
   top: 0;
   z-index: 1000;
+  flex-wrap: wrap;
 }
 
 header h1 {
   color: #b08d2a;
   letter-spacing: 2px;
   font-weight: bold;
+  margin: 0;
 }
-
 /* NAV */
 nav {
   display: flex;
