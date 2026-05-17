@@ -9,26 +9,26 @@
 
 <body>
 
-  <!-- HEADER WITH HAMBURGER MENU -->
-  <header>
+  <!-- HEADER -->
+  <header class="top-bar">
 
     <!-- MENU ICON -->
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
 
-    <!-- BRAND -->
-    <h1>CrownCapital</h1>
-
-    <!-- NAV MENU -->
-    <nav id="navMenu" class="nav-hidden">
-      <a href="index.html">Home</a>
-      <a href="plans.html">Investment Plans</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="wallet.html">Wallet</a>
-    </nav>
+    <!-- CENTER BRAND -->
+    <h1 class="logo">CrownCapital</h1>
 
   </header>
 
-  <!-- HERO -->
+  <!-- SIDEBAR NAVIGATION -->
+  <div id="sidebar" class="sidebar-hidden">
+    <a href="index.html">Home</a>
+    <a href="plans.html">Investment Plans</a>
+    <a href="dashboard.html">Dashboard</a>
+    <a href="wallet.html">Wallet</a>
+  </div>
+
+  <!-- HERO SECTION -->
   <section class="hero">
     <h2>Grow Your Wealth With Confidence</h2>
     <p>A modern investment platform for smart financial growth.</p>
