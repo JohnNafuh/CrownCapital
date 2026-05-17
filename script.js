@@ -1,42 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   /* =========================
-     HAMBURGER MENU TOGGLE
-  ========================== */
-  window.toggleMenu = function () {
-    const menu = document.getElementById("navMenu");
-
-    if (!menu) return;
-
-    if (menu.classList.contains("nav-show")) {
-      menu.classList.remove("nav-show");
-      menu.classList.add("nav-hidden");
-    } else {
-      menu.classList.remove("nav-hidden");
-      menu.classList.add("nav-show");
-    }
-  };
-
-  /* =========================
-     CLOSE MENU WHEN CLICKING OUTSIDE
-  ========================== */
-  document.addEventListener("click", function (event) {
-    const menu = document.getElementById("navMenu");
-    const icon = document.querySelector(".menu-icon");
-
-    if (!menu || !icon) return;
-
-    const clickedInsideMenu = menu.contains(event.target);
-    const clickedIcon = icon.contains(event.target);
-
-    if (!clickedInsideMenu && !clickedIcon) {
-      menu.classList.remove("nav-show");
-      menu.classList.add("nav-hidden");
-    }
-  });
-
-  /* =========================
-     LUXURY PAGE FADE IN
+     PAGE FADE IN EFFECT
   ========================== */
   document.body.style.opacity = 0;
   document.body.style.transition = "opacity 0.6s ease-in-out";
@@ -46,7 +11,29 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 100);
 
   /* =========================
-     BUTTON PRESS EFFECT
+     SMOOTH LINK TRANSITION (optional luxury feel)
+  ========================== */
+  const links = document.querySelectorAll("a");
+
+  links.forEach(link => {
+    link.addEventListener("click", function (e) {
+      const href = link.getAttribute("href");
+
+      // Only apply to internal pages
+      if (href && href.endsWith(".html")) {
+        e.preventDefault();
+
+        document.body.style.opacity = 0;
+
+        setTimeout(() => {
+          window.location.href = href;
+        }, 300);
+      }
+    });
+  });
+
+  /* =========================
+     BUTTON PRESS ANIMATION
   ========================== */
   const buttons = document.querySelectorAll(".btn");
 
