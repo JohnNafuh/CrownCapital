@@ -6,16 +6,41 @@ body {
 }
 
 /* =========================
-   LOGO
+   TOPBAR FIX (CENTER LOGO PROPERLY)
 ========================= */
+
+.topbar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 10px;
+  gap: 10px;
+  text-align: center;
+}
+
+/* LOGO CENTER FIX */
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* IMAGE INSIDE LOGO */
 .logo img {
-  height: 110px;
-  width: auto;
   display: block;
+  margin: 0 auto;
+  max-width: 140px;
+  height: auto;
+}
+
+/* NAV CENTER FIX */
+.nav-links {
+  margin: 0 auto;
 }
 
 /* =========================
-   NAVBAR (MOBILE-FIRST)
+   NAV LINKS STYLE
 ========================= */
 .nav-links {
   display: flex;
@@ -26,7 +51,6 @@ body {
   border-radius: 50px;
   box-shadow: inset 0 0 0 1px #eee3d2;
   max-width: 360px;
-  margin: 10px auto 0 auto;
 }
 
 .nav-links a {
@@ -60,17 +84,6 @@ body {
   background: linear-gradient(180deg, #ffffff, #f7f3ec);
 }
 
-.hero h2 {
-  font-size: 48px;
-  color: #b08d2a;
-  margin-bottom: 10px;
-}
-
-.hero p {
-  font-size: 18px;
-  color: #555;
-}
-
 /* =========================
    BUTTON
 ========================= */
@@ -91,7 +104,7 @@ body {
 }
 
 /* =========================
-   FEATURES / CARDS
+   FEATURES
 ========================= */
 .features {
   display: flex;
@@ -109,51 +122,6 @@ body {
   text-align: center;
   border: 1px solid #eee3d2;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  transition: 0.3s ease;
-}
-
-/* =========================
-   PLAN CARDS
-========================= */
-.plan-card {
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.plan-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: #b08d2a;
-  box-shadow: 0 15px 35px rgba(176, 141, 42, 0.25);
-}
-
-.plan-card:active {
-  transform: scale(0.98);
-}
-
-.plan-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(176, 141, 42, 0.15), transparent);
-  transition: 0.5s;
-}
-
-.plan-card:hover::before {
-  left: 120%;
-}
-
-.plan-card small {
-  display: block;
-  margin-top: 8px;
-  color: #777;
-  font-size: 12px;
 }
 
 /* =========================
@@ -218,7 +186,7 @@ body {
 }
 
 /* =========================
-   PRICE + PROFIT (UPDATED)
+   PRICE STYLES
 ========================= */
 #price {
   font-size: 22px;
