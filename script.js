@@ -1,10 +1,45 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   /* =========================
-     PAGE FADE-IN (LUXURY LOAD)
+     HAMBURGER MENU TOGGLE
+  ========================== */
+  window.toggleMenu = function () {
+    const menu = document.getElementById("navMenu");
+
+    if (!menu) return;
+
+    if (menu.classList.contains("nav-show")) {
+      menu.classList.remove("nav-show");
+      menu.classList.add("nav-hidden");
+    } else {
+      menu.classList.remove("nav-hidden");
+      menu.classList.add("nav-show");
+    }
+  };
+
+  /* =========================
+     CLOSE MENU WHEN CLICKING OUTSIDE
+  ========================== */
+  document.addEventListener("click", function (event) {
+    const menu = document.getElementById("navMenu");
+    const icon = document.querySelector(".menu-icon");
+
+    if (!menu || !icon) return;
+
+    const clickedInsideMenu = menu.contains(event.target);
+    const clickedIcon = icon.contains(event.target);
+
+    if (!clickedInsideMenu && !clickedIcon) {
+      menu.classList.remove("nav-show");
+      menu.classList.add("nav-hidden");
+    }
+  });
+
+  /* =========================
+     LUXURY PAGE FADE IN
   ========================== */
   document.body.style.opacity = 0;
-  document.body.style.transition = "opacity 0.8s ease-in-out";
+  document.body.style.transition = "opacity 0.6s ease-in-out";
 
   setTimeout(() => {
     document.body.style.opacity = 1;
@@ -24,44 +59,5 @@ document.addEventListener("DOMContentLoaded", function () {
       }, 150);
     });
   });
-
-  /* =========================
-     CARD HOVER LUXURY GLOW
-  ========================== */
-  const cards = document.querySelectorAll(".card");
-
-  cards.forEach(card => {
-    card.addEventListener("mouseenter", () => {
-      card.style.boxShadow = "0 18px 40px rgba(176, 141, 42, 0.25)";
-      card.style.borderColor = "#b08d2a";
-      card.style.transition = "0.3s ease";
-    });
-
-    card.addEventListener("mouseleave", () => {
-      card.style.boxShadow = "0 10px 30px rgba(0,0,0,0.05)";
-      card.style.borderColor = "#eee3d2";
-    });
-  });
-
-  /* =========================
-     ACTIVE NAV HIGHLIGHT
-  ========================== */
-  const links = document.querySelectorAll("nav a");
-  const currentPage = window.location.pathname.split("/").pop();
-
-  links.forEach(link => {
-    if (link.getAttribute("href") === currentPage) {
-      link.style.color = "#b08d2a";
-      link.style.fontWeight = "bold";
-    }
-  });
-
-  /* =========================
-     BRAND CONSOLE MESSAGE
-  ========================== */
-  console.log(
-    "%cCrownCapital Loaded Successfully",
-    "color:#b08d2a;font-size:16px;font-weight:bold;"
-  );
 
 });
