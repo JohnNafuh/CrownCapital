@@ -12,8 +12,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 16px 40px;
-  background: rgba(255, 255, 255, 0.9);
+  padding: 18px 40px;
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid #e6e0d8;
   position: sticky;
@@ -21,6 +21,7 @@ body {
   z-index: 1000;
 }
 
+/* LOGO */
 .logo {
   color: #b08d2a;
   font-size: 22px;
@@ -29,6 +30,7 @@ body {
   cursor: pointer;
 }
 
+/* NAV LINKS */
 .nav-links {
   display: flex;
   gap: 28px;
@@ -47,6 +49,7 @@ body {
   color: #b08d2a;
 }
 
+/* ACTIVE LINK (JS CONTROLLED) */
 .nav-links a.active {
   color: #b08d2a;
   font-weight: 600;
@@ -63,58 +66,95 @@ body {
 }
 
 /* =========================
-   HERO (FIXED HIERARCHY)
+   HERO (MAIN LANDING)
 ========================= */
 .hero {
   text-align: center;
-  padding: 90px 20px 40px; /* reduced massively */
+  padding: 120px 20px;
   background: linear-gradient(180deg, #ffffff, #f7f3ec);
 }
 
 .hero-main {
-  padding: 100px 20px 30px; /* tighter top */
+  padding: 140px 20px 80px;
 }
 
 .hero-content {
-  max-width: 720px;
+  max-width: 700px;
   margin: auto;
 }
 
 .hero-main h2 {
-  font-size: 48px;
+  font-size: 52px;
   color: #b08d2a;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
   letter-spacing: 1px;
 }
 
 .hero-main p {
-  font-size: 17px;
+  font-size: 18px;
   color: #555;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
 }
 
 /* =========================
-   STATS (PULLED UP FIX)
+   BUTTONS (FINTECH STYLE)
+========================= */
+.btn {
+  display: inline-block;
+  padding: 14px 26px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn.primary {
+  background: #b08d2a;
+  color: white;
+  box-shadow: 0 10px 25px rgba(176, 141, 42, 0.25);
+}
+
+.btn.primary:hover {
+  background: #8f7322;
+  transform: scale(1.05);
+}
+
+.btn.secondary {
+  background: transparent;
+  color: #b08d2a;
+  border: 1px solid #b08d2a;
+}
+
+.btn.secondary:hover {
+  background: #b08d2a;
+  color: white;
+}
+
+/* BUTTON GROUP */
+.hero-actions {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+/* =========================
+   STATS SECTION (PREMIUM LOOK)
 ========================= */
 .features {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 18px;
-  padding: 0 40px 40px;
-  margin-top: -20px; /* KEY FIX: pulls stats upward */
-  position: relative;
-  z-index: 5;
+  gap: 20px;
+  padding: 10px 40px 60px;
 }
 
-/* =========================
-   CARD (FINTECH PREMIUM)
-========================= */
+/* STAT / CARD STYLE */
 .card {
   background: linear-gradient(145deg, #ffffff, #f7f3ec);
   border: 1px solid #eee3d2;
   border-radius: 16px;
-  padding: 28px 18px;
+  padding: 30px 20px;
   text-align: center;
   box-shadow: 0 10px 30px rgba(0,0,0,0.06);
   transition: 0.3s;
@@ -133,34 +173,23 @@ body {
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 18px 45px rgba(176, 141, 42, 0.2);
+  transform: translateY(-10px);
+  box-shadow: 0 20px 50px rgba(176, 141, 42, 0.2);
 }
 
+/* CARD TEXT */
 .card h3 {
-  font-size: 13px;
-  color: #666;
-  margin-bottom: 8px;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 10px;
   letter-spacing: 1px;
 }
 
 .card p {
-  font-size: 28px;
+  font-size: 30px;
   font-weight: bold;
   color: #b08d2a;
   margin: 0;
-}
-
-/* =========================
-   BUTTONS
-========================= */
-.btn {
-  display: inline-block;
-  padding: 14px 26px;
-  border-radius: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: 0.3s;
 }
 
 /* =========================
@@ -172,5 +201,7 @@ footer {
   background: #ffffff;
   border-top: 1px solid #e6e0d8;
   color: #777;
-  margin-top: 40px;
+  margin-top: 50px;
 }
+
+For the css
