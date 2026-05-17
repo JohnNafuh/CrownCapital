@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 100);
 
   /* =========================
-     SMOOTH LINK TRANSITION (optional luxury feel)
+     SMOOTH PAGE TRANSITION
   ========================== */
   const links = document.querySelectorAll("a");
 
@@ -45,6 +45,22 @@ document.addEventListener("DOMContentLoaded", function () {
         btn.style.transform = "scale(1)";
       }, 150);
     });
+  });
+
+  /* =========================
+     AUTO ACTIVE NAVIGATION
+  ========================== */
+  const navLinks = document.querySelectorAll("nav a");
+  const currentPage = window.location.pathname.split("/").pop();
+
+  navLinks.forEach(link => {
+    const linkPage = link.getAttribute("href");
+
+    if (linkPage === currentPage) {
+      link.classList.add("active");
+    } else {
+      link.classList.remove("active");
+    }
   });
 
 });
