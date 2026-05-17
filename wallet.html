@@ -9,40 +9,60 @@
 
 <body>
 
-  <!-- HEADER (HAMBURGER MENU) -->
+  <!-- HEADER -->
   <header>
-
-    <div class="menu-icon" onclick="toggleMenu()">☰</div>
-
     <h1>CrownCapital</h1>
 
-    <nav id="navMenu" class="nav-hidden">
+    <nav>
       <a href="index.html">Home</a>
       <a href="plans.html">Investment Plans</a>
       <a href="dashboard.html">Dashboard</a>
       <a href="wallet.html">Wallet</a>
     </nav>
-
   </header>
 
-  <!-- WALLET SECTION -->
+  <!-- WALLET HERO -->
   <section class="hero">
     <h2>Your Wallet</h2>
-    <p>Manage your funds and track your balance</p>
+    <p>Manage your funds and track your investment balance</p>
+  </section>
 
-    <h2 style="margin-top:40px;">Balance: $0.00</h2>
-    <p>Deposit to start investing</p>
+  <!-- WALLET CARDS -->
+  <section class="features">
 
-    <a class="btn" href="plans.html">Fund Wallet</a>
+    <div class="card">
+      <h3>Available Balance</h3>
+      <p style="font-size: 22px; color:#b08d2a; font-weight:bold;">
+        $0.00
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Total Deposits</h3>
+      <p style="font-size: 22px; color:#b08d2a; font-weight:bold;">
+        $0.00
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Total Earnings</h3>
+      <p style="font-size: 22px; color:#b08d2a; font-weight:bold;">
+        $0.00
+      </p>
+    </div>
+
+  </section>
+
+  <!-- ACTION SECTION -->
+  <section class="hero">
+    <a class="btn" href="plans.html">Deposit Funds</a>
+    <a class="btn" href="#" style="margin-left:10px;">Withdraw</a>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <p>© 2026 CrownCapital. All rights reserved.</p>
   </footer>
-
-  <!-- SCRIPT -->
-  <script src="script.js"></script>
 
 </body>
 </html>
