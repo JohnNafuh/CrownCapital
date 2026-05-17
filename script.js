@@ -11,29 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }, 100);
 
   /* =========================
-     SMOOTH PAGE TRANSITION
-  ========================== */
-  const links = document.querySelectorAll("a");
-
-  links.forEach(link => {
-    link.addEventListener("click", function (e) {
-      const href = link.getAttribute("href");
-
-      // Only apply to internal pages
-      if (href && href.endsWith(".html")) {
-        e.preventDefault();
-
-        document.body.style.opacity = 0;
-
-        setTimeout(() => {
-          window.location.href = href;
-        }, 300);
-      }
-    });
-  });
-
-  /* =========================
-     BUTTON PRESS ANIMATION
+     BUTTON PRESS EFFECT
   ========================== */
   const buttons = document.querySelectorAll(".btn");
 
@@ -48,18 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* =========================
-     AUTO ACTIVE NAVIGATION
+     ACTIVE NAVIGATION (YOUR ADDITION)
   ========================== */
-  const navLinks = document.querySelectorAll("nav a");
+  const links = document.querySelectorAll(".nav-links a");
   const currentPage = window.location.pathname.split("/").pop();
 
-  navLinks.forEach(link => {
-    const linkPage = link.getAttribute("href");
-
-    if (linkPage === currentPage) {
+  links.forEach(link => {
+    if (link.getAttribute("href") === currentPage) {
       link.classList.add("active");
-    } else {
-      link.classList.remove("active");
     }
   });
 
