@@ -9,7 +9,8 @@ body {
    LOGO
 ========================= */
 .logo img {
-  height: clamp(60px, 10vw, 90px);
+  height: 80px;
+  max-width: 200px;
   width: auto;
   display: block;
   margin: 0 auto;
