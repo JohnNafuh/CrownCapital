@@ -141,4 +141,30 @@ footer {
   .hero h2 {
     font-size: 32px;
   }
+  /* =========================
+   ACTIVE NAV STATE
+========================= */
+nav a.active {
+  color: #b08d2a;
+  font-weight: 600;
+  position: relative;
+}
+/* =========================
+   ACTIVE NAV STATE
+========================= */
+nav a.active {
+  color: #b08d2a;
+  font-weight: 600;
+  position: relative;
+}
+
+nav a.active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 100%;
+  height: 2px;
+  background: #b08d2a;
+}
 }
