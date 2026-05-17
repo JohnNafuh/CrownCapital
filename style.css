@@ -5,7 +5,9 @@ body {
   color: #1a1a1a;
 }
 
-/* NAVBAR */
+/* =========================
+   NAVBAR (LOCKED STABLE VERSION)
+========================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -16,32 +18,46 @@ body {
   position: sticky;
   top: 0;
   z-index: 1000;
+
+  /* IMPORTANT FIXES */
+  width: 100%;
+  box-sizing: border-box;
+  flex-wrap: nowrap;
 }
 
+/* LOGO */
 .logo {
   color: #b08d2a;
   font-size: 22px;
   font-weight: bold;
-  letter-spacing: 2px;
   cursor: pointer;
+  white-space: nowrap;
 }
 
+/* NAV CONTAINER */
 .nav-links {
   display: flex;
-  gap: 25px;
+  align-items: center;
+  gap: 28px;
+  flex-wrap: nowrap;
 }
 
+/* LINKS */
 .nav-links a {
   text-decoration: none;
   color: #1a1a1a;
   font-weight: 500;
+  white-space: nowrap;
+  transition: 0.2s;
 }
 
 .nav-links a:hover {
   color: #b08d2a;
 }
 
-/* HERO */
+/* =========================
+   HERO
+========================= */
 .hero {
   text-align: center;
   padding: 120px 20px;
@@ -59,7 +75,9 @@ body {
   color: #555;
 }
 
-/* STATS */
+/* =========================
+   CARDS / STATS
+========================= */
 .features {
   display: flex;
   justify-content: center;
@@ -90,7 +108,9 @@ body {
   color: #b08d2a;
 }
 
-/* FOOTER */
+/* =========================
+   FOOTER
+========================= */
 footer {
   text-align: center;
   padding: 25px;
