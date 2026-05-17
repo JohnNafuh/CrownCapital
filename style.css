@@ -17,15 +17,11 @@ body {
   border-bottom: 1px solid #e6e0d8;
   position: sticky;
   top: 0;
-  z-index: 1000;
-
-  /* IMPORTANT FIXES */
+  z-index: 9999;
   width: 100%;
   box-sizing: border-box;
-  flex-wrap: nowrap;
 }
 
-/* LOGO */
 .logo {
   color: #b08d2a;
   font-size: 22px;
@@ -34,25 +30,30 @@ body {
   white-space: nowrap;
 }
 
-/* NAV CONTAINER */
 .nav-links {
   display: flex;
-  align-items: center;
   gap: 28px;
+  align-items: center;
   flex-wrap: nowrap;
+  margin: 0;
+  padding: 0;
 }
 
-/* LINKS */
 .nav-links a {
   text-decoration: none;
   color: #1a1a1a;
   font-weight: 500;
   white-space: nowrap;
-  transition: 0.2s;
+  padding: 6px 0;
 }
 
 .nav-links a:hover {
   color: #b08d2a;
+}
+
+/* IMPORTANT FIX FOR "SCATTERED LOOK" */
+* {
+  box-sizing: border-box;
 }
 
 /* =========================
