@@ -1,51 +1,64 @@
 document.addEventListener("DOMContentLoaded", function () {
 
   /* =========================
-     ACTIVE NAVIGATION SYSTEM
+     NAV ACTIVE SYSTEM
   ========================= */
   const links = document.querySelectorAll(".nav-links a");
   let currentPage = window.location.pathname.split("/").pop();
 
-  // Fix for GitHub Pages root URL
   if (currentPage === "" || currentPage === "/") {
     currentPage = "index.html";
   }
 
   links.forEach(link => {
-    const href = link.getAttribute("href");
-
-    if (href === currentPage) {
+    if (link.getAttribute("href") === currentPage) {
       link.classList.add("active");
     }
   });
 
   /* =========================
-     📊 MARKET ANIMATION
+     📈 START LIVE MARKET
   ========================= */
-  animateValue("profit", 0, 12450, 1500);
-  animateValue("loss", 0, 320, 1500);
+  startLiveMarket();
 });
 
 /* =========================
-   NUMBER COUNTER FUNCTION
+   LIVE MARKET ENGINE
 ========================= */
-function animateValue(id, start, end, duration) {
-  let obj = document.getElementById(id);
-  if (!obj) return;
+function startLiveMarket() {
 
-  let range = end - start;
-  let current = start;
-  let increment = range / (duration / 16);
+  let price = 1000;
 
-  let timer = setInterval(() => {
-    current += increment;
+  setInterval(() => {
 
-    let prefix = id === "growth" ? "+" : "$";
-    obj.innerText = prefix + current.toFixed(2);
+    const change = (Math.random() * 20 - 10); // random -10 to +10
+    price += change;
 
-    if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
-      clearInterval(timer);
-      obj.innerText = prefix + end.toFixed(2);
+    if (price < 200) price = 200; // safety floor
+
+    const priceEl = document.getElementById("price");
+    const profitEl = document.getElementById("profit");
+    const lossEl = document.getElementById("loss");
+
+    if (!priceEl) return;
+
+    /* PRICE UPDATE */
+    priceEl.innerText = "$" + price.toFixed(2);
+    priceEl.style.color = change >= 0 ? "#16c784" : "#ea3943";
+
+    /* PROFIT UPDATE */
+    if (profitEl) {
+      const profit = change >= 0 ? change * 10 : 0;
+      profitEl.innerText = "+" + "$" + profit.toFixed(2);
+      profitEl.style.color = "#16c784";
     }
-  }, 16);
+
+    /* LOSS UPDATE */
+    if (lossEl) {
+      const loss = change < 0 ? Math.abs(change * 10) : 0;
+      lossEl.innerText = "-" + "$" + loss.toFixed(2);
+      lossEl.style.color = "#ea3943";
+    }
+
+  }, 2500);
 }
