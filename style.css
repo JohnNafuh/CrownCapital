@@ -1,3 +1,13 @@
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f8f6f2;
+  color: #1a1a1a;
+}
+
+/* =========================
+   NAVBAR (ROUND PILL VERSION)
+========================= */
 .navbar {
   display: flex;
   justify-content: space-between;
@@ -20,7 +30,7 @@
   white-space: nowrap;
 }
 
-/* ROUND JOINED NAV */
+/* NAV CONTAINER (PILL STYLE) */
 .nav-links {
   display: flex;
   gap: 6px;
@@ -30,7 +40,7 @@
   box-shadow: inset 0 0 0 1px #eee3d2;
 }
 
-/* NAV ITEMS */
+/* NAV LINKS */
 .nav-links a {
   text-decoration: none;
   color: #1a1a1a;
@@ -51,4 +61,82 @@
 .nav-links a.active {
   background: #b08d2a;
   color: #ffffff;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+  background: linear-gradient(180deg, #ffffff, #f7f3ec);
+}
+
+.hero h2 {
+  font-size: 48px;
+  color: #b08d2a;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 18px;
+  color: #555;
+}
+
+/* =========================
+   BUTTON
+========================= */
+.btn {
+  display: inline-block;
+  padding: 14px 26px;
+  background: #b08d2a;
+  color: white;
+  margin-top: 25px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #8f7322;
+  transform: scale(1.05);
+}
+
+/* =========================
+   FEATURES
+========================= */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 60px 20px;
+  flex-wrap: wrap;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 220px;
+  text-align: center;
+  border: 1px solid #eee3d2;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  text-align: center;
+  padding: 25px;
+  background: #ffffff;
+  border-top: 1px solid #e6e0d8;
+  color: #777;
+  margin-top: 50px;
 }
