@@ -9,28 +9,22 @@ body {
    LOGO
 ========================= */
 .logo img {
-  height: 80px;
-  max-width: 200px;
+  height: 110px;
   width: auto;
   display: block;
-  margin: 0 auto;
 }
 
 /* =========================
-   NAVBAR (MOBILE-FIRST FIXED)
+   NAVBAR (MOBILE-FIRST)
 ========================= */
 .nav-links {
   display: flex;
   justify-content: center;
-  align-items: center;
   gap: 4px;
   background: #f7f3ec;
   padding: 6px;
   border-radius: 50px;
   box-shadow: inset 0 0 0 1px #eee3d2;
-
-  /* MOBILE OPTIMIZATION */
-  width: 100%;
   max-width: 360px;
   margin: 10px auto 0 auto;
 }
@@ -47,22 +41,19 @@ body {
   white-space: nowrap;
 }
 
-/* ACTIVE STATE */
 .nav-links a.active {
   background: #b08d2a;
   color: #fff;
 }
 
-/* HOVER */
 .nav-links a:hover {
   background: #e9dcc2;
   color: #b08d2a;
 }
 
 /* =========================
-   EVERYTHING ELSE (UNCHANGED)
+   HERO
 ========================= */
-
 .hero {
   text-align: center;
   padding: 120px 20px;
@@ -80,6 +71,9 @@ body {
   color: #555;
 }
 
+/* =========================
+   BUTTON
+========================= */
 .btn {
   display: inline-block;
   padding: 14px 26px;
@@ -96,6 +90,9 @@ body {
   transform: scale(1.05);
 }
 
+/* =========================
+   FEATURES / CARDS BASE
+========================= */
 .features {
   display: flex;
   justify-content: center;
@@ -112,8 +109,65 @@ body {
   text-align: center;
   border: 1px solid #eee3d2;
   box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: 0.3s ease;
 }
 
+/* =========================
+   🔥 INVESTMENT PLAN CARDS (UPGRADED)
+========================= */
+.plan-card {
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+/* hover = “investment selection feel” */
+.plan-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: #b08d2a;
+  box-shadow: 0 15px 35px rgba(176, 141, 42, 0.25);
+}
+
+/* click/tap effect (mobile feel) */
+.plan-card:active {
+  transform: scale(0.98);
+}
+
+/* subtle glow indicator */
+.plan-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent,
+    rgba(176, 141, 42, 0.15),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.plan-card:hover::before {
+  left: 120%;
+}
+
+/* plan subtitle */
+.plan-card small {
+  display: block;
+  margin-top: 8px;
+  color: #777;
+  font-size: 12px;
+}
+
+/* =========================
+   FOOTER
+========================= */
 footer {
   text-align: center;
   padding: 25px;
