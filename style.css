@@ -12,29 +12,50 @@ body {
   height: clamp(60px, 10vw, 90px);
   width: auto;
   display: block;
+  margin: 0 auto;
 }
 
 /* =========================
-   NAVBAR (SIZE + SPACING ONLY)
+   NAVBAR (MOBILE-FIRST FIXED)
 ========================= */
 .nav-links {
   display: flex;
   justify-content: center;
-  gap: 3px;
+  align-items: center;
+  gap: 4px;
   background: #f7f3ec;
-  padding: 3px;
+  padding: 6px;
   border-radius: 50px;
   box-shadow: inset 0 0 0 1px #eee3d2;
+
+  /* MOBILE OPTIMIZATION */
+  width: 100%;
+  max-width: 360px;
+  margin: 10px auto 0 auto;
 }
 
 .nav-links a {
+  flex: 1;
+  text-align: center;
   text-decoration: none;
   color: #1a1a1a;
   font-weight: 500;
-  padding: 6px 12px;
-  font-size: 13px;
+  padding: 8px 6px;
+  font-size: 12px;
   border-radius: 30px;
   white-space: nowrap;
+}
+
+/* ACTIVE STATE */
+.nav-links a.active {
+  background: #b08d2a;
+  color: #fff;
+}
+
+/* HOVER */
+.nav-links a:hover {
+  background: #e9dcc2;
+  color: #b08d2a;
 }
 
 /* =========================
