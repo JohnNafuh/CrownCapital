@@ -1,55 +1,127 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CrownCapital</title>
-  <link rel="stylesheet" href="style.css"/>
-</head>
+body {
+  margin: 0;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f8f6f2;
+  color: #1a1a1a;
+}
 
-<body>
+/* =========================
+   HEADER (SIMPLE NAVBAR)
+========================= */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  background: #ffffff;
+  border-bottom: 1px solid #e6e0d8;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
 
-  <!-- HEADER -->
-  <header class="top-bar">
+/* BRAND */
+header h1 {
+  color: #b08d2a;
+  letter-spacing: 2px;
+  font-weight: bold;
+  margin: 0;
+}
 
-    <!-- MENU ICON -->
-    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+/* NAV LINKS */
+nav {
+  display: flex;
+  gap: 25px;
+}
 
-    <!-- CENTER BRAND -->
-    <h1 class="logo">CrownCapital</h1>
+nav a {
+  text-decoration: none;
+  color: #1a1a1a;
+  font-weight: 500;
+  transition: 0.3s;
+}
 
-  </header>
+nav a:hover {
+  color: #b08d2a;
+}
 
-  <!-- SIDEBAR NAVIGATION -->
-  <div id="sidebar" class="sidebar-hidden">
-    <a href="index.html">Home</a>
-    <a href="plans.html">Investment Plans</a>
-    <a href="dashboard.html">Dashboard</a>
-    <a href="wallet.html">Wallet</a>
-  </div>
+/* =========================
+   HERO SECTION
+========================= */
+.hero {
+  text-align: center;
+  padding: 120px 20px;
+  background: linear-gradient(180deg, #ffffff, #f7f3ec);
+}
 
-  <!-- HERO SECTION -->
-  <section class="hero">
-    <h2>Grow Your Wealth With Confidence</h2>
-    <p>A modern investment platform for smart financial growth.</p>
+.hero h2 {
+  font-size: 48px;
+  color: #b08d2a;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+}
 
-    <a class="btn" href="plans.html">Start Investing</a>
-  </section>
+.hero p {
+  font-size: 18px;
+  color: #555;
+}
 
-  <!-- FEATURES -->
-  <section class="features">
-    <div class="card">Secure Investments</div>
-    <div class="card">Fast Withdrawals</div>
-    <div class="card">Daily ROI Tracking</div>
-  </section>
+/* =========================
+   BUTTON
+========================= */
+.btn {
+  display: inline-block;
+  padding: 14px 26px;
+  background: #b08d2a;
+  color: white;
+  margin-top: 25px;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: 0.3s;
+}
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 CrownCapital. All rights reserved.</p>
-  </footer>
+.btn:hover {
+  background: #8f7322;
+  transform: scale(1.05);
+}
 
-  <!-- SCRIPT -->
-  <script src="script.js"></script>
+/* =========================
+   FEATURES
+========================= */
+.features {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  padding: 60px 20px;
+  flex-wrap: wrap;
+}
 
-</body>
-</html>
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  width: 220px;
+  text-align: center;
+  border: 1px solid #eee3d2;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  border-color: #b08d2a;
+  box-shadow: 0 15px 35px rgba(176, 141, 42, 0.2);
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+  text-align: center;
+  padding: 25px;
+  background: #ffffff;
+  border-top: 1px solid #e6e0d8;
+  color: #777;
+  margin-top: 50px;
+}
