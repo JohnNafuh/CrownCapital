@@ -1,19 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dashboard - CrownCapital</title>
   <link rel="stylesheet" href="style.css"/>
 </head>
+
 <body>
 
-<header>
-  <h1>CrownCapital Dashboard</h1>
-</header>
+  <!-- HEADER (HAMBURGER MENU) -->
+  <header>
 
-<div class="hero">
-  <h2>Welcome Back, Investor</h2>
-  <p>Your portfolio is growing steadily.</p>
-</div>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+
+    <h1>CrownCapital</h1>
+
+    <nav id="navMenu" class="nav-hidden">
+      <a href="index.html">Home</a>
+      <a href="plans.html">Investment Plans</a>
+      <a href="dashboard.html">Dashboard</a>
+      <a href="wallet.html">Wallet</a>
+    </nav>
+
+  </header>
+
+  <!-- DASHBOARD CONTENT -->
+  <section class="hero">
+    <h2>Dashboard</h2>
+    <p>Welcome back, your investment overview is below</p>
+  </section>
+
+  <!-- STATS CARDS -->
+  <section class="features">
+
+    <div class="card">
+      <h3>Balance</h3>
+      <p>$0.00</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Profit</h3>
+      <p>$0.00</p>
+    </div>
+
+    <div class="card">
+      <h3>Active Plan</h3>
+      <p>None</p>
+    </div>
+
+  </section>
+
+  <!-- ACTION BUTTONS -->
+  <section class="hero" style="padding-top:40px;">
+    <a class="btn" href="plans.html">Invest Now</a>
+    <a class="btn" href="wallet.html">Wallet</a>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>© 2026 CrownCapital. All rights reserved.</p>
+  </footer>
+
+  <!-- SCRIPT -->
+  <script src="script.js"></script>
 
 </body>
 </html>
