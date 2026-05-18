@@ -6,6 +6,36 @@
   <title>Dashboard - CrownCapital</title>
 
   <link rel="stylesheet" href="./style.css">
+
+  <!-- 🔒 FIREBASE AUTH PROTECTION -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+      authDomain: "crowncapital-invest.firebaseapp.com",
+      projectId: "crowncapital-invest",
+      storageBucket: "crowncapital-invest.firebasestorage.app",
+      messagingSenderId: "9373579357",
+      appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // 🔒 PROTECTION LOGIC
+    onAuthStateChanged(auth, (user) => {
+      if (!user) {
+        // not logged in → redirect to login page
+        window.location.href = "login.html";
+      } else {
+        // logged in → allow access
+        console.log("User:", user.email);
+      }
+    });
+  </script>
+
 </head>
 
 <body>
