@@ -6,6 +6,35 @@
   <title>Investment Plans - CrownCapital</title>
 
   <link rel="stylesheet" href="style.css"/>
+
+  <!-- SAFE CARD UPGRADE STYLES ONLY -->
+  <style>
+    .plan-card {
+      transition: 0.3s ease;
+      text-decoration: none;
+    }
+
+    .plan-card:hover {
+      transform: translateY(-6px);
+      border: 1px solid #b08d2a;
+    }
+
+    .plan-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .plan-price {
+      font-size: 24px;
+      color: #b08d2a;
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .plan-desc {
+      color: #aaa;
+      font-size: 14px;
+    }
+  </style>
 </head>
 
 <body>
@@ -19,25 +48,25 @@
     <p>Choose a plan that fits your financial goals</p>
   </section>
 
-  <!-- PLANS (CLICKABLE CARDS) -->
+  <!-- PLANS (UNCHANGED STRUCTURE) -->
   <section class="features">
 
     <a href="#" class="card plan-card">
       <h3>Starter Plan</h3>
-      <p style="font-size:24px; color:#b08d2a; font-weight:bold;">5% ROI</p>
-      <small>Low risk • Beginner friendly</small>
+      <p class="plan-price">5% ROI</p>
+      <small class="plan-desc">Low risk • Beginner friendly</small>
     </a>
 
     <a href="#" class="card plan-card">
       <h3>Pro Plan</h3>
-      <p style="font-size:24px; color:#b08d2a; font-weight:bold;">10% ROI</p>
-      <small>Balanced growth</small>
+      <p class="plan-price">10% ROI</p>
+      <small class="plan-desc">Balanced growth</small>
     </a>
 
     <a href="#" class="card plan-card">
       <h3>Elite Plan</h3>
-      <p style="font-size:24px; color:#b08d2a; font-weight:bold;">20% ROI</p>
-      <small>High return • High reward</small>
+      <p class="plan-price">20% ROI</p>
+      <small class="plan-desc">High return • High reward</small>
     </a>
 
   </section>
