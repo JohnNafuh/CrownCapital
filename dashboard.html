@@ -7,11 +7,21 @@
 
   <link rel="stylesheet" href="./style.css">
 
-  <!-- 🔒 FIREBASE AUTH PROTECTION -->
+  <!-- 🔒 FIREBASE AUTH SCRIPT -->
   <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut,
+      signInWithEmailAndPassword,
+      createUserWithEmailAndPassword
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    /* =========================
+       FIREBASE CONFIG
+    ========================= */
     const firebaseConfig = {
       apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
       authDomain: "crowncapital-invest.firebaseapp.com",
@@ -24,47 +34,80 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const overlay = document.getElementById("loginOverlay");
-
-    // 🔒 AUTH STATE CHECK
+    /* =========================
+       🔒 AUTH STATE CONTROL
+    ========================= */
     onAuthStateChanged(auth, (user) => {
+
+      const overlay = document.getElementById("loginOverlay");
+
+      if (!overlay) return;
+
       if (user) {
         overlay.style.display = "none";
-        console.log("User:", user.email);
+        console.log("Logged in user:", user.email);
       } else {
         overlay.style.display = "flex";
       }
     });
 
-    // 🚪 LOGOUT
-    window.logout = function () {
-      signOut(auth).then(() => {
-        overlay.style.display = "flex";
-      });
-    };
-
-    // 🔑 LOGIN
+    /* =========================
+       🔑 LOGIN FUNCTION
+    ========================= */
     window.login = function () {
+
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
+
+      if (!email || !password) {
+        alert("Please fill in all fields");
+        return;
+      }
 
       signInWithEmailAndPassword(auth, email, password)
         .then(() => {
-          overlay.style.display = "none";
+          document.getElementById("loginOverlay").style.display = "none";
         })
-        .catch(e => alert(e.message));
+        .catch((error) => {
+          alert(error.message);
+        });
     };
 
-    // 🆕 SIGN UP
+    /* =========================
+       🆕 SIGN UP FUNCTION
+    ========================= */
     window.signup = function () {
+
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
+      if (!email || !password) {
+        alert("Please fill in all fields");
+        return;
+      }
+
       createUserWithEmailAndPassword(auth, email, password)
         .then(() => {
-          overlay.style.display = "none";
+          document.getElementById("loginOverlay").style.display = "none";
         })
-        .catch(e => alert(e.message));
+        .catch((error) => {
+          alert(error.message);
+        });
+    };
+
+    /* =========================
+       🚪 LOGOUT FUNCTION
+    ========================= */
+    window.logout = function () {
+
+      signOut(auth)
+        .then(() => {
+          const overlay = document.getElementById("loginOverlay");
+          if (overlay) overlay.style.display = "flex";
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
     };
 
   </script>
