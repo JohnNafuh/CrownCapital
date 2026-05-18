@@ -10,7 +10,7 @@
   <!-- 🔒 FIREBASE AUTH PROTECTION -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+    import { getAuth, onAuthStateChanged, signOut, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
     const firebaseConfig = {
       apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
@@ -24,20 +24,47 @@
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    // 🔒 PROTECT PAGE
+    const overlay = document.getElementById("loginOverlay");
+
+    // 🔒 AUTH STATE CHECK
     onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-      } else {
+      if (user) {
+        overlay.style.display = "none";
         console.log("User:", user.email);
+      } else {
+        overlay.style.display = "flex";
       }
     });
 
-    // 🚪 LOGOUT FUNCTION
+    // 🚪 LOGOUT
     window.logout = function () {
       signOut(auth).then(() => {
-        window.location.href = "login.html";
+        overlay.style.display = "flex";
       });
+    };
+
+    // 🔑 LOGIN
+    window.login = function () {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          overlay.style.display = "none";
+        })
+        .catch(e => alert(e.message));
+    };
+
+    // 🆕 SIGN UP
+    window.signup = function () {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(() => {
+          overlay.style.display = "none";
+        })
+        .catch(e => alert(e.message));
     };
 
   </script>
@@ -45,6 +72,46 @@
 </head>
 
 <body>
+
+  <!-- 🔒 LOGIN OVERLAY -->
+  <div id="loginOverlay" style="
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  ">
+
+    <div style="
+      background: #111;
+      padding: 30px;
+      border-radius: 10px;
+      width: 300px;
+      text-align: center;
+    ">
+
+      <h2 style="color:white;">Login Required</h2>
+
+      <input id="email" placeholder="Email" style="width:100%; margin:10px 0; padding:10px;">
+      <input id="password" type="password" placeholder="Password" style="width:100%; margin:10px 0; padding:10px;">
+
+      <button onclick="login()" style="width:100%; padding:10px; margin-top:10px;">
+        Login
+      </button>
+
+      <button onclick="signup()" style="width:100%; padding:10px; margin-top:10px;">
+        Create Account
+      </button>
+
+    </div>
+
+  </div>
 
   <!-- SYSTEM B HEADER PLACEHOLDER -->
   <div class="site-header"></div>
@@ -55,7 +122,7 @@
     <h2>Dashboard</h2>
     <p>Welcome back, your investment overview is below</p>
 
-    <!-- 🚪 LOGOUT BUTTON (BEST PLACE) -->
+    <!-- 🚪 LOGOUT BUTTON -->
     <button onclick="logout()" style="
       margin-top: 15px;
       padding: 10px 18px;
@@ -76,23 +143,17 @@
 
     <div class="card">
       <h3>Total Balance</h3>
-      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">
-        $0.00
-      </p>
+      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">$0.00</p>
     </div>
 
     <div class="card">
       <h3>Active Investment</h3>
-      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">
-        $0.00
-      </p>
+      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">$0.00</p>
     </div>
 
     <div class="card">
       <h3>Profit Earned</h3>
-      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">
-        $0.00
-      </p>
+      <p style="font-size:26px; color:#b08d2a; font-weight:bold;">$0.00</p>
     </div>
 
   </section>
@@ -102,7 +163,7 @@
     <p>© 2026 CrownCapital. All rights reserved.</p>
   </footer>
 
-  <!-- SYSTEM B SCRIPTS -->
+  <!-- SYSTEM SCRIPTS -->
   <script src="script.js"></script>
   <script src="header.js"></script>
 
