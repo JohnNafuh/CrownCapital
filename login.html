@@ -1,20 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CrownCapital Login</title>
 </head>
 
 <body>
 
-<h2>Login</h2>
+<h2>CrownCapital Account</h2>
 
-<input id="email" placeholder="Email">
+<input id="email" type="email" placeholder="Email">
+
 <input id="password" type="password" placeholder="Password">
 
-<button onclick="login()">Login</button>
-<button onclick="signup()">Sign Up</button>
+<br><br>
 
-<script type="module" src="firebase.js"></script>
+<button onclick="login()">Login</button>
+
+<button onclick="signup()">Create Account</button>
+
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+
+import { 
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+  authDomain: "crowncapital-invest.firebaseapp.com",
+  projectId: "crowncapital-invest",
+  storageBucket: "crowncapital-invest.firebasestorage.app",
+  messagingSenderId: "9373579357",
+  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+
+// SIGN UP
+window.signup = function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+createUserWithEmailAndPassword(auth,email,password)
+.then(()=>{
+
+alert("Account created");
+window.location.href="dashboard.html";
+
+})
+.catch(e=>alert(e.message));
+
+}
+
+
+// LOGIN
+window.login = function(){
+
+const email=document.getElementById("email").value;
+const password=document.getElementById("password").value;
+
+signInWithEmailAndPassword(auth,email,password)
+.then(()=>{
+
+window.location.href="dashboard.html";
+
+})
+.catch(e=>alert(e.message));
+
+}
+
+</script>
 
 </body>
 </html>
