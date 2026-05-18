@@ -27,12 +27,21 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 
 import { 
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
+import {
+  getFirestore,
+  doc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+
+/* =========================
+   FIREBASE CONFIG
+========================= */
 const firebaseConfig = {
   apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
   authDomain: "crowncapital-invest.firebaseapp.com",
@@ -44,41 +53,50 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 
-// SIGN UP
-window.signup = function(){
+/* =========================
+   SIGN UP (WITH WALLET CREATION)
+========================= */
+window.signup = function () {
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-createUserWithEmailAndPassword(auth,email,password)
-.then(()=>{
+  createUserWithEmailAndPassword(auth, email, password)
+    .then(async (userCredential) => {
 
-alert("Account created");
-window.location.href="dashboard.html";
+      const user = userCredential.user;
 
-})
-.catch(e=>alert(e.message));
+      // 🔥 CREATE FIRESTORE WALLET
+      await setDoc(doc(db, "users", user.uid), {
+        balance: 0,
+        profit: 0,
+        activePlan: "none"
+      });
 
-}
+      alert("Account created successfully");
+      window.location.href = "dashboard.html";
+    })
+    .catch(e => alert(e.message));
+};
 
 
-// LOGIN
-window.login = function(){
+/* =========================
+   LOGIN
+========================= */
+window.login = function () {
 
-const email=document.getElementById("email").value;
-const password=document.getElementById("password").value;
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-signInWithEmailAndPassword(auth,email,password)
-.then(()=>{
-
-window.location.href="dashboard.html";
-
-})
-.catch(e=>alert(e.message));
-
-}
+  signInWithEmailAndPassword(auth, email, password)
+    .then(() => {
+      window.location.href = "dashboard.html";
+    })
+    .catch(e => alert(e.message));
+};
 
 </script>
 
