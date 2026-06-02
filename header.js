@@ -1,45 +1,95 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged,
-  signOut
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+const container = document.querySelector(".site-header");
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
-  authDomain: "crowncapital-invest.firebaseapp.com",
-  projectId: "crowncapital-invest",
-  storageBucket: "crowncapital-invest.firebasestorage.app",
-  messagingSenderId: "9373579357",
-  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
-};
+function getPage() {
+  let page = window.location.pathname.split("/").pop();
+  if (!page || page === "/") page = "index.html";
+  return page;
+}
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
+if (container) {
 
-onAuthStateChanged(auth, (user) => {
-  const loginTab = document.querySelector(".login-tab");
-  const accountTab = document.querySelector(".account-tab");
+  const current = getPage();
 
-  if (!loginTab || !accountTab) return;
+  container.innerHTML = `
+    <header style="
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #0f0f0f 0%, #0b0b0b 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    ">
 
-  if (user) {
-    // USER LOGGED IN
-    loginTab.innerText = "Account ✓";
-    loginTab.href = "account.html";
-    loginTab.style.opacity = "1";
+      <!-- LOGO SECTION -->
+      <div style="
+        display:flex;
+        justify-content:center;
+        padding:22px 0 10px 0;
+      ">
+        <img 
+          src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
+          style="
+            height:78px;
+            object-fit:contain;
+            filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));
+          "
+        >
+      </div>
 
-    accountTab.style.display = "none";
+      <!-- NAVIGATION -->
+      <nav style="
+        display:flex;
+        justify-content:center;
+        gap:30px;
+        padding:12px 10px 18px 10px;
+        flex-wrap:wrap;
+      ">
 
-  } else {
-    // USER LOGGED OUT
-    loginTab.innerText = "Login";
-    loginTab.href = "login.html";
-    accountTab.style.display = "inline-block";
-  }
-});
+        ${nav("index.html","Home",current)}
+        ${nav("plans.html","Plans",current)}
+        ${nav("dashboard.html","Dashboard",current)}
+        ${nav("account.html","Account",current)}
+        ${nav("login.html","Login",current,true)}
 
-// optional logout function
-window.logout = function () {
-  signOut(auth);
-};
+      </nav>
+
+    </header>
+  `;
+}
+
+function nav(href,label,current,isAccent=false){
+
+  const active = current === href;
+
+  return `
+    <a href="${href}" style="
+      text-decoration:none;
+      font-size:14px;
+      letter-spacing:0.3px;
+      padding:8px 14px;
+      border-radius:10px;
+      transition:0.25s ease;
+
+      color:${
+        active ? "#ffffff" : isAccent ? "#b08d2a" : "rgba(255,255,255,0.65)"
+      };
+
+      background:${
+        active ? "rgba(255,255,255,0.06)" : "transparent"
+      };
+
+      border:1px solid ${
+        active ? "rgba(255,255,255,0.12)" : "transparent"
+      };
+
+      box-shadow:${
+        active ? "0 0 0 1px rgba(176,141,42,0.15)" : "none"
+      };
+    "
+    onmouseover="this.style.color='#ffffff'"
+    onmouseout="this.style.color='${active ? "#ffffff" : isAccent ? "#b08d2a" : "rgba(255,255,255,0.65)"}'"
+    >
+      ${label}
+    </a>
+  `;
+}
