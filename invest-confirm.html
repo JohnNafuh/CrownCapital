@@ -94,6 +94,12 @@ const params = new URLSearchParams(window.location.search);
 const plan = params.get("plan");
 const roi = params.get("roi");
 const duration = params.get("duration");
+const paid = params.get("paid");
+
+if (!paid) {
+  document.querySelector(".confirm-box").innerHTML =
+    "<h2>Payment Required</h2><p>Please complete payment first.</p>";
+}
 
 document.getElementById("plan").innerText = "Plan: " + plan;
 document.getElementById("roi").innerText = "ROI: " + roi + "%";
