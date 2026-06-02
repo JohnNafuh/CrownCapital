@@ -1,64 +1,65 @@
-document.addEventListener("DOMContentLoaded", function () {
-
-  const header = document.querySelector(".site-header");
-
-  if (!header) return;
-
-  header.innerHTML = `
-    <header class="topbar">
-
-      <div class="logo" onclick="location.href='index.html'">
-        <img src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png" alt="CrownCapital">
-      </div>
-
-      <nav class="nav-links">
-        <a href="index.html">Home</a>
-        <a href="plans.html">Plans</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="wallet.html">Wallet</a>
-      </nav>
-
-    </header>
-  `;
-
-  // ACTIVE TAB SYSTEM
-  const links = document.querySelectorAll(".nav-links a");
-  let currentPage = window.location.pathname.split("/").pop();
-
-  if (currentPage === "" || currentPage === "/") {
-    currentPage = "index.html";
-  }
-
-  links.forEach(link => {
-    if (link.getAttribute("href") === currentPage) {
-      link.classList.add("active");
-    }
-  });
-
-});
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 const auth = getAuth();
 
 document.addEventListener("DOMContentLoaded", () => {
 
-  const nav = document.querySelector(".nav-links");
+  const headerContainer = document.querySelector(".site-header");
 
-  if (!nav) return;
+  if (!headerContainer) return;
 
-  const accountBtn = document.createElement("a");
-  accountBtn.href = "account.html";
-  accountBtn.innerText = "Account";
-  accountBtn.style.display = "none"; // hidden until login confirmed
+  headerContainer.innerHTML = `
+    <div style="
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:15px 20px;
+      background:#0b0b0b;
+      border-bottom:1px solid rgba(176,141,42,0.2);
+    ">
 
-  nav.appendChild(accountBtn);
+      <div style="color:#b08d2a;font-weight:bold;font-size:18px;">
+        CrownCapital
+      </div>
+
+      <div class="nav-links" style="display:flex; gap:15px;">
+        <a href="index.html">Home</a>
+        <a href="plans.html">Plans</a>
+        <a href="dashboard.html">Dashboard</a>
+      </div>
+
+      <div id="authArea">
+        <a href="login.html" id="loginBtn">Login</a>
+      </div>
+
+    </div>
+  `;
+
+  const authArea = document.getElementById("authArea");
+  const loginBtn = document.getElementById("loginBtn");
 
   onAuthStateChanged(auth, (user) => {
 
     if (user) {
-      accountBtn.style.display = "inline-block";
+
+      authArea.innerHTML = `
+        <a href="account.html" style="color:#b08d2a; margin-right:10px;">Account</a>
+        <button id="logoutBtn" style="
+          background:#b08d2a;
+          border:none;
+          padding:6px 12px;
+          cursor:pointer;
+        ">Logout</button>
+      `;
+
+      document.getElementById("logoutBtn").onclick = () => {
+        auth.signOut().then(() => {
+          location.href = "index.html";
+        });
+      };
+
     } else {
-      accountBtn.remove(); // hide completely if not logged in
+      authArea.innerHTML = `<a href="login.html">Login</a>`;
     }
   });
 
