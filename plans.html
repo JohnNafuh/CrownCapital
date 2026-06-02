@@ -1,45 +1,41 @@
-<!-- PAGE TITLE -->
-<section class="hero" style="padding: 50px 20px 20px 20px;">
+<section class="hero" style="padding: 50px 20px 10px 20px;">
   <h2>Investment Plans</h2>
   <p>Choose a plan that matches your risk appetite</p>
 </section>
 
-<!-- PLANS GRID -->
+<!-- GRID FIX -->
 <section style="
-  display:flex;
-  justify-content:center;
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap:20px;
-  flex-wrap:wrap;
-  padding:20px;
+  padding:30px 20px;
+  max-width:1000px;
+  margin:auto;
 ">
 
-  <!-- BASIC PLAN -->
+  <!-- CARD 1 -->
   <div style="
-    width:280px;
     background:linear-gradient(180deg,#141414,#0c0c0c);
     border:1px solid rgba(255,255,255,0.06);
     border-radius:16px;
     padding:20px;
     color:white;
   ">
-
-    <h3 style="margin-bottom:8px;">Starter Plan</h3>
+    <h3>Starter Plan</h3>
 
     <div style="color:#b08d2a;font-size:26px;font-weight:bold;">
       5% ROI
     </div>
 
-    <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">
+    <p style="font-size:12px;color:rgba(255,255,255,0.6);">
       Low risk • Beginner friendly
     </p>
 
-    <!-- ROI TIMELINE -->
-    <div style="margin-top:15px;font-size:12px;color:rgba(255,255,255,0.5);">
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.5);">
       Duration: 7 Days<br>
       Daily Return: ~0.7%
     </div>
 
-    <!-- BUTTON -->
     <button style="
       margin-top:15px;
       width:100%;
@@ -47,18 +43,15 @@
       border:none;
       border-radius:10px;
       background:#b08d2a;
-      color:#000;
       font-weight:bold;
       cursor:pointer;
     ">
       Invest Now
     </button>
-
   </div>
 
-  <!-- PRO PLAN -->
+  <!-- CARD 2 -->
   <div style="
-    width:280px;
     background:linear-gradient(180deg,#141414,#0c0c0c);
     border:1px solid rgba(255,255,255,0.08);
     border-radius:16px;
@@ -66,18 +59,17 @@
     color:white;
     transform:scale(1.03);
   ">
-
-    <h3 style="margin-bottom:8px;">Pro Plan</h3>
+    <h3>Pro Plan</h3>
 
     <div style="color:#b08d2a;font-size:26px;font-weight:bold;">
       10% ROI
     </div>
 
-    <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">
+    <p style="font-size:12px;color:rgba(255,255,255,0.6);">
       Balanced growth • Medium risk
     </p>
 
-    <div style="margin-top:15px;font-size:12px;color:rgba(255,255,255,0.5);">
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.5);">
       Duration: 14 Days<br>
       Daily Return: ~0.7%
     </div>
@@ -89,36 +81,32 @@
       border:none;
       border-radius:10px;
       background:#b08d2a;
-      color:#000;
       font-weight:bold;
       cursor:pointer;
     ">
       Invest Now
     </button>
-
   </div>
 
-  <!-- ELITE PLAN -->
+  <!-- CARD 3 -->
   <div style="
-    width:280px;
     background:linear-gradient(180deg,#141414,#0c0c0c);
     border:1px solid rgba(255,255,255,0.06);
     border-radius:16px;
     padding:20px;
     color:white;
   ">
-
-    <h3 style="margin-bottom:8px;">Elite Plan</h3>
+    <h3>Elite Plan</h3>
 
     <div style="color:#b08d2a;font-size:26px;font-weight:bold;">
       20% ROI
     </div>
 
-    <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">
+    <p style="font-size:12px;color:rgba(255,255,255,0.6);">
       High return • High risk
     </p>
 
-    <div style="margin-top:15px;font-size:12px;color:rgba(255,255,255,0.5);">
+    <div style="margin-top:12px;font-size:12px;color:rgba(255,255,255,0.5);">
       Duration: 30 Days<br>
       Daily Return: ~0.66%
     </div>
@@ -130,13 +118,11 @@
       border:none;
       border-radius:10px;
       background:#b08d2a;
-      color:#000;
       font-weight:bold;
       cursor:pointer;
     ">
       Invest Now
     </button>
-
   </div>
 
 </section>
