@@ -7,20 +7,17 @@
 
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- SAFE CARD UPGRADE STYLES ONLY -->
+  <!-- PREMIUM BUTTON UPGRADE -->
   <style>
     .plan-card {
       transition: 0.3s ease;
       text-decoration: none;
+      position: relative;
     }
 
     .plan-card:hover {
       transform: translateY(-6px);
       border: 1px solid #b08d2a;
-    }
-
-    .plan-card h3 {
-      margin-bottom: 10px;
     }
 
     .plan-price {
@@ -34,62 +31,109 @@
       color: #aaa;
       font-size: 14px;
     }
+
+    /* =========================
+       INVEST BUTTON UPGRADE
+    ========================= */
+
+    .invest-btn {
+      margin-top: 14px;
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(176,141,42,0.35);
+      background: linear-gradient(180deg, #b08d2a, #8f7322);
+      color: #000;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .invest-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 35px rgba(176,141,42,0.25);
+    }
+
+    .invest-btn:active {
+      transform: scale(0.98);
+    }
+
+    /* subtle shine sweep */
+    .invest-btn::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -60%;
+      width: 50%;
+      height: 100%;
+      background: rgba(255,255,255,0.25);
+      transform: skewX(-20deg);
+      transition: 0.5s;
+    }
+
+    .invest-btn:hover::after {
+      left: 120%;
+    }
   </style>
 </head>
 
 <body>
+
 <div class="site-header"></div>
-
 <script type="module" src="header.js"></script>
-  <!-- SYSTEM B HEADER -->
-  <div class="site-header"></div>
 
-  <!-- PAGE TITLE -->
-  <section class="hero" style="padding: 50px 20px 30px 20px;">
-    <h2>Investment Plans</h2>
-    <p>Choose a plan that fits your financial goals</p>
-  </section>
+<!-- TITLE -->
+<section class="hero" style="padding: 50px 20px 30px 20px;">
+  <h2>Investment Plans</h2>
+  <p>Choose a plan that fits your financial goals</p>
+</section>
 
-  <!-- PLANS (UNCHANGED STRUCTURE) -->
-  <section class="features">
+<!-- PLANS -->
+<section class="features">
 
-    <a href="#" class="card plan-card">
-      <h3>Starter Plan</h3>
-      <p class="plan-price">5% ROI</p>
-      <small class="plan-desc">Low risk • Beginner friendly</small>
-      <button onclick="investPlan('Starter Plan', 5, 7)">
-  Invest Now
-</button>
-    </a>
+  <a href="#" class="card plan-card">
+    <h3>Starter Plan</h3>
+    <p class="plan-price">5% ROI</p>
+    <small class="plan-desc">Low risk • Beginner friendly</small>
 
-    <a href="#" class="card plan-card">
-      <h3>Pro Plan</h3>
-      <p class="plan-price">10% ROI</p>
-      <small class="plan-desc">Balanced growth</small>
-      <button onclick="investPlan('Pro Plan', 10, 14)">
-  Invest Now
-</button>
-    </a>
+    <button class="invest-btn"
+      onclick="event.preventDefault(); investPlan('Starter Plan', 5, 7)">
+      Invest Now
+    </button>
+  </a>
 
-    <a href="#" class="card plan-card">
-      <h3>Elite Plan</h3>
-      <p class="plan-price">20% ROI</p>
-      <small class="plan-desc">High return • High reward</small>
-      <button onclick="investPlan('Elite Plan', 20, 30)">
-  Invest Now
-</button>
-    </a>
+  <a href="#" class="card plan-card">
+    <h3>Pro Plan</h3>
+    <p class="plan-price">10% ROI</p>
+    <small class="plan-desc">Balanced growth</small>
 
-  </section>
+    <button class="invest-btn"
+      onclick="event.preventDefault(); investPlan('Pro Plan', 10, 14)">
+      Invest Now
+    </button>
+  </a>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 CrownCapital. All rights reserved.</p>
-  </footer>
+  <a href="#" class="card plan-card">
+    <h3>Elite Plan</h3>
+    <p class="plan-price">20% ROI</p>
+    <small class="plan-desc">High return • High reward</small>
 
-  <!-- SCRIPTS -->
-  <script src="script.js"></script>
-  <script src="header.js"></script>
+    <button class="invest-btn"
+      onclick="event.preventDefault(); investPlan('Elite Plan', 20, 30)">
+      Invest Now
+    </button>
+  </a>
+
+</section>
+
+<footer>
+  <p>© 2026 CrownCapital. All rights reserved.</p>
+</footer>
+
+<!-- FIREBASE -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
@@ -110,7 +154,6 @@ const db = getFirestore(app);
 
 let currentUser = null;
 
-/* 🔒 GET USER */
 onAuthStateChanged(auth, (user) => {
   if (!user) {
     alert("Login required");
@@ -120,13 +163,8 @@ onAuthStateChanged(auth, (user) => {
   currentUser = user;
 });
 
-/* 💰 PLAN INVEST SYSTEM */
 window.investPlan = async function(planName, roi, duration) {
-
-  if (!currentUser) {
-    alert("Please login first");
-    return;
-  }
+  if (!currentUser) return;
 
   const userRef = doc(db, "users", currentUser.uid);
 
@@ -141,5 +179,6 @@ window.investPlan = async function(planName, roi, duration) {
   window.location.href = "dashboard.html";
 };
 </script>
+
 </body>
 </html>
