@@ -1,103 +1,149 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>CrownCapital Login</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CrownCapital Login</title>
+
+  <link rel="stylesheet" href="./style.css">
+
+  <style>
+    .auth-box {
+      max-width: 380px;
+      margin: 120px auto;
+      padding: 25px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #161a22, #0f131a);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      text-align: center;
+    }
+
+    .auth-box h2 {
+      margin-bottom: 18px;
+    }
+
+    .auth-box input {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: #0b0d12;
+      color: white;
+      outline: none;
+    }
+
+    .auth-box button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 10px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s ease;
+    }
+
+    .login-btn {
+      background: #b08d2a;
+      color: #000;
+    }
+
+    .login-btn:hover {
+      background: #d6b146;
+    }
+
+    .signup-btn {
+      background: transparent;
+      color: white;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .signup-btn:hover {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .title {
+      font-size: 12px;
+      letter-spacing: 2px;
+      color: rgba(255,255,255,0.5);
+    }
+  </style>
 </head>
 
 <body>
 
-<h2>CrownCapital Account</h2>
+<div class="auth-box">
+  <div class="title">CROWNCAPITAL ACCESS</div>
+  <h2>Login to your account</h2>
 
-<input id="email" type="email" placeholder="Email">
+  <input id="email" type="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
 
-<input id="password" type="password" placeholder="Password">
-
-<br><br>
-
-<button onclick="login()">Login</button>
-
-<button onclick="signup()">Create Account</button>
-
+  <button class="login-btn" onclick="login()">Login</button>
+  <button class="signup-btn" onclick="signup()">Create Account</button>
+</div>
 
 <script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import {
+    getAuth,
+    signInWithEmailAndPassword,
+    createUserWithEmailAndPassword
+  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+  import {
+    getFirestore,
+    doc,
+    setDoc
+  } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
-import { 
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+  const firebaseConfig = {
+    apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+    authDomain: "crowncapital-invest.firebaseapp.com",
+    projectId: "crowncapital-invest",
+    storageBucket: "crowncapital-invest.firebasestorage.app",
+    messagingSenderId: "9373579357",
+    appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+  };
 
-import {
-  getFirestore,
-  doc,
-  setDoc
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
+  // LOGIN
+  window.login = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
-const firebaseConfig = {
-  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
-  authDomain: "crowncapital-invest.firebaseapp.com",
-  projectId: "crowncapital-invest",
-  storageBucket: "crowncapital-invest.firebasestorage.app",
-  messagingSenderId: "9373579357",
-  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
-};
+    signInWithEmailAndPassword(auth, email, password)
+      .then(() => {
+        window.location.href = "dashboard.html";
+      })
+      .catch(err => alert(err.message));
+  };
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  // SIGNUP + WALLET CREATION
+  window.signup = function () {
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
 
+    createUserWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
+        const user = userCredential.user;
 
-/* =========================
-   SIGN UP (WITH WALLET CREATION)
-========================= */
-window.signup = function () {
+        await setDoc(doc(db, "users", user.uid), {
+          balance: 0,
+          profit: 0,
+          activePlan: "none",
+          createdAt: Date.now()
+        });
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  createUserWithEmailAndPassword(auth, email, password)
-    .then(async (userCredential) => {
-
-      const user = userCredential.user;
-
-      // 🔥 CREATE FIRESTORE WALLET
-      await setDoc(doc(db, "users", user.uid), {
-        balance: 0,
-        profit: 0,
-        activePlan: "none"
-      });
-
-      alert("Account created successfully");
-      window.location.href = "index.html";
-    })
-    .catch(e => alert(e.message));
-};
-
-
-/* =========================
-   LOGIN
-========================= */
-window.login = function () {
-
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  signInWithEmailAndPassword(auth, email, password)
-    .then(() => {
-      window.location.href = "index.html";
-    })
-    .catch(e => alert(e.message));
-};
-
+        window.location.href = "dashboard.html";
+      })
+      .catch(err => alert(err.message));
+  };
 </script>
 
 </body>
