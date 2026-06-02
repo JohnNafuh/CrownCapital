@@ -12,37 +12,36 @@ if (container) {
 
   container.innerHTML = `
     <header style="
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
-      background: rgba(255,255,255,0.85);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(0,0,0,0.06);
+      font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #0f0f0f 0%, #0b0b0b 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       position: sticky;
       top: 0;
       z-index: 1000;
     ">
 
-      <!-- LOGO -->
+      <!-- LOGO SECTION -->
       <div style="
         display:flex;
         justify-content:center;
-        padding:20px 0 8px 0;
+        padding:22px 0 10px 0;
       ">
         <img 
           src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
           style="
-            height:64px;
+            height:78px;
             object-fit:contain;
+            filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));
           "
         >
       </div>
 
-      <!-- NAV -->
+      <!-- NAVIGATION -->
       <nav style="
         display:flex;
         justify-content:center;
-        gap:26px;
-        padding:10px 10px 16px 10px;
+        gap:30px;
+        padding:12px 10px 18px 10px;
         flex-wrap:wrap;
       ">
 
@@ -58,7 +57,7 @@ if (container) {
   `;
 }
 
-function nav(href, label, current, accent = false) {
+function nav(href,label,current,isAccent=false){
 
   const active = current === href;
 
@@ -66,22 +65,29 @@ function nav(href, label, current, accent = false) {
     <a href="${href}" style="
       text-decoration:none;
       font-size:14px;
-      font-weight:500;
-      letter-spacing:0.2px;
-      padding:6px 10px;
-      border-radius:8px;
-      transition:0.2s ease;
+      letter-spacing:0.3px;
+      padding:8px 14px;
+      border-radius:10px;
+      transition:0.25s ease;
 
       color:${
-        active ? "#111" : accent ? "#007aff" : "rgba(0,0,0,0.55)"
+        active ? "#ffffff" : isAccent ? "#b08d2a" : "rgba(255,255,255,0.65)"
       };
 
       background:${
-        active ? "rgba(0,0,0,0.05)" : "transparent"
+        active ? "rgba(255,255,255,0.06)" : "transparent"
+      };
+
+      border:1px solid ${
+        active ? "rgba(255,255,255,0.12)" : "transparent"
+      };
+
+      box-shadow:${
+        active ? "0 0 0 1px rgba(176,141,42,0.15)" : "none"
       };
     "
-    onmouseover="this.style.color='#111'"
-    onmouseout="this.style.color='${active ? "#111" : accent ? "#007aff" : "rgba(0,0,0,0.55)"}'"
+    onmouseover="this.style.color='#ffffff'"
+    onmouseout="this.style.color='${active ? "#ffffff" : isAccent ? "#b08d2a" : "rgba(255,255,255,0.65)"}'"
     >
       ${label}
     </a>
