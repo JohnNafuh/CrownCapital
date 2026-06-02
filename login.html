@@ -77,7 +77,7 @@ window.signup = function () {
       });
 
       alert("Account created successfully");
-      window.location.href = "dashboard.html";
+      window.location.href = "index.html";
     })
     .catch(e => alert(e.message));
 };
@@ -93,7 +93,7 @@ window.login = function () {
 
   signInWithEmailAndPassword(auth, email, password)
     .then(() => {
-      window.location.href = "dashboard.html";
+      window.location.href = "index.html";
     })
     .catch(e => alert(e.message));
 };
