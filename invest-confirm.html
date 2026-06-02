@@ -19,10 +19,6 @@
       text-align: center;
     }
 
-    .confirm-box h2 {
-      margin-bottom: 10px;
-    }
-
     .detail {
       color: rgba(255,255,255,0.7);
       margin: 8px 0;
@@ -50,6 +46,17 @@
       opacity: 0.6;
       cursor: not-allowed;
     }
+
+    .error-box {
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 22px;
+      text-align: center;
+      border-radius: 18px;
+      background: rgba(255,0,0,0.08);
+      border: 1px solid rgba(255,0,0,0.2);
+      color: #ff6b6b;
+    }
   </style>
 </head>
 
@@ -58,7 +65,8 @@
 <div class="site-header"></div>
 <script type="module" src="header.js"></script>
 
-<div class="confirm-box">
+<!-- MAIN UI -->
+<div class="confirm-box" id="box">
   <h2>Confirm Investment</h2>
 
   <p class="detail" id="plan">Plan: ...</p>
@@ -88,7 +96,7 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-/* GET URL DATA */
+/* URL DATA */
 const params = new URLSearchParams(window.location.search);
 
 const plan = params.get("plan");
@@ -96,11 +104,29 @@ const roi = params.get("roi");
 const duration = params.get("duration");
 const paid = params.get("paid");
 
+/* ❌ BLOCK ACCESS IF NOT PAID */
 if (!paid) {
-  document.querySelector(".confirm-box").innerHTML =
-    "<h2>Payment Required</h2><p>Please complete payment first.</p>";
+  document.body.innerHTML = `
+    <div class="error-box">
+      <h2>Payment Required</h2>
+      <p>Please complete payment before confirming investment.</p>
+    </div>
+  `;
+  throw new Error("Payment required");
 }
 
+/* validate params */
+if (!plan || !roi || !duration) {
+  document.body.innerHTML = `
+    <div class="error-box">
+      <h2>Invalid Request</h2>
+      <p>Missing investment data.</p>
+    </div>
+  `;
+  throw new Error("Invalid params");
+}
+
+/* fill UI */
 document.getElementById("plan").innerText = "Plan: " + plan;
 document.getElementById("roi").innerText = "ROI: " + roi + "%";
 document.getElementById("duration").innerText = "Duration: " + duration + " days";
@@ -117,7 +143,7 @@ onAuthStateChanged(auth, (user) => {
   userRef = doc(db, "users", user.uid);
 });
 
-/* CONFIRM BUTTON */
+/* CONFIRM INVESTMENT */
 document.getElementById("confirmBtn").addEventListener("click", async () => {
 
   if (!userRef) return;
@@ -126,18 +152,25 @@ document.getElementById("confirmBtn").addEventListener("click", async () => {
   btn.disabled = true;
   btn.innerText = "Processing...";
 
-  await updateDoc(userRef, {
-    activePlan: plan,
-    planROI: Number(roi),
-    planDuration: Number(duration),
-    planStart: Date.now()
-  });
+  try {
+    await updateDoc(userRef, {
+      activePlan: plan,
+      planROI: Number(roi),
+      planDuration: Number(duration),
+      planStart: Date.now()
+    });
 
-  btn.innerText = "Success!";
+    btn.innerText = "Success!";
 
-  setTimeout(() => {
-    window.location.href = "dashboard.html";
-  }, 1200);
+    setTimeout(() => {
+      window.location.href = "dashboard.html";
+    }, 1200);
+
+  } catch (err) {
+    console.error(err);
+    btn.innerText = "Try Again";
+    btn.disabled = false;
+  }
 });
 </script>
 
