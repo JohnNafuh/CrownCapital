@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="style.css"/>
 
-  <!-- PREMIUM BUTTON UPGRADE -->
   <style>
     .plan-card {
       transition: 0.3s ease;
@@ -32,10 +31,7 @@
       font-size: 14px;
     }
 
-    /* =========================
-       INVEST BUTTON UPGRADE
-    ========================= */
-
+    /* INVEST BUTTON */
     .invest-btn {
       margin-top: 14px;
       width: 100%;
@@ -61,7 +57,11 @@
       transform: scale(0.98);
     }
 
-    /* subtle shine sweep */
+    .invest-btn:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .invest-btn::after {
       content: "";
       position: absolute;
@@ -71,11 +71,11 @@
       height: 100%;
       background: rgba(255,255,255,0.25);
       transform: skewX(-20deg);
-      transition: 0.5s;
     }
 
     .invest-btn:hover::after {
       left: 120%;
+      transition: 0.5s;
     }
   </style>
 </head>
@@ -88,46 +88,46 @@
 <!-- TITLE -->
 <section class="hero" style="padding: 50px 20px 30px 20px;">
   <h2>Investment Plans</h2>
-<p>
-  Select a plan that aligns with your financial goals, risk preference, and long-term capital growth strategy.
-</p>
+  <p>
+    Select a plan that aligns with your financial goals, risk preference, and long-term capital growth strategy.
+  </p>
 </section>
 
 <!-- PLANS -->
 <section class="features">
 
-  <a href="#" class="card plan-card">
+  <div class="card plan-card">
     <h3>Starter Plan</h3>
     <p class="plan-price">5% ROI</p>
     <small class="plan-desc">Low risk • Beginner friendly</small>
 
     <button class="invest-btn"
-      onclick="event.preventDefault(); investPlan('Starter Plan', 5, 7)">
+      onclick="investPlan(this, 'Starter Plan', 5, 7)">
       Invest Now
     </button>
-  </a>
+  </div>
 
-  <a href="#" class="card plan-card">
+  <div class="card plan-card">
     <h3>Pro Plan</h3>
     <p class="plan-price">10% ROI</p>
     <small class="plan-desc">Balanced growth</small>
 
     <button class="invest-btn"
-      onclick="event.preventDefault(); investPlan('Pro Plan', 10, 14)">
+      onclick="investPlan(this, 'Pro Plan', 10, 14)">
       Invest Now
     </button>
-  </a>
+  </div>
 
-  <a href="#" class="card plan-card">
+  <div class="card plan-card">
     <h3>Elite Plan</h3>
     <p class="plan-price">20% ROI</p>
     <small class="plan-desc">High return • High reward</small>
 
     <button class="invest-btn"
-      onclick="event.preventDefault(); investPlan('Elite Plan', 20, 30)">
+      onclick="investPlan(this, 'Elite Plan', 20, 30)">
       Invest Now
     </button>
-  </a>
+  </div>
 
 </section>
 
@@ -139,7 +139,6 @@
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
@@ -152,39 +151,35 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
 
 let currentUser = null;
 
 onAuthStateChanged(auth, (user) => {
-  if (!user) {
-    alert("Login required");
-    window.location.href = "login.html";
-    return;
-  }
-  currentUser = user;
+  currentUser = user || null;
 });
 
-window.investPlan = function(planName, roi, duration) {
+window.investPlan = function(btn, planName, roi, duration) {
 
   if (!currentUser) {
-    alert("Please login first");
+    alert("Login required");
     return;
   }
 
-  // fake pricing (you can change later)
+  // prevent double click
+  btn.disabled = true;
+  btn.innerText = "Processing...";
+
   let amount = 1500;
 
   if (planName === "Pro Plan") amount = 3500;
-  if (planName === "Elite Plan") amount = 600;
+  if (planName === "Elite Plan") amount = 6000;
 
-  window.location.href =
-    `payment.html?plan=${encodeURIComponent(planName)}&amount=${amount}&roi=${roi}&duration=${duration}`;
+  setTimeout(() => {
+    window.location.href =
+      `payment.html?plan=${encodeURIComponent(planName)}&amount=${amount}&roi=${roi}&duration=${duration}`;
+  }, 800);
 };
 
-  alert(`${planName} activated successfully!`);
-  window.location.href = "dashboard.html";
-};
 </script>
 
 </body>
