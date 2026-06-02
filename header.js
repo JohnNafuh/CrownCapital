@@ -1,42 +1,44 @@
-// header.js (WORKING SIMPLE VERSION - GITHUB PAGES SAFE)
+// CrownCapital HEADER (RESTORED STYLE)
 
-document.addEventListener("DOMContentLoaded", () => {
-  const container = document.querySelector(".site-header");
+const container = document.querySelector(".site-header");
 
-  if (!container) return;
-
+if (container) {
   container.innerHTML = `
-    <header style="
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      padding:15px 20px;
+    
+    <div style="
       background:#0b0b0b;
       border-bottom:1px solid #222;
-      font-family:Arial, sans-serif;
+      font-family:Arial;
+      padding:15px 10px;
+      text-align:center;
     ">
 
-      <div style="color:#b08d2a;font-weight:bold;font-size:18px;">
+      <!-- LOGO (TOP) -->
+      <div style="
+        color:#b08d2a;
+        font-weight:bold;
+        font-size:20px;
+        margin-bottom:10px;
+      ">
         CrownCapital
       </div>
 
-      <nav style="display:flex;gap:15px;">
+      <!-- NAV TABS (BOTTOM) -->
+      <div style="
+        display:flex;
+        justify-content:center;
+        gap:20px;
+        flex-wrap:wrap;
+      ">
+
         <a href="index.html" style="color:white;text-decoration:none;">Home</a>
         <a href="plans.html" style="color:white;text-decoration:none;">Plans</a>
         <a href="dashboard.html" style="color:white;text-decoration:none;">Dashboard</a>
         <a href="account.html" style="color:white;text-decoration:none;">Account</a>
-      </nav>
+        <a href="login.html" style="color:#b08d2a;text-decoration:none;">Login</a>
 
-      <div>
-        <a href="login.html" style="
-          color:#b08d2a;
-          text-decoration:none;
-          font-weight:bold;
-        ">
-          Login
-        </a>
       </div>
 
-    </header>
+    </div>
   `;
-});
+}
