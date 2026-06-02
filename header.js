@@ -24,34 +24,31 @@ function getPage() {
   return page;
 }
 
-function nav(href, label, current, isLoggedIn = false) {
+function nav(href, label, current, isActiveUser = false) {
   const active = current === href;
 
   return `
     <a href="${href}" style="
       text-decoration:none;
       font-size:14px;
-      letter-spacing:0.3px;
       padding:8px 14px;
       border-radius:10px;
-      transition:0.25s ease;
+      transition:0.2s ease;
 
       color:${active ? "#ffffff" : "rgba(255,255,255,0.65)"};
-
       background:${active ? "rgba(255,255,255,0.06)" : "transparent"};
-
       border:1px solid ${active ? "rgba(255,255,255,0.12)" : "transparent"};
-
-      box-shadow:${active ? "0 0 0 1px rgba(176,141,42,0.15)" : "none"};
     ">
-      ${isLoggedIn ? label + " ✓" : label}
+      ${label}${isActiveUser ? " ✓" : ""}
     </a>
   `;
 }
 
-function renderHeader(isLoggedIn) {
-
+function renderHeader(state) {
   const current = getPage();
+
+  // state: loading | loggedOut | loggedIn
+  const isLoggedIn = state === "loggedIn";
 
   return `
     <header style="
@@ -64,18 +61,11 @@ function renderHeader(isLoggedIn) {
     ">
 
       <!-- LOGO -->
-      <div style="
-        display:flex;
-        justify-content:center;
-        padding:22px 0 10px 0;
-      ">
+      <div style="display:flex;justify-content:center;padding:22px 0 10px;">
         <img 
           src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
-          style="
-            height:82px;
-            object-fit:contain;
-            filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));
-          "
+          style="height:82px;object-fit:contain;
+          filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));"
         >
       </div>
 
@@ -84,7 +74,7 @@ function renderHeader(isLoggedIn) {
         display:flex;
         justify-content:center;
         gap:30px;
-        padding:12px 10px 18px 10px;
+        padding:12px 10px 18px;
         flex-wrap:wrap;
       ">
 
@@ -106,14 +96,19 @@ function renderHeader(isLoggedIn) {
 }
 
 /* =========================
-   1. INSTANT RENDER (NO DELAY)
+   STEP 1: SHOW NOTHING WRONG (NO FAKE STATE)
 ========================= */
-const current = getPage();
-container.innerHTML = renderHeader(false);
+container.innerHTML = renderHeader("loading");
 
 /* =========================
-   2. UPDATE AFTER FIREBASE LOADS
+   STEP 2: FINAL AUTH STATE
 ========================= */
 onAuthStateChanged(auth, (user) => {
-  container.innerHTML = renderHeader(!!user);
+
+  if (user) {
+    container.innerHTML = renderHeader("loggedIn");
+  } else {
+    container.innerHTML = renderHeader("loggedOut");
+  }
+
 });
