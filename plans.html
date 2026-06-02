@@ -165,17 +165,15 @@ onAuthStateChanged(auth, (user) => {
   currentUser = user;
 });
 
-window.investPlan = async function(planName, roi, duration) {
-  if (!currentUser) return;
+window.investPlan = function(planName, roi, duration) {
+  if (!currentUser) {
+    alert("Please login first");
+    return;
+  }
 
-  const userRef = doc(db, "users", currentUser.uid);
-
-  await updateDoc(userRef, {
-    activePlan: planName,
-    planROI: roi,
-    planDuration: duration,
-    planStart: Date.now()
-  });
+  window.location.href =
+    `invest-confirm.html?plan=${encodeURIComponent(planName)}&roi=${roi}&duration=${duration}`;
+};
 
   alert(`${planName} activated successfully!`);
   window.location.href = "dashboard.html";
