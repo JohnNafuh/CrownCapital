@@ -75,19 +75,20 @@ function animateValue(el, start, end, duration) {
         if (snap.exists()) {
           const data = snap.data();
 
-          document.getElementById("balance").innerText =
-            "$" + (data.balance ?? 0);
+          const balanceEl = document.getElementById("balance");
+const profitEl = document.getElementById("profit");
+const planEl = document.getElementById("activePlan");
 
-          document.getElementById("profit").innerText =
-            "$" + (data.profit ?? 0);
+animateValue(balanceEl, 0, data.balance ?? 0, 900);
+animateValue(profitEl, 0, data.profit ?? 0, 900);
 
-          document.getElementById("activePlan").innerText =
-            data.activePlan ?? "None";
-        }
-      } catch (err) {
-        console.error("Firestore error:", err);
-      }
-    });
+planEl.innerText = data.activePlan ?? "None";
+
+/* add subtle glow when data loads */
+document.querySelectorAll(".card").forEach(card => {
+  card.classList.add("updated");
+  setTimeout(() => card.classList.remove("updated"), 1200);
+});
 
     /* =========================
        LOGOUT
