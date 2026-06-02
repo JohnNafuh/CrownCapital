@@ -15,14 +15,16 @@
 <script type="module" src="header.js"></script>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" style="padding: 60px 20px 40px 20px;">
   <h2>Grow Wealth. Track ROI. Build Freedom.</h2>
   <p>A modern investment platform designed for smart financial growth.</p>
+
   <a class="btn" href="dashboard.html">Enter Dashboard</a>
 </section>
 
 <!-- STATS -->
 <section class="features">
+
   <div class="card">
     <h3>Total Users</h3>
     <p style="font-size:28px; color:#b08d2a; font-weight:bold;">12,480+</p>
@@ -37,12 +39,14 @@
     <h3>Assets Managed</h3>
     <p style="font-size:28px; color:#b08d2a; font-weight:bold;">$48.2M+</p>
   </div>
+
 </section>
 
 <!-- SECOND HERO -->
 <section class="hero">
   <h2>Smart Investing Made Simple</h2>
   <p>Track profits, manage portfolios, and grow your capital with confidence.</p>
+
   <a class="btn" href="plans.html">View Investment Plans</a>
 </section>
 
@@ -56,6 +60,7 @@
       <span class="live-dot">● Live</span>
     </div>
 
+    <!-- CHART -->
     <div class="chart">
       <svg viewBox="0 0 300 100" class="mini-chart">
         <polyline
@@ -68,12 +73,15 @@
       </svg>
     </div>
 
+    <!-- PRICE -->
     <p id="price">
       <span class="currency">$</span>
       <span id="priceValue">125,000.00</span>
     </p>
 
+    <!-- STATS -->
     <div class="market-stats">
+
       <div>
         <h4>Total Growth</h4>
         <p id="growth">+0.00%</p>
@@ -88,49 +96,61 @@
         <h4>Loss</h4>
         <p id="loss">-$0.00</p>
       </div>
+
     </div>
 
   </div>
+
 </section>
 
 <!-- =========================
-     TRADING DESK (CLEAN STEP 2 LAYOUT)
+     📊 TRADING DESK (ADDED BELOW MARKET)
 ========================= -->
-<section class="hero">
+<section class="hero" style="padding: 40px 20px;">
 
   <h2>Live Trading Desk</h2>
-  <p style="opacity:0.7;">
-    Institutional-grade simulated market activity and portfolio execution system
+  <p style="color: rgba(255,255,255,0.6); margin-bottom: 30px;">
+    Institutional-level simulated trading activity across global markets
   </p>
 
-  <div class="features">
+  <div style="
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+    max-width: 1000px;
+    margin: auto;
+  ">
 
     <div class="card">
       <h3>Open Positions</h3>
       <p style="color:#00ff88; font-weight:bold;">+6 Active Trades</p>
-      <p style="font-size:13px; opacity:0.7;">BTC • ETH • NASDAQ • GOLD</p>
+      <p style="font-size:13px; color:rgba(255,255,255,0.6);">
+        BTC • ETH • NASDAQ • GOLD
+      </p>
     </div>
 
     <div class="card">
       <h3>Live Orders</h3>
       <p style="color:#b08d2a; font-weight:bold;">$8.7M Pending</p>
-      <p style="font-size:13px; opacity:0.7;">12 Buy • 5 Sell Orders</p>
+      <p style="font-size:13px; color:rgba(255,255,255,0.6);">
+        12 Buy • 5 Sell Orders
+      </p>
     </div>
 
     <div class="card">
       <h3>Daily PnL</h3>
       <p style="color:#00ff88; font-weight:bold;">+$642,310</p>
-      <p style="font-size:13px; opacity:0.7;">+4.92% portfolio growth</p>
+      <p style="font-size:13px; color:rgba(255,255,255,0.6);">
+        +4.92% portfolio growth
+      </p>
     </div>
 
   </div>
 
 </section>
 
-<!-- =========================
-     TRADE HISTORY (CENTERED FIXED)
-========================= -->
-<section class="hero">
+<!-- TRADE HISTORY -->
+<section class="hero" style="padding: 20px;">
 
   <h2>Recent Trades</h2>
 
@@ -156,6 +176,7 @@
       </thead>
 
       <tbody>
+
         <tr style="border-top:1px solid rgba(255,255,255,0.05);">
           <td style="padding:12px;">BTC/USD</td>
           <td style="color:#00ff88;">BUY</td>
@@ -179,6 +200,7 @@
           <td style="color:#00ff88;">+$18,980</td>
           <td>Closed</td>
         </tr>
+
       </tbody>
 
     </table>
@@ -187,7 +209,6 @@
 
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>© 2026 CrownCapital. All rights reserved.</p>
 </footer>
@@ -195,7 +216,7 @@
 <script src="script.js"></script>
 
 <!-- =========================
-     TRADING ENGINE (UNCHANGED)
+     🚀 UPGRADED INSTITUTIONAL TRADING ENGINE
 ========================= -->
 <script>
 let basePrice = 12500000;
@@ -240,11 +261,18 @@ function updateMarket() {
   document.getElementById("growth").innerText =
     (growthPercent >= 0 ? "+" : "") + growthPercent.toFixed(2) + "%";
 
+  document.getElementById("growth").style.color =
+    growthPercent >= 0 ? "#00ff88" : "#ff4d4d";
+
   document.getElementById("profit").innerText =
     "+" + format(profit);
 
+  document.getElementById("profit").style.color = "#00ff88";
+
   document.getElementById("loss").innerText =
     "-" + format(loss);
+
+  document.getElementById("loss").style.color = "#ff4d4d";
 
   let min = Math.min(...history);
   let max = Math.max(...history);
