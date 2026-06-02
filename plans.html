@@ -81,6 +81,56 @@
   <!-- SCRIPTS -->
   <script src="script.js"></script>
   <script src="header.js"></script>
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, updateDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
+const firebaseConfig = {
+  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+  authDomain: "crowncapital-invest.firebaseapp.com",
+  projectId: "crowncapital-invest",
+  storageBucket: "crowncapital-invest.firebasestorage.app",
+  messagingSenderId: "9373579357",
+  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+let currentUser = null;
+
+/* 🔒 GET USER */
+onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    alert("Login required");
+    window.location.href = "login.html";
+    return;
+  }
+  currentUser = user;
+});
+
+/* 💰 PLAN INVEST SYSTEM */
+window.investPlan = async function(planName, roi, duration) {
+
+  if (!currentUser) {
+    alert("Please login first");
+    return;
+  }
+
+  const userRef = doc(db, "users", currentUser.uid);
+
+  await updateDoc(userRef, {
+    activePlan: planName,
+    planROI: roi,
+    planDuration: duration,
+    planStart: Date.now()
+  });
+
+  alert(`${planName} activated successfully!`);
+  window.location.href = "dashboard.html";
+};
+</script>
 </body>
 </html>
