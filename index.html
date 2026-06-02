@@ -10,7 +10,7 @@
 
 <body>
 
-<!-- HEADER (ONLY ONCE) -->
+<!-- HEADER -->
 <div class="site-header"></div>
 <script type="module" src="header.js"></script>
 
@@ -50,7 +50,7 @@
   <a class="btn" href="plans.html">View Investment Plans</a>
 </section>
 
-<!-- MARKET SECTION -->
+<!-- MARKET -->
 <section class="market-section">
 
   <div class="market-card">
@@ -111,21 +111,23 @@
   <p>© 2026 CrownCapital. All rights reserved.</p>
 </footer>
 
-<!-- SCRIPTS -->
-<script src="script.js"></script>
-
-<!-- 🔥 MARKET LIVE ENGINE (UPGRADED HIGH-CAPITAL SYSTEM) -->
+<!-- MARKET ENGINE (FIXED + PORTFOLIO STYLE) -->
 <script>
-let basePrice = 75000;        // capital base
+let basePrice = 75000;
 let initialPrice = 75000;
+
+// trend memory (IMPORTANT FIX)
+let trend = 0.2;
 
 function updateMarket() {
 
-  // stronger institutional volatility
-  const changePercent = (Math.random() * 6 - 3); // -3% to +3%
+  // smoother trend-based movement (not pure randomness)
+  trend += (Math.random() - 0.5) * 0.25;
+  trend = Math.max(-2, Math.min(2, trend));
 
-  const changeAmount = basePrice * (changePercent / 100);
-  basePrice += changeAmount;
+  // apply movement
+  const change = basePrice * (trend / 100);
+  basePrice += change;
 
   const profit = basePrice - initialPrice;
   const loss = profit < 0 ? Math.abs(profit) : 0;
@@ -137,28 +139,26 @@ function updateMarket() {
     basePrice.toFixed(2);
 
   // GROWTH
-  document.getElementById("growth").innerText =
+  const growthEl = document.getElementById("growth");
+  growthEl.innerText =
     (growthPercent >= 0 ? "+" : "") + growthPercent.toFixed(2) + "%";
 
-  document.getElementById("growth").style.color =
+  growthEl.style.color =
     growthPercent >= 0 ? "#00ff88" : "#ff4d4d";
 
   // PROFIT
-  document.getElementById("profit").innerText =
-    "+" + profit.toFixed(2);
-
-  document.getElementById("profit").style.color =
-    "#00ff88";
+  const profitEl = document.getElementById("profit");
+  profitEl.innerText = "+" + Math.max(profit, 0).toFixed(2);
+  profitEl.style.color = "#00ff88";
 
   // LOSS
-  document.getElementById("loss").innerText =
-    "-" + loss.toFixed(2);
-
-  document.getElementById("loss").style.color =
-    "#ff4d4d";
+  const lossEl = document.getElementById("loss");
+  lossEl.innerText = "-" + loss.toFixed(2);
+  lossEl.style.color = "#ff4d4d";
 }
 
-setInterval(updateMarket, 2000);
+// faster + smoother updates (feels more real)
+setInterval(updateMarket, 1800);
 updateMarket();
 </script>
 
