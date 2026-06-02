@@ -13,7 +13,9 @@ if (container) {
       text-align:center;
     ">
 
-<img src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png" style="height:40px;">
+<div>
+  <img src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png" style="height:40px;">
+</div>
 
       <!-- NAV TABS (BOTTOM) -->
       <div style="
