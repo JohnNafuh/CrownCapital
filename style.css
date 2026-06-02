@@ -215,4 +215,35 @@ footer {
   border-top: 1px solid rgba(255,255,255,0.05);
   color: rgba(255,255,255,0.45);
   margin-top: 50px;
+  @keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes glowPulse {
+  0% { box-shadow: 0 0 0 rgba(176,141,42,0); }
+  50% { box-shadow: 0 0 25px rgba(176,141,42,0.15); }
+  100% { box-shadow: 0 0 0 rgba(176,141,42,0); }
+}
+
+/* cards animate in */
+.card {
+  animation: fadeInUp 0.6s ease both;
+}
+
+/* stagger effect */
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.15s; }
+.card:nth-child(3) { animation-delay: 0.25s; }
+
+/* active highlight pulse (for updates) */
+.card.updated {
+  animation: glowPulse 1.2s ease;
+}
 }
