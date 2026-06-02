@@ -1,86 +1,142 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Investment Plans - CrownCapital</title>
+<!-- PAGE TITLE -->
+<section class="hero" style="padding: 50px 20px 20px 20px;">
+  <h2>Investment Plans</h2>
+  <p>Choose a plan that matches your risk appetite</p>
+</section>
 
-  <link rel="stylesheet" href="style.css"/>
+<!-- PLANS GRID -->
+<section style="
+  display:flex;
+  justify-content:center;
+  gap:20px;
+  flex-wrap:wrap;
+  padding:20px;
+">
 
-  <!-- SAFE CARD UPGRADE STYLES ONLY -->
-  <style>
-    .plan-card {
-      transition: 0.3s ease;
-      text-decoration: none;
-    }
+  <!-- BASIC PLAN -->
+  <div style="
+    width:280px;
+    background:linear-gradient(180deg,#141414,#0c0c0c);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:16px;
+    padding:20px;
+    color:white;
+  ">
 
-    .plan-card:hover {
-      transform: translateY(-6px);
-      border: 1px solid #b08d2a;
-    }
+    <h3 style="margin-bottom:8px;">Starter Plan</h3>
 
-    .plan-card h3 {
-      margin-bottom: 10px;
-    }
+    <div style="color:#b08d2a;font-size:26px;font-weight:bold;">
+      5% ROI
+    </div>
 
-    .plan-price {
-      font-size: 24px;
-      color: #b08d2a;
-      font-weight: bold;
-      margin: 10px 0;
-    }
+    <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">
+      Low risk • Beginner friendly
+    </p>
 
-    .plan-desc {
-      color: #aaa;
-      font-size: 14px;
-    }
-  </style>
-</head>
+    <!-- ROI TIMELINE -->
+    <div style="margin-top:15px;font-size:12px;color:rgba(255,255,255,0.5);">
+      Duration: 7 Days<br>
+      Daily Return: ~0.7%
+    </div>
 
-<body>
-<div class="site-header"></div>
+    <!-- BUTTON -->
+    <button style="
+      margin-top:15px;
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:10px;
+      background:#b08d2a;
+      color:#000;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      Invest Now
+    </button>
 
-<script type="module" src="header.js"></script>
-  <!-- SYSTEM B HEADER -->
-  <div class="site-header"></div>
+  </div>
 
-  <!-- PAGE TITLE -->
-  <section class="hero" style="padding: 50px 20px 30px 20px;">
-    <h2>Investment Plans</h2>
-    <p>Choose a plan that fits your financial goals</p>
-  </section>
+  <!-- PRO PLAN -->
+  <div style="
+    width:280px;
+    background:linear-gradient(180deg,#141414,#0c0c0c);
+    border:1px solid rgba(255,255,255,0.08);
+    border-radius:16px;
+    padding:20px;
+    color:white;
+    transform:scale(1.03);
+  ">
 
-  <!-- PLANS (UNCHANGED STRUCTURE) -->
-  <section class="features">
+    <h3 style="margin-bottom:8px;">Pro Plan</h3>
 
-    <a href="#" class="card plan-card">
-      <h3>Starter Plan</h3>
-      <p class="plan-price">5% ROI</p>
-      <small class="plan-desc">Low risk • Beginner friendly</small>
-    </a>
+    <div style="color:#b08d2a;font-size:26px;font-weight:bold;">
+      10% ROI
+    </div>
 
-    <a href="#" class="card plan-card">
-      <h3>Pro Plan</h3>
-      <p class="plan-price">10% ROI</p>
-      <small class="plan-desc">Balanced growth</small>
-    </a>
+    <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">
+      Balanced growth • Medium risk
+    </p>
 
-    <a href="#" class="card plan-card">
-      <h3>Elite Plan</h3>
-      <p class="plan-price">20% ROI</p>
-      <small class="plan-desc">High return • High reward</small>
-    </a>
+    <div style="margin-top:15px;font-size:12px;color:rgba(255,255,255,0.5);">
+      Duration: 14 Days<br>
+      Daily Return: ~0.7%
+    </div>
 
-  </section>
+    <button style="
+      margin-top:15px;
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:10px;
+      background:#b08d2a;
+      color:#000;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      Invest Now
+    </button>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 CrownCapital. All rights reserved.</p>
-  </footer>
+  </div>
 
-  <!-- SCRIPTS -->
-  <script src="script.js"></script>
-  <script src="header.js"></script>
+  <!-- ELITE PLAN -->
+  <div style="
+    width:280px;
+    background:linear-gradient(180deg,#141414,#0c0c0c);
+    border:1px solid rgba(255,255,255,0.06);
+    border-radius:16px;
+    padding:20px;
+    color:white;
+  ">
 
-</body>
-</html>
+    <h3 style="margin-bottom:8px;">Elite Plan</h3>
+
+    <div style="color:#b08d2a;font-size:26px;font-weight:bold;">
+      20% ROI
+    </div>
+
+    <p style="font-size:12px;color:rgba(255,255,255,0.6);margin-top:6px;">
+      High return • High risk
+    </p>
+
+    <div style="margin-top:15px;font-size:12px;color:rgba(255,255,255,0.5);">
+      Duration: 30 Days<br>
+      Daily Return: ~0.66%
+    </div>
+
+    <button style="
+      margin-top:15px;
+      width:100%;
+      padding:10px;
+      border:none;
+      border-radius:10px;
+      background:#b08d2a;
+      color:#000;
+      font-weight:bold;
+      cursor:pointer;
+    ">
+      Invest Now
+    </button>
+
+  </div>
+
+</section>
