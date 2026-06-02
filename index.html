@@ -37,7 +37,7 @@
 
   <div class="card">
     <h3>Assets Managed</h3>
-    <p style="font-size:28px; color:#b08d2a; font-weight:bold;">$4.2M+</p>
+    <p style="font-size:28px; color:#b08d2a; font-weight:bold;">$48.2M+</p>
   </div>
 
 </section>
@@ -50,7 +50,7 @@
   <a class="btn" href="plans.html">View Investment Plans</a>
 </section>
 
-<!-- MARKET -->
+<!-- MARKET SECTION -->
 <section class="market-section">
 
   <div class="market-card">
@@ -60,44 +60,41 @@
       <span class="live-dot">● Live</span>
     </div>
 
-    <div class="market-body">
+    <!-- CHART -->
+    <div class="chart">
+      <svg viewBox="0 0 300 100" class="mini-chart">
+        <polyline
+          id="chartLine"
+          points=""
+          fill="none"
+          stroke="#b08d2a"
+          stroke-width="3"
+        />
+      </svg>
+    </div>
 
-      <!-- GRAPH -->
-      <div class="chart">
-        <svg viewBox="0 0 300 100" class="mini-chart">
-          <polyline
-            points="0,80 30,70 60,75 90,50 120,60 150,40 180,55 210,30 240,45 270,20 300,35"
-            fill="none"
-            stroke="#b08d2a"
-            stroke-width="3"
-          />
-        </svg>
+    <!-- PRICE -->
+    <p id="price">
+      <span class="currency">$</span>
+      <span id="priceValue">125,000.00</span>
+    </p>
+
+    <!-- STATS -->
+    <div class="market-stats">
+
+      <div>
+        <h4>Total Growth</h4>
+        <p id="growth">+0.00%</p>
       </div>
 
-      <!-- LIVE PRICE -->
-      <p id="price">
-        <span class="currency">$</span>
-        <span id="priceValue">75000.00</span>
-      </p>
+      <div>
+        <h4>Profit</h4>
+        <p id="profit">$0.00</p>
+      </div>
 
-      <!-- STATS -->
-      <div class="market-stats">
-
-        <div>
-          <h4>Total Growth</h4>
-          <p id="growth">+0.00%</p>
-        </div>
-
-        <div>
-          <h4>Profit</h4>
-          <p id="profit">$0.00</p>
-        </div>
-
-        <div>
-          <h4>Loss</h4>
-          <p id="loss">-$0.00</p>
-        </div>
-
+      <div>
+        <h4>Loss</h4>
+        <p id="loss">-$0.00</p>
       </div>
 
     </div>
@@ -106,58 +103,84 @@
 
 </section>
 
-<!-- FOOTER -->
 <footer>
   <p>© 2026 CrownCapital. All rights reserved.</p>
 </footer>
 
-<!-- MARKET ENGINE (FIXED + PORTFOLIO STYLE) -->
-<script>
-let basePrice = 75000;
-let initialPrice = 75000;
+<script src="script.js"></script>
 
-// trend memory (IMPORTANT FIX)
-let trend = 0.2;
+<!-- =========================
+     REAL TRADING ENGINE
+========================= -->
+<script>
+let basePrice = 125000;
+let initialPrice = 125000;
+let history = [];
+
+function clamp(num, min, max) {
+  return Math.min(Math.max(num, min), max);
+}
+
+// smoother market movement (trend + volatility)
+let trend = 0;
 
 function updateMarket() {
 
-  // smoother trend-based movement (not pure randomness)
-  trend += (Math.random() - 0.5) * 0.25;
-  trend = Math.max(-2, Math.min(2, trend));
+  // slow trend shift (market behavior)
+  trend += (Math.random() - 0.5) * 0.6;
+  trend = clamp(trend, -3, 3);
 
-  // apply movement
-  const change = basePrice * (trend / 100);
-  basePrice += change;
+  // price movement influenced by trend
+  const volatility = (Math.random() - 0.5) * 2.5;
+  const changePercent = trend + volatility;
 
+  const changeAmount = basePrice * (changePercent / 100);
+  basePrice += changeAmount;
+
+  // prevent unrealistic collapse
+  basePrice = Math.max(basePrice, initialPrice * 0.4);
+
+  // store history for chart
+  history.push(basePrice);
+  if (history.length > 30) history.shift();
+
+  // stats
   const profit = basePrice - initialPrice;
   const loss = profit < 0 ? Math.abs(profit) : 0;
-
   const growthPercent = (profit / initialPrice) * 100;
 
-  // PRICE
+  // UI updates
   document.getElementById("priceValue").innerText =
-    basePrice.toFixed(2);
+    basePrice.toLocaleString(undefined, {maximumFractionDigits: 2});
 
-  // GROWTH
-  const growthEl = document.getElementById("growth");
-  growthEl.innerText =
+  document.getElementById("growth").innerText =
     (growthPercent >= 0 ? "+" : "") + growthPercent.toFixed(2) + "%";
 
-  growthEl.style.color =
+  document.getElementById("growth").style.color =
     growthPercent >= 0 ? "#00ff88" : "#ff4d4d";
 
-  // PROFIT
-  const profitEl = document.getElementById("profit");
-  profitEl.innerText = "+" + Math.max(profit, 0).toFixed(2);
-  profitEl.style.color = "#00ff88";
+  document.getElementById("profit").innerText =
+    "+" + profit.toLocaleString(undefined, {maximumFractionDigits: 2});
 
-  // LOSS
-  const lossEl = document.getElementById("loss");
-  lossEl.innerText = "-" + loss.toFixed(2);
-  lossEl.style.color = "#ff4d4d";
+  document.getElementById("profit").style.color = "#00ff88";
+
+  document.getElementById("loss").innerText =
+    "-" + loss.toLocaleString(undefined, {maximumFractionDigits: 2});
+
+  document.getElementById("loss").style.color = "#ff4d4d";
+
+  // chart update
+  let points = history.map((p, i) => {
+    const x = (i / (history.length - 1)) * 300;
+    const min = Math.min(...history);
+    const max = Math.max(...history);
+    const y = 100 - ((p - min) / (max - min || 1)) * 100;
+    return `${x},${y}`;
+  }).join(" ");
+
+  document.getElementById("chartLine").setAttribute("points", points);
 }
 
-// faster + smoother updates (feels more real)
 setInterval(updateMarket, 1800);
 updateMarket();
 </script>
