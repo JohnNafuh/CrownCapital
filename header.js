@@ -13,15 +13,7 @@ if (container) {
       text-align:center;
     ">
 
-      <!-- LOGO (TOP) -->
-      <div style="
-        color:#b08d2a;
-        font-weight:bold;
-        font-size:20px;
-        margin-bottom:10px;
-      ">
-        CrownCapital
-      </div>
+<img src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png" style="height:40px;">
 
       <!-- NAV TABS (BOTTOM) -->
       <div style="
