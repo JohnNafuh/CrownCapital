@@ -134,8 +134,6 @@ body {
   transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
-
-  /* STEP 4: animation */
   animation: fadeInUp 0.6s ease both;
 }
 
@@ -156,12 +154,10 @@ body {
   box-shadow: 0 18px 45px rgba(0,0,0,0.6);
 }
 
-/* stagger effect */
 .card:nth-child(1) { animation-delay: 0.05s; }
 .card:nth-child(2) { animation-delay: 0.15s; }
 .card:nth-child(3) { animation-delay: 0.25s; }
 
-/* glow when updated */
 .card.updated {
   animation: glowPulse 1.2s ease;
 }
@@ -230,7 +226,7 @@ footer {
 }
 
 /* =========================
-   STEP 4 ANIMATIONS (FIXED)
+   ANIMATIONS (FIXED)
 ========================= */
 
 @keyframes fadeInUp {
@@ -248,8 +244,10 @@ footer {
   0% { box-shadow: 0 0 0 rgba(176,141,42,0); }
   50% { box-shadow: 0 0 25px rgba(176,141,42,0.15); }
   100% { box-shadow: 0 0 0 rgba(176,141,42,0); }
-  /* =========================
-   INVESTMENT PLANS UPGRADE UI
+}
+
+/* =========================
+   PLAN CARDS (APPLE + FINTECH UPGRADE)
 ========================= */
 
 .plan-card {
@@ -261,7 +259,6 @@ footer {
   transition: all 0.25s ease;
 }
 
-/* glowing top accent */
 .plan-card::before {
   content: "";
   position: absolute;
@@ -273,28 +270,24 @@ footer {
   opacity: 0.6;
 }
 
-/* hover premium lift */
 .plan-card:hover {
   transform: translateY(-8px) scale(1.02);
   border-color: rgba(176,141,42,0.3);
   box-shadow: 0 25px 60px rgba(0,0,0,0.7);
 }
 
-/* ROI text upgrade */
 .plan-card p {
   font-size: 26px !important;
   letter-spacing: 1px;
   margin: 10px 0;
 }
 
-/* small text styling */
 .plan-card small {
   color: rgba(255,255,255,0.6);
   display: block;
   margin-top: 8px;
 }
 
-/* add “recommended” badge style */
 .plan-card.recommended::after {
   content: "MOST POPULAR";
   position: absolute;
@@ -306,5 +299,4 @@ footer {
   color: #b08d2a;
   border: 1px solid rgba(176,141,42,0.3);
   border-radius: 999px;
-}
 }
