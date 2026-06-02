@@ -166,13 +166,20 @@ onAuthStateChanged(auth, (user) => {
 });
 
 window.investPlan = function(planName, roi, duration) {
+
   if (!currentUser) {
     alert("Please login first");
     return;
   }
 
+  // fake pricing (you can change later)
+  let amount = 1500;
+
+  if (planName === "Pro Plan") amount = 3500;
+  if (planName === "Elite Plan") amount = 600;
+
   window.location.href =
-    `invest-confirm.html?plan=${encodeURIComponent(planName)}&roi=${roi}&duration=${duration}`;
+    `payment.html?plan=${encodeURIComponent(planName)}&amount=${amount}&roi=${roi}&duration=${duration}`;
 };
 
   alert(`${planName} activated successfully!`);
