@@ -1,71 +1,203 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Account</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Account - CrownCapital</title>
+
+  <link rel="stylesheet" href="./style.css">
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import {
+      getAuth,
+      onAuthStateChanged,
+      signOut
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+    import {
+      getFirestore,
+      doc,
+      getDoc
+    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+      authDomain: "crowncapital-invest.firebaseapp.com",
+      projectId: "crowncapital-invest",
+      storageBucket: "crowncapital-invest.firebasestorage.app",
+      messagingSenderId: "9373579357",
+      appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    function animateValue(el, start, end, duration) {
+      let startTimestamp = null;
+
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = progress * (end - start) + start;
+
+        el.innerText = "$" + value.toFixed(2);
+
+        if (progress < 1) {
+          requestAnimationFrame(step);
+        }
+      };
+
+      requestAnimationFrame(step);
+    }
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        window.location.href = "login.html";
+        return;
+      }
+
+      const ref = doc(db, "users", user.uid);
+      const snap = await getDoc(ref);
+
+      if (snap.exists()) {
+        const data = snap.data();
+
+        document.getElementById("email").innerText = user.email;
+
+        animateValue(
+          document.getElementById("balance"),
+          0,
+          data.balance ?? 0,
+          900
+        );
+
+        animateValue(
+          document.getElementById("profit"),
+          0,
+          data.profit ?? 0,
+          900
+        );
+
+        document.getElementById("plan").innerText =
+          data.activePlan ?? "No Active Plan";
+      }
+    });
+
+    window.logout = function () {
+      signOut(auth).then(() => {
+        window.location.href = "login.html";
+      });
+    };
+  </script>
 </head>
 
 <body>
 
-<h2>My Account</h2>
+<!-- HEADER -->
+<div class="site-header"></div>
+<script type="module" src="header.js"></script>
 
-<p>Email: <span id="email"></span></p>
+<!-- ACCOUNT HEADER (NOT DASHBOARD STYLE) -->
+<section style="
+  padding: 60px 20px 30px;
+  text-align: center;
+  background: radial-gradient(circle at top, #1a1d24, #0b0d12);
+">
 
-<div class="card">
-  <h3>Balance</h3>
-  <p id="balance">$0.00</p>
-</div>
+  <div style="
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    letter-spacing: 2px;
+  ">
+    ACCOUNT CONTROL CENTER
+  </div>
 
-<div class="card">
-  <h3>Profit</h3>
-  <p id="profit">$0.00</p>
-</div>
+  <h1 style="margin:10px 0; font-size:26px;">My Account</h1>
 
-<button onclick="logout()">Logout</button>
+  <p id="email" style="color:rgba(255,255,255,0.6); font-size:13px;"></p>
 
-<script type="module">
+  <button onclick="logout()" style="
+    margin-top: 18px;
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: none;
+    background: #b08d2a;
+    color: #000;
+    font-weight: bold;
+    cursor: pointer;
+  ">
+    Logout
+  </button>
+</section>
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+<!-- FINTECH ACCOUNT PANEL -->
+<section style="
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 18px;
+  padding: 40px 20px;
+  max-width: 900px;
+  margin: auto;
+">
 
-const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_PROJECT_ID"
-};
+  <div class="card">
+    <h3>Wallet Balance</h3>
+    <p id="balance">$0.00</p>
+  </div>
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+  <div class="card">
+    <h3>Total Profit</h3>
+    <p id="profit">$0.00</p>
+  </div>
 
-onAuthStateChanged(auth, async (user) => {
+  <div class="card">
+    <h3>Active Plan</h3>
+    <p id="plan">Loading...</p>
+  </div>
 
-  if (!user) {
-    window.location.href = "login.html";
-    return;
-  }
+</section>
 
-  document.getElementById("email").innerText = user.email;
+<!-- ACTION PANEL -->
+<section style="
+  max-width: 900px;
+  margin: auto;
+  padding: 10px 20px 60px;
+  display: grid;
+  gap: 14px;
+">
 
-  const ref = doc(db, "users", user.uid);
-  const snap = await getDoc(ref);
+  <div class="card" style="text-align:left;">
+    <h3>Deposit Funds</h3>
+    <p style="font-size:13px; color:rgba(255,255,255,0.6);">
+      Fund your wallet to activate investment plans.
+    </p>
+    <button class="btn" style="margin-top:10px;">Deposit</button>
+  </div>
 
-  if (snap.exists()) {
-    const data = snap.data();
+  <div class="card" style="text-align:left;">
+    <h3>Withdraw Earnings</h3>
+    <p style="font-size:13px; color:rgba(255,255,255,0.6);">
+      Request withdrawal to your external wallet.
+    </p>
+    <button class="btn" style="margin-top:10px;">Withdraw</button>
+  </div>
 
-    document.getElementById("balance").innerText = "$" + data.balance;
-    document.getElementById("profit").innerText = "$" + data.profit;
-  }
-});
+  <div class="card" style="text-align:left;">
+    <h3>Security</h3>
+    <p style="font-size:13px; color:rgba(255,255,255,0.6);">
+      Manage login sessions and account security.
+    </p>
+    <button class="btn" style="margin-top:10px;">Manage</button>
+  </div>
 
-window.logout = function () {
-  signOut(auth).then(() => {
-    window.location.href = "login.html";
-  });
-};
+</section>
 
-</script>
+<footer>
+  <p>© 2026 CrownCapital. All rights reserved.</p>
+</footer>
 
 </body>
 </html>
