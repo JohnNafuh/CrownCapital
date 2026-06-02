@@ -1,12 +1,12 @@
 body {
   margin: 0;
   font-family: "Segoe UI", Arial, sans-serif;
-  background: #0f1115;
+  background: #0b0d12;
   color: #ffffff;
 }
 
 /* =========================
-   TOPBAR FIX (CENTER LOGO PROPERLY)
+   TOPBAR
 ========================= */
 
 .topbar {
@@ -14,7 +14,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 15px 10px;
+  padding: 14px 10px;
   gap: 10px;
   text-align: center;
 }
@@ -28,62 +28,65 @@ body {
 .logo img {
   display: block;
   margin: 0 auto;
-  max-width: 180px;
+  max-width: 190px;
   height: auto;
+  filter: drop-shadow(0 6px 20px rgba(0,0,0,0.4));
 }
 
 /* =========================
-   NAV LINKS STYLE (FINTECH UPGRADE)
+   NAV (MORE APP-LIKE)
 ========================= */
 
 .nav-links {
   display: flex;
   justify-content: center;
   gap: 6px;
-  background: rgba(255,255,255,0.04);
-  padding: 6px;
-  border-radius: 50px;
-  border: 1px solid rgba(255,255,255,0.06);
-  backdrop-filter: blur(10px);
-  max-width: 420px;
+  background: rgba(255,255,255,0.03);
+  padding: 7px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,0.05);
+  backdrop-filter: blur(14px);
+  max-width: 430px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
 .nav-links a {
   flex: 1;
   text-align: center;
   text-decoration: none;
-  color: rgba(255,255,255,0.65);
+  color: rgba(255,255,255,0.6);
   font-weight: 500;
-  padding: 9px 10px;
+  padding: 10px 10px;
   font-size: 12px;
-  border-radius: 30px;
-  white-space: nowrap;
-  transition: 0.2s ease;
+  border-radius: 999px;
+  transition: all 0.2s ease;
 }
 
 .nav-links a.active {
-  background: rgba(176,141,42,0.15);
+  background: rgba(176,141,42,0.18);
   color: #b08d2a;
   border: 1px solid rgba(176,141,42,0.25);
+  box-shadow: 0 0 18px rgba(176,141,42,0.15);
 }
 
 .nav-links a:hover {
   background: rgba(255,255,255,0.06);
   color: #ffffff;
+  transform: translateY(-1px);
 }
 
 /* =========================
-   HERO (FINTECH DEPTH)
+   HERO (MORE PREMIUM DEPTH)
 ========================= */
 
 .hero {
   text-align: center;
-  padding: 110px 20px;
-  background: radial-gradient(circle at top, #1a1d24, #0f1115);
+  padding: 100px 20px;
+  background: radial-gradient(circle at top, #1a1d24, #0b0d12);
 }
 
 /* =========================
-   BUTTON (FINTECH)
+   BUTTON
 ========================= */
 
 .btn {
@@ -93,46 +96,62 @@ body {
   color: #000;
   margin-top: 25px;
   text-decoration: none;
-  border-radius: 30px;
+  border-radius: 999px;
   font-weight: bold;
   transition: 0.2s ease;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
 .btn:hover {
-  background: #d1ad3c;
+  background: #d6b146;
   transform: translateY(-2px);
 }
 
 /* =========================
-   FEATURES (GRID UPGRADE)
+   FEATURES
 ========================= */
 
 .features {
   display: flex;
   justify-content: center;
-  gap: 20px;
-  padding: 60px 20px;
+  gap: 18px;
+  padding: 55px 20px;
   flex-wrap: wrap;
 }
 
 /* =========================
-   CARD (MAJOR UPGRADE)
+   CARD (BIG FINTECH UPGRADE)
 ========================= */
 
 .card {
-  background: linear-gradient(180deg, #1a1d24, #12151b);
+  background: linear-gradient(180deg, #161a22, #0f131a);
   padding: 22px;
-  border-radius: 16px;
+  border-radius: 18px;
   width: 240px;
   text-align: center;
   border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
-  transition: 0.25s ease;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+  transition: all 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* subtle glow line */
+.card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -50%;
+  width: 200%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(176,141,42,0.4), transparent);
+  opacity: 0.5;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
   border-color: rgba(176,141,42,0.25);
+  box-shadow: 0 18px 45px rgba(0,0,0,0.6);
 }
 
 /* =========================
@@ -146,13 +165,13 @@ body {
 }
 
 .market-card {
-  background: linear-gradient(180deg, #1a1d24, #12151b);
+  background: linear-gradient(180deg, #161a22, #0f131a);
   width: 100%;
   max-width: 420px;
-  border-radius: 16px;
+  border-radius: 18px;
   padding: 20px;
   border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  box-shadow: 0 12px 35px rgba(0,0,0,0.45);
 }
 
 /* =========================
@@ -167,12 +186,12 @@ body {
 
 @keyframes pulse {
   0% { opacity: 1; }
-  50% { opacity: 0.4; }
+  50% { opacity: 0.35; }
   100% { opacity: 1; }
 }
 
 /* =========================
-   PRICE STYLES
+   PRICE
 ========================= */
 
 #price {
@@ -191,9 +210,9 @@ body {
 
 footer {
   text-align: center;
-  padding: 25px;
-  background: #0f1115;
-  border-top: 1px solid rgba(255,255,255,0.06);
-  color: rgba(255,255,255,0.5);
+  padding: 28px;
+  background: #0b0d12;
+  border-top: 1px solid rgba(255,255,255,0.05);
+  color: rgba(255,255,255,0.45);
   margin-top: 50px;
 }
