@@ -24,7 +24,61 @@ function getPage() {
   return page;
 }
 
-function nav(href, label, current) {
+const current = getPage();
+
+/* =========================
+   BUILD HEADER ONCE
+========================= */
+container.innerHTML = `
+  <header style="
+    font-family: Arial, sans-serif;
+    background: linear-gradient(180deg, #0f0f0f 0%, #0b0b0b 100%);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  ">
+
+    <!-- LOGO -->
+    <div style="display:flex;justify-content:center;padding:22px 0 10px;">
+      <img 
+        src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
+        style="height:82px;object-fit:contain;
+        filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));"
+      >
+    </div>
+
+    <!-- NAV -->
+    <nav style="
+      display:flex;
+      justify-content:center;
+      gap:30px;
+      padding:12px 10px 18px;
+      flex-wrap:wrap;
+    ">
+
+      ${nav("index.html","Home")}
+      ${nav("plans.html","Plans")}
+      ${nav("dashboard.html","Dashboard")}
+
+      <a id="authLink" href="login.html" style="
+        text-decoration:none;
+        font-size:14px;
+        padding:8px 14px;
+        border-radius:10px;
+        transition:0.25s ease;
+        color:rgba(255,255,255,0.65);
+        border:1px solid transparent;
+      ">
+        Login
+      </a>
+
+    </nav>
+
+  </header>
+`;
+
+function nav(href, label) {
   const active = current === href;
 
   return `
@@ -44,62 +98,27 @@ function nav(href, label, current) {
   `;
 }
 
-function renderHeader(state) {
-  const current = getPage();
-  const isLoggedIn = state === "loggedIn";
-
-  return `
-    <header style="
-      font-family: Arial, sans-serif;
-      background: linear-gradient(180deg, #0f0f0f 0%, #0b0b0b 100%);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    ">
-
-      <!-- LOGO -->
-      <div style="display:flex;justify-content:center;padding:22px 0 10px;">
-        <img 
-          src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
-          style="height:82px;object-fit:contain;
-          filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));"
-        >
-      </div>
-
-      <!-- NAV -->
-      <nav style="
-        display:flex;
-        justify-content:center;
-        gap:30px;
-        padding:12px 10px 18px;
-        flex-wrap:wrap;
-      ">
-
-        ${nav("index.html","Home",current)}
-        ${nav("plans.html","Plans",current)}
-        ${nav("dashboard.html","Dashboard",current)}
-
-        ${nav(
-          isLoggedIn ? "account.html" : "login.html",
-          isLoggedIn ? "Account" : "Login",
-          current
-        )}
-
-      </nav>
-
-    </header>
-  `;
-}
-
 /* =========================
-   INITIAL RENDER
+   SMOOTH AUTH UPDATE (NO DOM REBUILD)
 ========================= */
-container.innerHTML = renderHeader("loading");
+const authLink = document.getElementById("authLink");
 
-/* =========================
-   AUTH UPDATE (NO FLICKER)
-========================= */
 onAuthStateChanged(auth, (user) => {
-  container.innerHTML = renderHeader(user ? "loggedIn" : "loggedOut");
+
+  if (user) {
+    authLink.textContent = "Account";
+    authLink.href = "account.html";
+
+    authLink.style.color = "#ffffff";
+    authLink.style.border = "1px solid rgba(255,255,255,0.12)";
+    authLink.style.background = "rgba(255,255,255,0.06)";
+  } else {
+    authLink.textContent = "Login";
+    authLink.href = "login.html";
+
+    authLink.style.color = "rgba(255,255,255,0.65)";
+    authLink.style.border = "1px solid transparent";
+    authLink.style.background = "transparent";
+  }
+
 });
