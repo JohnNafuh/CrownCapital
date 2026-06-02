@@ -36,3 +36,30 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const auth = getAuth();
+
+document.addEventListener("DOMContentLoaded", () => {
+
+  const nav = document.querySelector(".nav-links");
+
+  if (!nav) return;
+
+  const accountBtn = document.createElement("a");
+  accountBtn.href = "account.html";
+  accountBtn.innerText = "Account";
+  accountBtn.style.display = "none"; // hidden until login confirmed
+
+  nav.appendChild(accountBtn);
+
+  onAuthStateChanged(auth, (user) => {
+
+    if (user) {
+      accountBtn.style.display = "inline-block";
+    } else {
+      accountBtn.remove(); // hide completely if not logged in
+    }
+  });
+
+});
