@@ -27,8 +27,9 @@ function getPage() {
 const current = getPage();
 
 /* =========================
-   1. RENDER STATIC SHELL ONLY ONCE
+   HEADER SHELL (STATIC)
 ========================= */
+
 container.innerHTML = `
 <header style="
   font-family: Arial, sans-serif;
@@ -61,15 +62,24 @@ container.innerHTML = `
     ${nav("plans.html","Plans")}
     ${nav("dashboard.html","Dashboard")}
 
-    <!-- AUTH BUTTON (ONLY DYNAMIC PART) -->
+    <!-- AUTH -->
     <a id="authLink" href="#" style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      height:38px;
+      padding:0 14px;
+      box-sizing:border-box;
+
       text-decoration:none;
       font-size:14px;
-      padding:8px 14px;
       border-radius:10px;
       transition:0.25s ease;
+
       color:rgba(255,255,255,0.45);
       border:1px solid rgba(255,255,255,0.06);
+
       pointer-events:none;
       opacity:0.5;
     ">
@@ -81,16 +91,27 @@ container.innerHTML = `
 </header>
 `;
 
+/* =========================
+   NAV LINK
+========================= */
+
 function nav(href, label) {
   const active = current === href;
 
   return `
     <a href="${href}" style="
+      display:flex;
+      align-items:center;
+      justify-content:center;
+
+      height:38px;
+      padding:0 14px;
+      box-sizing:border-box;
+
       text-decoration:none;
       font-size:14px;
-      padding:8px 14px;
       border-radius:10px;
-      transition:0.2s ease;
+      transition:0.25s ease;
 
       color:${active ? "#ffffff" : "rgba(255,255,255,0.65)"};
       background:${active ? "rgba(255,255,255,0.06)" : "transparent"};
@@ -102,15 +123,12 @@ function nav(href, label) {
 }
 
 /* =========================
-   2. FIREBASE STATE HANDLER
-   (NO DOM REBUILD = NO FLICKER)
+   AUTH STATE (NO FLICKER)
 ========================= */
 
 const authLink = document.getElementById("authLink");
 
 onAuthStateChanged(auth, (user) => {
-
-  if (user === undefined) return; // still loading (true loading state)
 
   if (user) {
     authLink.textContent = "Account";
