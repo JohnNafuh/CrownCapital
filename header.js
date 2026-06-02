@@ -1,6 +1,6 @@
 const container = document.querySelector(".site-header");
 
-function getCurrentPage() {
+function getPage() {
   let page = window.location.pathname.split("/").pop();
   if (!page || page === "/") page = "index.html";
   return page;
@@ -8,29 +8,31 @@ function getCurrentPage() {
 
 if (container) {
 
-  const currentPage = getCurrentPage();
+  const current = getPage();
 
   container.innerHTML = `
     <header style="
-      background: #0b0b0b;
-      border-bottom: 1px solid #1c1c1c;
       font-family: Arial, sans-serif;
+      background: linear-gradient(180deg, #121212 0%, #0b0b0b 100%);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
       position: sticky;
       top: 0;
       z-index: 1000;
     ">
 
-      <!-- LOGO -->
+      <!-- LOGO (BIGGER + MORE PREMIUM PRESENCE) -->
       <div style="
         display:flex;
         justify-content:center;
-        padding:18px 0 10px 0;
+        padding:22px 0 10px 0;
       ">
         <img 
           src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
           style="
-            height:55px;
+            height:72px;
+            max-width:240px;
             object-fit:contain;
+            filter: drop-shadow(0 2px 10px rgba(176,141,42,0.15));
           "
         >
       </div>
@@ -39,16 +41,16 @@ if (container) {
       <nav style="
         display:flex;
         justify-content:center;
-        gap:28px;
+        gap:30px;
         padding:12px 10px 18px 10px;
         flex-wrap:wrap;
       ">
 
-        ${navLink("index.html", "Home", currentPage)}
-        ${navLink("plans.html", "Plans", currentPage)}
-        ${navLink("dashboard.html", "Dashboard", currentPage)}
-        ${navLink("account.html", "Account", currentPage)}
-        ${navLink("login.html", "Login", currentPage, true)}
+        ${nav("index.html","Home",current)}
+        ${nav("plans.html","Plans",current)}
+        ${nav("dashboard.html","Dashboard",current)}
+        ${nav("account.html","Account",current)}
+        ${nav("login.html","Login",current,true)}
 
       </nav>
 
@@ -56,42 +58,33 @@ if (container) {
   `;
 }
 
-function navLink(href, label, currentPage, isAccent = false) {
+function nav(href,label,current,isAccent=false){
 
-  const isActive = currentPage === href;
+  const active = current === href;
 
   return `
     <a href="${href}" style="
       text-decoration:none;
       font-size:14px;
-      padding:6px 10px;
-      border-radius:6px;
-      transition:0.2s;
+      letter-spacing:0.3px;
+      padding:8px 12px;
+      border-radius:10px;
+      transition:0.2s ease;
 
-      color: ${
-        isActive 
-          ? "#b08d2a" 
-          : isAccent 
-            ? "#b08d2a" 
-            : "#ffffff"
+      color:${
+        active ? "#ffffff" : isAccent ? "#b08d2a" : "rgba(255,255,255,0.6)"
       };
 
-      background: ${
-        isActive 
-          ? "rgba(176,141,42,0.12)" 
-          : "transparent"
+      background:${
+        active ? "rgba(255,255,255,0.07)" : "transparent"
       };
 
-      border-bottom: ${
-        isActive 
-          ? "2px solid #b08d2a"
-          : "2px solid transparent"
+      border:1px solid ${
+        active ? "rgba(255,255,255,0.12)" : "transparent"
       };
-
-      opacity:${isActive ? "1" : "0.75"};
     "
-    onmouseover="this.style.opacity='1'"
-    onmouseout="this.style.opacity='${isActive ? '1' : '0.75'}'"
+    onmouseover="this.style.color='#ffffff'"
+    onmouseout="this.style.color='${active ? "#ffffff" : isAccent ? "#b08d2a" : "rgba(255,255,255,0.6)"}'"
     >
       ${label}
     </a>
