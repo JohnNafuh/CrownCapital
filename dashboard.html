@@ -14,9 +14,7 @@
     import {
       getAuth,
       onAuthStateChanged,
-      signOut,
-      signInWithEmailAndPassword,
-      createUserWithEmailAndPassword
+      signOut
     } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
     import {
@@ -24,24 +22,29 @@
       doc,
       getDoc
     } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-function animateValue(el, start, end, duration) {
-  let startTimestamp = null;
 
-  const step = (timestamp) => {
-    if (!startTimestamp) startTimestamp = timestamp;
-    const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+    /* =========================
+       ANIMATION ENGINE
+    ========================= */
+    function animateValue(el, start, end, duration) {
+      let startTimestamp = null;
 
-    const value = progress * (end - start) + start;
+      const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
 
-    el.innerText = "$" + value.toFixed(2);
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const value = progress * (end - start) + start;
 
-    if (progress < 1) {
+        el.innerText = "$" + value.toFixed(2);
+
+        if (progress < 1) {
+          window.requestAnimationFrame(step);
+        }
+      };
+
       window.requestAnimationFrame(step);
     }
-  };
 
-  window.requestAnimationFrame(step);
-}
     /* =========================
        FIREBASE CONFIG
     ========================= */
@@ -76,19 +79,25 @@ function animateValue(el, start, end, duration) {
           const data = snap.data();
 
           const balanceEl = document.getElementById("balance");
-const profitEl = document.getElementById("profit");
-const planEl = document.getElementById("activePlan");
+          const profitEl = document.getElementById("profit");
+          const planEl = document.getElementById("activePlan");
 
-animateValue(balanceEl, 0, data.balance ?? 0, 900);
-animateValue(profitEl, 0, data.profit ?? 0, 900);
+          animateValue(balanceEl, 0, data.balance ?? 0, 900);
+          animateValue(profitEl, 0, data.profit ?? 0, 900);
 
-planEl.innerText = data.activePlan ?? "None";
+          planEl.innerText = data.activePlan ?? "None";
 
-/* add subtle glow when data loads */
-document.querySelectorAll(".card").forEach(card => {
-  card.classList.add("updated");
-  setTimeout(() => card.classList.remove("updated"), 1200);
-});
+          /* glow effect */
+          document.querySelectorAll(".card").forEach(card => {
+            card.classList.add("updated");
+            setTimeout(() => card.classList.remove("updated"), 1200);
+          });
+        }
+
+      } catch (err) {
+        console.error("Firestore error:", err);
+      }
+    });
 
     /* =========================
        LOGOUT
