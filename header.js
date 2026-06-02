@@ -24,7 +24,7 @@ function getPage() {
   return page;
 }
 
-function nav(href, label, current, isActiveUser = false) {
+function nav(href, label, current) {
   const active = current === href;
 
   return `
@@ -39,15 +39,13 @@ function nav(href, label, current, isActiveUser = false) {
       background:${active ? "rgba(255,255,255,0.06)" : "transparent"};
       border:1px solid ${active ? "rgba(255,255,255,0.12)" : "transparent"};
     ">
-      ${label}${isActiveUser ? " ✓" : ""}
+      ${label}
     </a>
   `;
 }
 
 function renderHeader(state) {
   const current = getPage();
-
-  // state: loading | loggedOut | loggedIn
   const isLoggedIn = state === "loggedIn";
 
   return `
@@ -85,8 +83,7 @@ function renderHeader(state) {
         ${nav(
           isLoggedIn ? "account.html" : "login.html",
           isLoggedIn ? "Account" : "Login",
-          current,
-          isLoggedIn
+          current
         )}
 
       </nav>
@@ -96,19 +93,13 @@ function renderHeader(state) {
 }
 
 /* =========================
-   STEP 1: SHOW NOTHING WRONG (NO FAKE STATE)
+   INITIAL RENDER
 ========================= */
 container.innerHTML = renderHeader("loading");
 
 /* =========================
-   STEP 2: FINAL AUTH STATE
+   AUTH UPDATE (NO FLICKER)
 ========================= */
 onAuthStateChanged(auth, (user) => {
-
-  if (user) {
-    container.innerHTML = renderHeader("loggedIn");
-  } else {
-    container.innerHTML = renderHeader("loggedOut");
-  }
-
+  container.innerHTML = renderHeader(user ? "loggedIn" : "loggedOut");
 });
