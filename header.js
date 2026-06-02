@@ -95,7 +95,7 @@ if (container) {
 
           ${
             isLoggedIn
-              ? nav("account.html","Account ✓",current)
+              ? nav("account.html","Account",current)
               : nav("login.html","Login",current)
           }
 
