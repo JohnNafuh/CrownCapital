@@ -6,6 +6,35 @@ body {
 }
 
 /* =========================
+   🔥 STEP 1: GLOBAL CENTERING SYSTEM (NEW)
+========================= */
+
+.container {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+}
+
+/* Force all major sections to behave consistently */
+.hero,
+.features,
+.market-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ensure inner content doesn't drift left/right */
+.hero > *,
+.features > *,
+.market-section > * {
+  width: 100%;
+  max-width: 1100px;
+}
+
+/* =========================
    TOPBAR
 ========================= */
 
