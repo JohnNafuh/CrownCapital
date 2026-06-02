@@ -110,70 +110,80 @@
 <script src="script.js"></script>
 
 <!-- =========================
-     REAL TRADING ENGINE
+     🚀 UPGRADED INSTITUTIONAL TRADING ENGINE
 ========================= -->
 <script>
-let basePrice = 125000;
-let initialPrice = 125000;
+let basePrice = 12500000;   // 12.5M starting capital (REALISTIC BIG FUNDS)
+let initialPrice = basePrice;
 let history = [];
 
 function clamp(num, min, max) {
   return Math.min(Math.max(num, min), max);
 }
 
-// smoother market movement (trend + volatility)
 let trend = 0;
+
+function format(value) {
+  return value.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+}
 
 function updateMarket() {
 
-  // slow trend shift (market behavior)
-  trend += (Math.random() - 0.5) * 0.6;
-  trend = clamp(trend, -3, 3);
+  // long-term institutional drift
+  trend += (Math.random() - 0.5) * 1.4;
+  trend = clamp(trend, -8, 8);
 
-  // price movement influenced by trend
-  const volatility = (Math.random() - 0.5) * 2.5;
+  // volatility (market spikes + dips)
+  const volatility = (Math.random() - 0.5) * 7;
+
   const changePercent = trend + volatility;
 
   const changeAmount = basePrice * (changePercent / 100);
   basePrice += changeAmount;
 
-  // prevent unrealistic collapse
-  basePrice = Math.max(basePrice, initialPrice * 0.4);
+  // safety floor (prevents unrealistic collapse)
+  basePrice = Math.max(basePrice, initialPrice * 0.25);
 
-  // store history for chart
+  // store history (for chart)
   history.push(basePrice);
-  if (history.length > 30) history.shift();
+  if (history.length > 40) history.shift();
 
-  // stats
   const profit = basePrice - initialPrice;
   const loss = profit < 0 ? Math.abs(profit) : 0;
   const growthPercent = (profit / initialPrice) * 100;
 
-  // UI updates
+  // PRICE
   document.getElementById("priceValue").innerText =
-    basePrice.toLocaleString(undefined, {maximumFractionDigits: 2});
+    format(basePrice);
 
+  // GROWTH
   document.getElementById("growth").innerText =
     (growthPercent >= 0 ? "+" : "") + growthPercent.toFixed(2) + "%";
 
   document.getElementById("growth").style.color =
     growthPercent >= 0 ? "#00ff88" : "#ff4d4d";
 
+  // PROFIT
   document.getElementById("profit").innerText =
-    "+" + profit.toLocaleString(undefined, {maximumFractionDigits: 2});
+    "+" + format(profit);
 
   document.getElementById("profit").style.color = "#00ff88";
 
+  // LOSS
   document.getElementById("loss").innerText =
-    "-" + loss.toLocaleString(undefined, {maximumFractionDigits: 2});
+    "-" + format(loss);
 
   document.getElementById("loss").style.color = "#ff4d4d";
 
-  // chart update
+  // CHART
+  let min = Math.min(...history);
+  let max = Math.max(...history);
+
   let points = history.map((p, i) => {
     const x = (i / (history.length - 1)) * 300;
-    const min = Math.min(...history);
-    const max = Math.max(...history);
     const y = 100 - ((p - min) / (max - min || 1)) * 100;
     return `${x},${y}`;
   }).join(" ");
@@ -181,7 +191,7 @@ function updateMarket() {
   document.getElementById("chartLine").setAttribute("points", points);
 }
 
-setInterval(updateMarket, 1800);
+setInterval(updateMarket, 1200);
 updateMarket();
 </script>
 
