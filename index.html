@@ -93,12 +93,14 @@
   </div>
 </section>
 
-<!-- TRADING DESK -->
+<!-- =========================
+     TRADING DESK (CLEAN STEP 2 LAYOUT)
+========================= -->
 <section class="hero">
 
   <h2>Live Trading Desk</h2>
   <p style="opacity:0.7;">
-    Institutional-grade simulated trading activity
+    Institutional-grade simulated market activity and portfolio execution system
   </p>
 
   <div class="features">
@@ -125,12 +127,14 @@
 
 </section>
 
-<!-- TRADE HISTORY -->
+<!-- =========================
+     TRADE HISTORY (CENTERED FIXED)
+========================= -->
 <section class="hero">
 
   <h2>Recent Trades</h2>
 
-  <div style="max-width:900px;margin:auto;overflow-x:auto;">
+  <div style="max-width: 900px; margin: auto; overflow-x:auto;">
 
     <table style="
       width:100%;
@@ -139,12 +143,11 @@
       border-radius:14px;
       overflow:hidden;
       border:1px solid rgba(255,255,255,0.06);
-      font-size:13px;
     ">
 
       <thead>
         <tr style="text-align:left; color:rgba(255,255,255,0.7);">
-          <th style="padding:10px;">Asset</th>
+          <th style="padding:12px;">Asset</th>
           <th>Type</th>
           <th>Amount</th>
           <th>P/L</th>
@@ -153,8 +156,8 @@
       </thead>
 
       <tbody>
-        <tr>
-          <td style="padding:10px;">BTC/USD</td>
+        <tr style="border-top:1px solid rgba(255,255,255,0.05);">
+          <td style="padding:12px;">BTC/USD</td>
           <td style="color:#00ff88;">BUY</td>
           <td>$120,000</td>
           <td style="color:#00ff88;">+$14,240</td>
@@ -162,7 +165,7 @@
         </tr>
 
         <tr>
-          <td style="padding:10px;">ETH/USD</td>
+          <td style="padding:12px;">ETH/USD</td>
           <td style="color:#ff4d4d;">SELL</td>
           <td>$85,000</td>
           <td style="color:#00ff88;">+$6,120</td>
@@ -170,13 +173,12 @@
         </tr>
 
         <tr>
-          <td style="padding:10px;">NASDAQ</td>
+          <td style="padding:12px;">NASDAQ</td>
           <td style="color:#00ff88;">BUY</td>
           <td>$250,000</td>
           <td style="color:#00ff88;">+$18,980</td>
           <td>Closed</td>
         </tr>
-
       </tbody>
 
     </table>
@@ -185,13 +187,16 @@
 
 </section>
 
+<!-- FOOTER -->
 <footer>
   <p>© 2026 CrownCapital. All rights reserved.</p>
 </footer>
 
 <script src="script.js"></script>
 
-<!-- TRADING ENGINE -->
+<!-- =========================
+     TRADING ENGINE (UNCHANGED)
+========================= -->
 <script>
 let basePrice = 12500000;
 let initialPrice = basePrice;
@@ -235,8 +240,11 @@ function updateMarket() {
   document.getElementById("growth").innerText =
     (growthPercent >= 0 ? "+" : "") + growthPercent.toFixed(2) + "%";
 
-  document.getElementById("profit").innerText = "+" + format(profit);
-  document.getElementById("loss").innerText = "-" + format(loss);
+  document.getElementById("profit").innerText =
+    "+" + format(profit);
+
+  document.getElementById("loss").innerText =
+    "-" + format(loss);
 
   let min = Math.min(...history);
   let max = Math.max(...history);
