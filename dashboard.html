@@ -7,7 +7,6 @@
 
   <link rel="stylesheet" href="./style.css">
 
-  <!-- 🔒 FIREBASE SCRIPT -->
   <script type="module">
 
     import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
@@ -24,7 +23,7 @@
     } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
     /* =========================
-       ANIMATION ENGINE
+       ANIMATION ENGINE (IMPROVED)
     ========================= */
     function animateValue(el, start, end, duration) {
       let startTimestamp = null;
@@ -33,16 +32,20 @@
         if (!startTimestamp) startTimestamp = timestamp;
 
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const value = progress * (end - start) + start;
+
+        // easing for premium feel
+        const eased = 1 - Math.pow(1 - progress, 3);
+
+        const value = start + (end - start) * eased;
 
         el.innerText = "$" + value.toFixed(2);
 
         if (progress < 1) {
-          window.requestAnimationFrame(step);
+          requestAnimationFrame(step);
         }
       };
 
-      window.requestAnimationFrame(step);
+      requestAnimationFrame(step);
     }
 
     /* =========================
@@ -62,6 +65,16 @@
     const db = getFirestore(app);
 
     /* =========================
+       LOADING STATE
+    ========================= */
+    function setLoading(state) {
+      document.querySelectorAll(".card").forEach(card => {
+        card.style.opacity = state ? "0.6" : "1";
+        card.style.transform = state ? "scale(0.98)" : "scale(1)";
+      });
+    }
+
+    /* =========================
        AUTH + WALLET LOAD
     ========================= */
     onAuthStateChanged(auth, async (user) => {
@@ -70,6 +83,8 @@
         window.location.href = "login.html";
         return;
       }
+
+      setLoading(true);
 
       try {
         const ref = doc(db, "users", user.uid);
@@ -82,21 +97,47 @@
           const profitEl = document.getElementById("profit");
           const planEl = document.getElementById("activePlan");
 
-          animateValue(balanceEl, 0, data.balance ?? 0, 900);
-          animateValue(profitEl, 0, data.profit ?? 0, 900);
+          const balance = data.balance ?? 0;
+          const profit = data.profit ?? 0;
 
-          planEl.innerText = data.activePlan ?? "None";
+          /* =========================
+             STAGGERED REVEAL (IMPORTANT)
+          ========================= */
 
-          /* glow effect */
-          document.querySelectorAll(".card").forEach(card => {
-            card.classList.add("updated");
-            setTimeout(() => card.classList.remove("updated"), 1200);
-          });
+          setTimeout(() => {
+            animateValue(balanceEl, 0, balance, 1000);
+          }, 150);
+
+          setTimeout(() => {
+            animateValue(profitEl, 0, profit, 1000);
+          }, 350);
+
+          setTimeout(() => {
+            planEl.innerText = data.activePlan ?? "None";
+          }, 550);
+
+          /* EMPTY STATE FEEDBACK */
+          if (balance === 0 && profit === 0) {
+            planEl.innerText = "No active plan";
+
+            planEl.style.opacity = "0.7";
+            planEl.style.letterSpacing = "1px";
+          }
+
+          /* CARD SYNC GLOW */
+          setTimeout(() => {
+            document.querySelectorAll(".card").forEach(card => {
+              card.classList.add("updated");
+              setTimeout(() => card.classList.remove("updated"), 900);
+            });
+          }, 300);
         }
 
       } catch (err) {
         console.error("Firestore error:", err);
       }
+
+      setLoading(false);
     });
 
     /* =========================
@@ -158,7 +199,7 @@
 
     <div class="card">
       <h3>Active Plan</h3>
-      <p id="activePlan">None</p>
+      <p id="activePlan">Loading...</p>
     </div>
 
   </section>
