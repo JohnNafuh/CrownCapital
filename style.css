@@ -34,7 +34,7 @@ body {
 }
 
 /* =========================
-   NAV (FINTECH STYLE)
+   NAV
 ========================= */
 
 .nav-links {
@@ -86,7 +86,7 @@ body {
 }
 
 /* =========================
-   BUTTON
+   BUTTON (GENERAL)
 ========================= */
 
 .btn {
@@ -108,6 +108,64 @@ body {
 }
 
 /* =========================
+   INVEST BUTTON (FINTECH PREMIUM)
+========================= */
+
+.invest-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 18px;
+  border-radius: 14px;
+
+  background: linear-gradient(135deg, #b08d2a, #d6b146);
+  color: #0b0d12;
+
+  font-weight: 600;
+  font-size: 14px;
+
+  border: none;
+  cursor: pointer;
+
+  box-shadow: 0 12px 30px rgba(176,141,42,0.25);
+
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+.invest-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 45px rgba(176,141,42,0.35);
+}
+
+.invest-btn:active {
+  transform: translateY(0px) scale(0.98);
+}
+
+/* shine effect */
+.invest-btn::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -70%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
+  transform: skewX(-20deg);
+}
+
+.invest-btn:hover::before {
+  animation: shine 0.8s ease;
+}
+
+@keyframes shine {
+  0% { left: -70%; }
+  100% { left: 140%; }
+}
+
+/* =========================
    FEATURES
 ========================= */
 
@@ -120,7 +178,7 @@ body {
 }
 
 /* =========================
-   CARD (FINTECH CORE)
+   CARD
 ========================= */
 
 .card {
@@ -154,10 +212,6 @@ body {
   box-shadow: 0 18px 45px rgba(0,0,0,0.6);
 }
 
-.card:nth-child(1) { animation-delay: 0.05s; }
-.card:nth-child(2) { animation-delay: 0.15s; }
-.card:nth-child(3) { animation-delay: 0.25s; }
-
 .card.updated {
   animation: glowPulse 1.2s ease;
 }
@@ -167,9 +221,9 @@ body {
 ========================= */
 
 .market-section {
-  padding: 20px;
   display: flex;
   justify-content: center;
+  padding: 20px;
 }
 
 .market-card {
@@ -208,10 +262,6 @@ body {
   transition: 0.3s ease;
 }
 
-#profit {
-  transition: 0.3s ease;
-}
-
 /* =========================
    FOOTER
 ========================= */
@@ -226,7 +276,7 @@ footer {
 }
 
 /* =========================
-   ANIMATIONS (FIXED)
+   ANIMATIONS
 ========================= */
 
 @keyframes fadeInUp {
@@ -247,7 +297,7 @@ footer {
 }
 
 /* =========================
-   PLAN CARDS (APPLE + FINTECH UPGRADE)
+   PLAN CARDS
 ========================= */
 
 .plan-card {
