@@ -246,4 +246,7 @@ footer {
 .card.updated {
   animation: glowPulse 1.2s ease;
 }
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+}
 }
