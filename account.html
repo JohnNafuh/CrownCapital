@@ -15,12 +15,6 @@
       signOut
     } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
     const firebaseConfig = {
       apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
       authDomain: "crowncapital-invest.firebaseapp.com",
@@ -32,58 +26,14 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
-    const db = getFirestore(app);
 
-    function animateValue(el, start, end, duration) {
-      let startTimestamp = null;
-
-      const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const value = progress * (end - start) + start;
-
-        el.innerText = "$" + value.toFixed(2);
-
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      };
-
-      requestAnimationFrame(step);
-    }
-
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (!user) {
         window.location.href = "login.html";
         return;
       }
 
-      const ref = doc(db, "users", user.uid);
-      const snap = await getDoc(ref);
-
-      if (snap.exists()) {
-        const data = snap.data();
-
-        document.getElementById("email").innerText = user.email;
-
-        animateValue(
-          document.getElementById("balance"),
-          0,
-          data.balance ?? 0,
-          900
-        );
-
-        animateValue(
-          document.getElementById("profit"),
-          0,
-          data.profit ?? 0,
-          900
-        );
-
-        document.getElementById("plan").innerText =
-          data.activePlan ?? "No Active Plan";
-      }
+      document.getElementById("email").innerText = user.email;
     });
 
     window.logout = function () {
@@ -100,97 +50,51 @@
 <div class="site-header"></div>
 <script type="module" src="header.js"></script>
 
-<!-- ACCOUNT HEADER (NOT DASHBOARD STYLE) -->
-<section style="
+<!-- ACCOUNT HEADER -->
+<section class="hero" style="
   padding: 60px 20px 30px;
   text-align: center;
   background: radial-gradient(circle at top, #1a1d24, #0b0d12);
 ">
 
-  <div style="
-    font-size: 12px;
-    color: rgba(255,255,255,0.5);
-    letter-spacing: 2px;
-  ">
-    ACCOUNT CONTROL CENTER
+  <div style="font-size:12px; letter-spacing:2px; color:rgba(255,255,255,0.5);">
+    ACCOUNT CENTER
   </div>
 
-  <h1 style="margin:10px 0; font-size:26px;">My Account</h1>
+  <h1 style="margin:10px 0;">My Profile</h1>
 
   <p id="email" style="color:rgba(255,255,255,0.6); font-size:13px;"></p>
 
-  <button onclick="logout()" style="
-    margin-top: 18px;
-    padding: 10px 18px;
-    border-radius: 999px;
-    border: none;
-    background: #b08d2a;
-    color: #000;
-    font-weight: bold;
-    cursor: pointer;
-  ">
+  <button onclick="logout()" class="btn" style="margin-top:18px;">
     Logout
   </button>
 </section>
 
-<!-- FINTECH ACCOUNT PANEL -->
-<section style="
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 18px;
-  padding: 40px 20px;
-  max-width: 900px;
-  margin: auto;
-">
+<!-- ACCOUNT ACTIONS -->
+<section class="features">
 
   <div class="card">
-    <h3>Wallet Balance</h3>
-    <p id="balance">$0.00</p>
-  </div>
-
-  <div class="card">
-    <h3>Total Profit</h3>
-    <p id="profit">$0.00</p>
-  </div>
-
-  <div class="card">
-    <h3>Active Plan</h3>
-    <p id="plan">Loading...</p>
-  </div>
-
-</section>
-
-<!-- ACTION PANEL -->
-<section style="
-  max-width: 900px;
-  margin: auto;
-  padding: 10px 20px 60px;
-  display: grid;
-  gap: 14px;
-">
-
-  <div class="card" style="text-align:left;">
     <h3>Deposit Funds</h3>
     <p style="font-size:13px; color:rgba(255,255,255,0.6);">
-      Fund your wallet to activate investment plans.
+      Add money to activate investment plans
     </p>
-    <button class="btn" style="margin-top:10px;">Deposit</button>
+    <button class="btn">Deposit</button>
   </div>
 
-  <div class="card" style="text-align:left;">
-    <h3>Withdraw Earnings</h3>
+  <div class="card">
+    <h3>Withdraw</h3>
     <p style="font-size:13px; color:rgba(255,255,255,0.6);">
-      Request withdrawal to your external wallet.
+      Request payout from earnings
     </p>
-    <button class="btn" style="margin-top:10px;">Withdraw</button>
+    <button class="btn">Withdraw</button>
   </div>
 
-  <div class="card" style="text-align:left;">
+  <div class="card">
     <h3>Security</h3>
     <p style="font-size:13px; color:rgba(255,255,255,0.6);">
-      Manage login sessions and account security.
+      Manage login access & protection
     </p>
-    <button class="btn" style="margin-top:10px;">Manage</button>
+    <button class="btn">Manage</button>
   </div>
 
 </section>
