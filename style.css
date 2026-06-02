@@ -17,6 +17,7 @@ body {
   padding: 14px 10px;
   gap: 10px;
   text-align: center;
+  width: 100%;
 }
 
 .logo {
@@ -34,34 +35,49 @@ body {
 }
 
 /* =========================
-   NAV
+   NAV (STABLE + CENTERED)
 ========================= */
 
 .nav-links {
   display: flex;
   justify-content: center;
+  align-items: center;
+
   gap: 6px;
+
   background: rgba(255,255,255,0.03);
   padding: 7px;
+
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.05);
+
   backdrop-filter: blur(14px);
-  max-width: 430px;
+
+  width: fit-content;        /* KEY FIX */
+  max-width: 100%;
+
+  margin: 0 auto;
+
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
+/* NAV LINKS */
 .nav-links a {
-  flex: 1;
   text-align: center;
   text-decoration: none;
   color: rgba(255,255,255,0.6);
   font-weight: 500;
-  padding: 10px;
+
+  padding: 10px 16px;
   font-size: 12px;
+
   border-radius: 999px;
   transition: all 0.2s ease;
+
+  white-space: nowrap; /* prevents wrapping issues */
 }
 
+/* ACTIVE */
 .nav-links a.active {
   background: rgba(176,141,42,0.18);
   color: #b08d2a;
@@ -69,6 +85,7 @@ body {
   box-shadow: 0 0 18px rgba(176,141,42,0.15);
 }
 
+/* HOVER */
 .nav-links a:hover {
   background: rgba(255,255,255,0.06);
   color: #ffffff;
