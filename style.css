@@ -248,4 +248,63 @@ footer {
   0% { box-shadow: 0 0 0 rgba(176,141,42,0); }
   50% { box-shadow: 0 0 25px rgba(176,141,42,0.15); }
   100% { box-shadow: 0 0 0 rgba(176,141,42,0); }
+  /* =========================
+   INVESTMENT PLANS UPGRADE UI
+========================= */
+
+.plan-card {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(180deg, #161a22, #0f131a);
+  border: 1px solid rgba(255,255,255,0.06);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+  transition: all 0.25s ease;
+}
+
+/* glowing top accent */
+.plan-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -40%;
+  width: 180%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #b08d2a, transparent);
+  opacity: 0.6;
+}
+
+/* hover premium lift */
+.plan-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(176,141,42,0.3);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
+}
+
+/* ROI text upgrade */
+.plan-card p {
+  font-size: 26px !important;
+  letter-spacing: 1px;
+  margin: 10px 0;
+}
+
+/* small text styling */
+.plan-card small {
+  color: rgba(255,255,255,0.6);
+  display: block;
+  margin-top: 8px;
+}
+
+/* add “recommended” badge style */
+.plan-card.recommended::after {
+  content: "MOST POPULAR";
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font-size: 10px;
+  padding: 4px 8px;
+  background: rgba(176,141,42,0.15);
+  color: #b08d2a;
+  border: 1px solid rgba(176,141,42,0.3);
+  border-radius: 999px;
+}
 }
