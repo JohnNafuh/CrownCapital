@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    .pay-box {
+      max-width: 420px;
+      margin: 60px auto;
+      padding: 22px;
+      border-radius: 18px;
+      background: linear-gradient(180deg, #161a22, #0f131a);
+      border: 1px solid rgba(255,255,255,0.06);
+      text-align: center;
+    }
+
+    .pay-btn {
+      width: 100%;
+      margin-top: 20px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #b08d2a, #d6b146);
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .pay-btn:hover {
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="site-header"></div>
+<script type="module" src="header.js"></script>
+
+<div class="pay-box">
+  <h2>Complete Payment</h2>
+
+  <p id="plan">Plan: ...</p>
+  <p id="amount">Amount: ...</p>
+
+  <button class="pay-btn" id="payBtn">Pay Now</button>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+const plan = params.get("plan");
+const amount = params.get("amount");
+
+document.getElementById("plan").innerText = "Plan: " + plan;
+document.getElementById("amount").innerText = "Amount: $" + amount;
+
+document.getElementById("payBtn").onclick = () => {
+
+  const btn = document.getElementById("payBtn");
+  btn.innerText = "Processing...";
+  btn.disabled = true;
+
+  setTimeout(() => {
+    // simulate successful payment
+    window.location.href =
+      `invest-confirm.html?plan=${plan}&paid=true&amount=${amount}`;
+  }, 1500);
+};
+</script>
+
+</body>
+</html>
