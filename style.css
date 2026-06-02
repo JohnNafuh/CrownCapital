@@ -6,27 +6,29 @@ body {
 }
 
 /* =========================
-   🔥 STEP 1: GLOBAL CENTERING SYSTEM (NEW)
+   🔥 GLOBAL CONTAINER SYSTEM (FIXED)
 ========================= */
 
 .container {
   width: 100%;
   max-width: 1100px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: 0 16px;
   box-sizing: border-box;
 }
 
-/* Force all major sections to behave consistently */
+/* Fix section alignment WITHOUT making everything too spaced */
 .hero,
 .features,
 .market-section {
   display: flex;
   justify-content: center;
   align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
 }
 
-/* Ensure inner content doesn't drift left/right */
+/* inner consistency */
 .hero > *,
 .features > *,
 .market-section > * {
@@ -43,21 +45,15 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 14px 10px;
-  gap: 10px;
+  padding: 10px 10px;
+  gap: 8px;
   text-align: center;
-}
-
-.logo {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .logo img {
   display: block;
   margin: 0 auto;
-  max-width: 190px;
+  max-width: 160px;
   height: auto;
   filter: drop-shadow(0 6px 20px rgba(0,0,0,0.4));
 }
@@ -71,11 +67,11 @@ body {
   justify-content: center;
   gap: 6px;
   background: rgba(255,255,255,0.03);
-  padding: 7px;
+  padding: 6px;
   border-radius: 999px;
   border: 1px solid rgba(255,255,255,0.05);
   backdrop-filter: blur(14px);
-  max-width: 430px;
+  max-width: 420px;
   box-shadow: 0 10px 25px rgba(0,0,0,0.25);
 }
 
@@ -85,7 +81,7 @@ body {
   text-decoration: none;
   color: rgba(255,255,255,0.6);
   font-weight: 500;
-  padding: 10px;
+  padding: 9px;
   font-size: 12px;
   border-radius: 999px;
   transition: all 0.2s ease;
@@ -95,40 +91,46 @@ body {
   background: rgba(176,141,42,0.18);
   color: #b08d2a;
   border: 1px solid rgba(176,141,42,0.25);
-  box-shadow: 0 0 18px rgba(176,141,42,0.15);
 }
 
 .nav-links a:hover {
   background: rgba(255,255,255,0.06);
   color: #ffffff;
-  transform: translateY(-1px);
 }
 
 /* =========================
-   HERO
+   HERO (FIXED SPACING)
 ========================= */
 
 .hero {
   text-align: center;
-  padding: 100px 20px;
+  padding: 70px 16px;   /* reduced from 100px */
   background: radial-gradient(circle at top, #1a1d24, #0b0d12);
 }
 
+.hero h2 {
+  margin-bottom: 10px;
+}
+
+.hero p {
+  margin-top: 0;
+  opacity: 0.8;
+}
+
 /* =========================
-   BUTTON (GENERAL)
+   BUTTON
 ========================= */
 
 .btn {
   display: inline-block;
-  padding: 14px 26px;
+  padding: 12px 22px;
   background: #b08d2a;
   color: #000;
-  margin-top: 25px;
+  margin-top: 18px;
   text-decoration: none;
   border-radius: 999px;
   font-weight: bold;
   transition: 0.2s ease;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
 }
 
 .btn:hover {
@@ -137,132 +139,56 @@ body {
 }
 
 /* =========================
-   INVEST BUTTON (FINTECH PREMIUM)
-========================= */
-
-.invest-btn {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 12px 18px;
-  border-radius: 14px;
-
-  background: linear-gradient(135deg, #b08d2a, #d6b146);
-  color: #0b0d12;
-
-  font-weight: 600;
-  font-size: 14px;
-
-  border: none;
-  cursor: pointer;
-
-  box-shadow: 0 12px 30px rgba(176,141,42,0.25);
-
-  transition: all 0.25s ease;
-  overflow: hidden;
-}
-
-.invest-btn:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 18px 45px rgba(176,141,42,0.35);
-}
-
-.invest-btn:active {
-  transform: translateY(0px) scale(0.98);
-}
-
-/* shine effect */
-.invest-btn::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -70%;
-  width: 50%;
-  height: 100%;
-  background: linear-gradient(120deg, transparent, rgba(255,255,255,0.35), transparent);
-  transform: skewX(-20deg);
-}
-
-.invest-btn:hover::before {
-  animation: shine 0.8s ease;
-}
-
-@keyframes shine {
-  0% { left: -70%; }
-  100% { left: 140%; }
-}
-
-/* =========================
-   FEATURES
+   FEATURES (FIXED GAP)
 ========================= */
 
 .features {
   display: flex;
   justify-content: center;
-  gap: 18px;
-  padding: 55px 20px;
+  gap: 14px;
+  padding: 35px 16px; /* reduced */
   flex-wrap: wrap;
 }
 
 /* =========================
-   CARD
+   CARD (COMPACT FIX)
 ========================= */
 
 .card {
   background: linear-gradient(180deg, #161a22, #0f131a);
-  padding: 22px;
-  border-radius: 18px;
-  width: 240px;
+  padding: 18px;   /* reduced */
+  border-radius: 16px;
+  width: 220px;    /* slightly smaller */
   text-align: center;
   border: 1px solid rgba(255,255,255,0.06);
   box-shadow: 0 12px 35px rgba(0,0,0,0.45);
   transition: all 0.25s ease;
   position: relative;
-  overflow: hidden;
-  animation: fadeInUp 0.6s ease both;
 }
 
-.card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -50%;
-  width: 200%;
-  height: 2px;
-  background: linear-gradient(90deg, transparent, rgba(176,141,42,0.4), transparent);
-  opacity: 0.5;
-}
-
+/* hover */
 .card:hover {
-  transform: translateY(-6px) scale(1.01);
+  transform: translateY(-4px);
   border-color: rgba(176,141,42,0.25);
-  box-shadow: 0 18px 45px rgba(0,0,0,0.6);
-}
-
-.card.updated {
-  animation: glowPulse 1.2s ease;
 }
 
 /* =========================
-   MARKET
+   MARKET (COMPACT DASH STYLE)
 ========================= */
 
 .market-section {
   display: flex;
   justify-content: center;
-  padding: 20px;
+  padding: 18px 16px;
 }
 
 .market-card {
   background: linear-gradient(180deg, #161a22, #0f131a);
   width: 100%;
-  max-width: 420px;
-  border-radius: 18px;
-  padding: 20px;
+  max-width: 380px; /* tighter like dashboard */
+  border-radius: 16px;
+  padding: 18px;
   border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 12px 35px rgba(0,0,0,0.45);
 }
 
 /* =========================
@@ -271,7 +197,7 @@ body {
 
 .live-dot {
   color: #b08d2a;
-  font-size: 12px;
+  font-size: 11px;
   animation: pulse 1.5s infinite;
 }
 
@@ -286,9 +212,9 @@ body {
 ========================= */
 
 #price {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: bold;
-  transition: 0.3s ease;
+  margin: 10px 0;
 }
 
 /* =========================
@@ -297,11 +223,28 @@ body {
 
 footer {
   text-align: center;
-  padding: 28px;
+  padding: 22px;
   background: #0b0d12;
   border-top: 1px solid rgba(255,255,255,0.05);
   color: rgba(255,255,255,0.45);
-  margin-top: 50px;
+  margin-top: 40px;
+}
+
+/* =========================
+   PLAN CARDS (FIXED SIZE)
+========================= */
+
+.plan-card {
+  background: linear-gradient(180deg, #161a22, #0f131a);
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,0.06);
+  padding: 18px;
+  width: 230px;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(176,141,42,0.3);
 }
 
 /* =========================
@@ -309,73 +252,6 @@ footer {
 ========================= */
 
 @keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes glowPulse {
-  0% { box-shadow: 0 0 0 rgba(176,141,42,0); }
-  50% { box-shadow: 0 0 25px rgba(176,141,42,0.15); }
-  100% { box-shadow: 0 0 0 rgba(176,141,42,0); }
-}
-
-/* =========================
-   PLAN CARDS
-========================= */
-
-.plan-card {
-  position: relative;
-  overflow: hidden;
-  background: linear-gradient(180deg, #161a22, #0f131a);
-  border: 1px solid rgba(255,255,255,0.06);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5);
-  transition: all 0.25s ease;
-}
-
-.plan-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -40%;
-  width: 180%;
-  height: 3px;
-  background: linear-gradient(90deg, transparent, #b08d2a, transparent);
-  opacity: 0.6;
-}
-
-.plan-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  border-color: rgba(176,141,42,0.3);
-  box-shadow: 0 25px 60px rgba(0,0,0,0.7);
-}
-
-.plan-card p {
-  font-size: 26px !important;
-  letter-spacing: 1px;
-  margin: 10px 0;
-}
-
-.plan-card small {
-  color: rgba(255,255,255,0.6);
-  display: block;
-  margin-top: 8px;
-}
-
-.plan-card.recommended::after {
-  content: "MOST POPULAR";
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  font-size: 10px;
-  padding: 4px 8px;
-  background: rgba(176,141,42,0.15);
-  color: #b08d2a;
-  border: 1px solid rgba(176,141,42,0.3);
-  border-radius: 999px;
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
 }
