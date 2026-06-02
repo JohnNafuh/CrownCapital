@@ -9,112 +9,158 @@
 </head>
 
 <body>
+
+<!-- HEADER (ONLY ONCE) -->
 <div class="site-header"></div>
-
 <script type="module" src="header.js"></script>
-  <!-- SYSTEM B HEADER -->
-  <div class="site-header"></div>
 
-  <!-- HERO (SHORTENED) -->
-  <section class="hero" style="padding: 60px 20px 40px 20px;">
-    <h2>Grow Wealth. Track ROI. Build Freedom.</h2>
-    <p>A modern investment platform designed for smart financial growth.</p>
+<!-- HERO -->
+<section class="hero" style="padding: 60px 20px 40px 20px;">
+  <h2>Grow Wealth. Track ROI. Build Freedom.</h2>
+  <p>A modern investment platform designed for smart financial growth.</p>
 
-    <a class="btn" href="dashboard.html">Enter Dashboard</a>
-  </section>
+  <a class="btn" href="dashboard.html">Enter Dashboard</a>
+</section>
 
-  <!-- STATS -->
-  <section class="features">
+<!-- STATS -->
+<section class="features">
 
-    <div class="card">
-      <h3>Total Users</h3>
-      <p style="font-size:28px; color:#b08d2a; font-weight:bold;">12,480+</p>
+  <div class="card">
+    <h3>Total Users</h3>
+    <p style="font-size:28px; color:#b08d2a; font-weight:bold;">12,480+</p>
+  </div>
+
+  <div class="card">
+    <h3>Average ROI</h3>
+    <p style="font-size:28px; color:#b08d2a; font-weight:bold;">+18.6%</p>
+  </div>
+
+  <div class="card">
+    <h3>Assets Managed</h3>
+    <p style="font-size:28px; color:#b08d2a; font-weight:bold;">$4.2M+</p>
+  </div>
+
+</section>
+
+<!-- SECOND HERO -->
+<section class="hero">
+  <h2>Smart Investing Made Simple</h2>
+  <p>Track profits, manage portfolios, and grow your capital with confidence.</p>
+
+  <a class="btn" href="plans.html">View Investment Plans</a>
+</section>
+
+<!-- MARKET SECTION -->
+<section class="market-section">
+
+  <div class="market-card">
+
+    <div class="market-header">
+      <h3>Portfolio Performance</h3>
+      <span class="live-dot">● Live</span>
     </div>
 
-    <div class="card">
-      <h3>Average ROI</h3>
-      <p style="font-size:28px; color:#b08d2a; font-weight:bold;">+18.6%</p>
-    </div>
+    <div class="market-body">
 
-    <div class="card">
-      <h3>Assets Managed</h3>
-      <p style="font-size:28px; color:#b08d2a; font-weight:bold;">$4.2M+</p>
-    </div>
-
-  </section>
-
-  <!-- SECOND HERO -->
-  <section class="hero">
-    <h2>Smart Investing Made Simple</h2>
-    <p>Track profits, manage portfolios, and grow your capital with confidence.</p>
-
-    <a class="btn" href="plans.html">View Investment Plans</a>
-  </section>
-
-  <!-- 📊 MARKET SECTION (UPDATED LIVE PRICE SYSTEM) -->
-  <section class="market-section">
-
-    <div class="market-card">
-
-      <div class="market-header">
-        <h3>Portfolio Performance</h3>
-        <span class="live-dot">● Live</span>
+      <!-- GRAPH -->
+      <div class="chart">
+        <svg viewBox="0 0 300 100" class="mini-chart">
+          <polyline
+            points="0,80 30,70 60,75 90,50 120,60 150,40 180,55 210,30 240,45 270,20 300,35"
+            fill="none"
+            stroke="#b08d2a"
+            stroke-width="3"
+          />
+        </svg>
       </div>
 
-      <div class="market-body">
+      <!-- LIVE PRICE -->
+      <p id="price">
+        <span class="currency">$</span>
+        <span id="priceValue">75000.00</span>
+      </p>
 
-        <!-- GRAPH -->
-        <div class="chart">
-  <svg viewBox="0 0 300 100" class="mini-chart">
-    <polyline
-      points="0,80 30,70 60,75 90,50 120,60 150,40 180,55 210,30 240,45 270,20 300,35"
-      fill="none"
-      stroke="#b08d2a"
-      stroke-width="3"
-    />
-  </svg>
-</div>
+      <!-- STATS -->
+      <div class="market-stats">
 
-        <!-- LIVE PRICE (NEW) -->
-        <p id="price">
-  <span class="currency">$</span>
-  <span id="priceValue">35,000.00</span>
-</p>
+        <div>
+          <h4>Total Growth</h4>
+          <p id="growth">+0.00%</p>
+        </div>
 
-        <!-- NUMBERS -->
-        <div class="market-stats">
+        <div>
+          <h4>Profit</h4>
+          <p id="profit">$0.00</p>
+        </div>
 
-          <div>
-            <h4>Total Growth</h4>
-            <p id="growth">+0.00%</p>
-          </div>
-
-          <div>
-            <h4>Profit</h4>
-            <p id="profit">$0.00</p>
-          </div>
-
-          <div>
-            <h4>Loss</h4>
-            <p id="loss">-$0.00</p>
-          </div>
-
+        <div>
+          <h4>Loss</h4>
+          <p id="loss">-$0.00</p>
         </div>
 
       </div>
 
     </div>
 
-  </section>
+  </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 CrownCapital. All rights reserved.</p>
-  </footer>
+</section>
 
-  <!-- SCRIPTS -->
-  <script src="script.js"></script>
-  <script src="header.js"></script>
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 CrownCapital. All rights reserved.</p>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="script.js"></script>
+
+<!-- 🔥 MARKET LIVE ENGINE (UPGRADED HIGH-CAPITAL SYSTEM) -->
+<script>
+let basePrice = 75000;        // capital base
+let initialPrice = 75000;
+
+function updateMarket() {
+
+  // stronger institutional volatility
+  const changePercent = (Math.random() * 6 - 3); // -3% to +3%
+
+  const changeAmount = basePrice * (changePercent / 100);
+  basePrice += changeAmount;
+
+  const profit = basePrice - initialPrice;
+  const loss = profit < 0 ? Math.abs(profit) : 0;
+
+  const growthPercent = (profit / initialPrice) * 100;
+
+  // PRICE
+  document.getElementById("priceValue").innerText =
+    basePrice.toFixed(2);
+
+  // GROWTH
+  document.getElementById("growth").innerText =
+    (growthPercent >= 0 ? "+" : "") + growthPercent.toFixed(2) + "%";
+
+  document.getElementById("growth").style.color =
+    growthPercent >= 0 ? "#00ff88" : "#ff4d4d";
+
+  // PROFIT
+  document.getElementById("profit").innerText =
+    "+" + profit.toFixed(2);
+
+  document.getElementById("profit").style.color =
+    "#00ff88";
+
+  // LOSS
+  document.getElementById("loss").innerText =
+    "-" + loss.toFixed(2);
+
+  document.getElementById("loss").style.color =
+    "#ff4d4d";
+}
+
+setInterval(updateMarket, 2000);
+updateMarket();
+</script>
 
 </body>
 </html>
