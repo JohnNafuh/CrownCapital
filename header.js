@@ -3,8 +3,7 @@ const container = document.querySelector(".site-header");
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import {
   getAuth,
-  onAuthStateChanged,
-  signOut
+  onAuthStateChanged
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -25,11 +24,11 @@ function getPage() {
   return page;
 }
 
-function nav(href, label, current, extraClass = "") {
+function nav(href, label, current) {
   const active = current === href;
 
   return `
-    <a href="${href}" class="${extraClass}" style="
+    <a href="${href}" style="
       text-decoration:none;
       font-size:14px;
       letter-spacing:0.3px;
@@ -53,9 +52,6 @@ function nav(href, label, current, extraClass = "") {
 if (container) {
 
   const current = getPage();
-
-  // initial render (default logged out state)
-  container.innerHTML = renderHeader(false);
 
   function renderHeader(isLoggedIn) {
     return `
@@ -105,41 +101,12 @@ if (container) {
 
         </nav>
 
-        ${
-          isLoggedIn
-            ? `
-              <div style="
-                display:flex;
-                justify-content:center;
-                padding-bottom:12px;
-              ">
-                <button onclick="logout()" style="
-                  padding:6px 14px;
-                  border-radius:999px;
-                  border:1px solid rgba(176,141,42,0.3);
-                  background:rgba(176,141,42,0.12);
-                  color:#b08d2a;
-                  font-size:12px;
-                  cursor:pointer;
-                ">
-                  Logout
-                </button>
-              </div>
-            `
-            : ""
-        }
-
       </header>
     `;
   }
 
-  // AUTH LISTENER
+  // auth state
   onAuthStateChanged(auth, (user) => {
     container.innerHTML = renderHeader(!!user);
   });
-
-  // logout
-  window.logout = function () {
-    signOut(auth);
-  };
 }
