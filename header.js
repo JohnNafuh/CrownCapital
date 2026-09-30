@@ -41,9 +41,9 @@ const links = [
   ["dashboard.html", "Dashboard"]
 ];
 
-const navLinks = links.map(([href, label]) => `
+const navLinks = links.map(([href, label, show]) => `
   <a class="cc-nav__link${current === href ? " is-active" : ""}" href="${href}"
-     ${current === href ? 'aria-current="page"' : ""}>${label}</a>
+     ${current === href ? 'aria-current="page"' : ""}${show ? ` data-show="${show}"` : ""}>${label}</a>
 `).join("");
 
 /* =========================
@@ -98,6 +98,12 @@ container.querySelectorAll(".cc-nav a").forEach(a =>
 ========================= */
 const footerSlot = document.querySelector(".site-footer-slot");
 
+// Footer never links to the page you're already on
+function footerLink(href, label, show) {
+  if (href === current) return "";
+  return `<a href="${href}"${show ? ` data-show="${show}"` : ""}>${label}</a>`;
+}
+
 if (footerSlot) {
   footerSlot.outerHTML = `
 <footer class="site-footer">
@@ -109,11 +115,11 @@ if (footerSlot) {
       </a>
 
       <nav class="footer-links" aria-label="Footer">
-        <a href="plans.html">Plans</a>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="wallet.html" data-show="in">Wallet</a>
-        <a href="account.html" data-show="in">Account</a>
-        <a href="login.html" data-show="out">Login</a>
+        ${footerLink("index.html", "Home")}
+        ${footerLink("plans.html", "Plans")}
+        ${footerLink("dashboard.html", "Dashboard")}
+        ${footerLink("account.html", "Account", "in")}
+        ${footerLink("login.html", "Login", "out")}
         <a href="mailto:support@crowncapital.com">Support</a>
       </nav>
     </div>

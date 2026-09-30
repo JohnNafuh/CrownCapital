@@ -2,215 +2,290 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dashboard - CrownCapital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard — Crown Capital</title>
+  <meta name="description" content="Your Crown Capital dashboard: balance, active plan, deposits, earnings and withdrawals." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="logo-mark.png" />
 
-  <link rel="stylesheet" href="./style.css">
-
-  <script type="module">
-
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-    import {
-      getFirestore,
-      doc,
-      getDoc
-    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
-
-    /* =========================
-       ANIMATION ENGINE (IMPROVED)
-    ========================= */
-    function animateValue(el, start, end, duration) {
-      let startTimestamp = null;
-
-      const step = (timestamp) => {
-        if (!startTimestamp) startTimestamp = timestamp;
-
-        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-
-        // easing for premium feel
-        const eased = 1 - Math.pow(1 - progress, 3);
-
-        const value = start + (end - start) * eased;
-
-        el.innerText = "$" + value.toFixed(2);
-
-        if (progress < 1) {
-          requestAnimationFrame(step);
-        }
-      };
-
-      requestAnimationFrame(step);
-    }
-
-    /* =========================
-       FIREBASE CONFIG
-    ========================= */
-    const firebaseConfig = {
-      apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
-      authDomain: "crowncapital-invest.firebaseapp.com",
-      projectId: "crowncapital-invest",
-      storageBucket: "crowncapital-invest.firebasestorage.app",
-      messagingSenderId: "9373579357",
-      appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-
-    /* =========================
-       LOADING STATE
-    ========================= */
-    function setLoading(state) {
-      document.querySelectorAll(".card").forEach(card => {
-        card.style.opacity = state ? "0.6" : "1";
-        card.style.transform = state ? "scale(0.98)" : "scale(1)";
-      });
-    }
-
-    /* =========================
-       AUTH + WALLET LOAD
-    ========================= */
-    onAuthStateChanged(auth, async (user) => {
-
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      setLoading(true);
-
-      try {
-        const ref = doc(db, "users", user.uid);
-        const snap = await getDoc(ref);
-
-        if (snap.exists()) {
-          const data = snap.data();
-
-          const balanceEl = document.getElementById("balance");
-          const profitEl = document.getElementById("profit");
-          const planEl = document.getElementById("activePlan");
-
-          const balance = data.balance ?? 0;
-          const profit = data.profit ?? 0;
-
-          /* =========================
-             STAGGERED REVEAL (IMPORTANT)
-          ========================= */
-
-          setTimeout(() => {
-            animateValue(balanceEl, 0, balance, 1000);
-          }, 150);
-
-          setTimeout(() => {
-            animateValue(profitEl, 0, profit, 1000);
-          }, 350);
-
-          setTimeout(() => {
-            planEl.innerText = data.activePlan ?? "None";
-          }, 550);
-
-          /* EMPTY STATE FEEDBACK */
-          if (balance === 0 && profit === 0) {
-            planEl.innerText = "No active plan";
-
-            planEl.style.opacity = "0.7";
-            planEl.style.letterSpacing = "1px";
-          }
-
-          /* CARD SYNC GLOW */
-          setTimeout(() => {
-            document.querySelectorAll(".card").forEach(card => {
-              card.classList.add("updated");
-              setTimeout(() => card.classList.remove("updated"), 900);
-            });
-          }, 300);
-        }
-
-      } catch (err) {
-        console.error("Firestore error:", err);
-      }
-
-      setLoading(false);
-    });
-
-    /* =========================
-       LOGOUT
-    ========================= */
-    window.logout = function () {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      });
-    };
-
-  </script>
-
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css?v=5" />
 </head>
 
-<body>
+<body class="is-loading-data">
 
-  <!-- HEADER -->
-  <div class="site-header"></div>
-  <script type="module" src="header.js"></script>
+<!-- HEADER -->
+<div class="site-header"></div>
+<script type="module" src="header.js?v=5"></script>
 
-  <!-- DASHBOARD HERO -->
-  <section class="hero" style="
-    padding: 40px 20px 20px 20px;
-    text-align: center;
-    background: radial-gradient(circle at top, #1a1d24, #0f1115);
-  ">
-    <h2 style="margin:0; font-size:22px;">Dashboard</h2>
-    <p style="margin-top:8px; color:rgba(255,255,255,0.6); font-size:13px;">
-      Overview of your account activity and investments
-    </p>
+<main>
 
-    <button onclick="logout()" style="
-      margin-top: 15px;
-      padding: 10px 18px;
-      background: #b08d2a;
-      border: none;
-      color: #000;
-      font-weight: bold;
-      cursor: pointer;
-      border-radius: 6px;
-    ">
-      Logout
-    </button>
-  </section>
+<!-- TITLE -->
+<section class="page-head">
+  <div class="wrap">
+    <h1>Dashboard</h1>
+    <p>Your balance, active plan and activity in one place.</p>
+  </div>
+</section>
 
-  <!-- WALLET CARDS -->
-  <section class="features">
+<section class="section--tight">
+  <div class="wrap">
 
-    <div class="card">
-      <h3>Wallet Balance</h3>
-      <p id="balance">$0.00</p>
+    <div class="wallet-top">
+
+      <!-- BALANCE -->
+      <div class="panel balance-card">
+        <h2 class="panel__title">Available Balance</h2>
+        <p class="balance-card__value"><span class="currency">$</span><span id="balance">0.00</span></p>
+        <p class="muted" id="balanceNote" style="margin:0; font-size:13px;">&nbsp;</p>
+
+        <div class="balance-card__actions">
+          <a class="btn" href="plans.html">Deposit funds</a>
+          <button class="btn btn--ghost" type="button" id="withdrawToggle" aria-expanded="false" aria-controls="withdrawForm">Withdraw</button>
+        </div>
+
+        <form class="withdraw" id="withdrawForm" hidden novalidate>
+          <div class="withdraw__row">
+            <label class="sr-only" for="wAmount">Amount in USD</label>
+            <input class="field" id="wAmount" type="number" inputmode="decimal" min="1" step="0.01" placeholder="Amount (USD)">
+            <label class="sr-only" for="wMethod">Withdraw to</label>
+            <select class="field" id="wMethod">
+              <option value="bank">Bank transfer</option>
+              <option value="crypto">Crypto wallet</option>
+            </select>
+            <button class="btn" type="submit">Request withdrawal</button>
+          </div>
+          <p class="form-note" id="wNote" aria-live="polite"></p>
+        </form>
+      </div>
+
+      <!-- ACTIVE PLAN -->
+      <div class="panel plan-status" id="planStatus">
+        <h2 class="panel__title">Active Plan</h2>
+        <div class="empty">
+          <p>Loading…</p>
+        </div>
+      </div>
+
     </div>
 
-    <div class="card">
-      <h3>Profit</h3>
-      <p id="profit">$0.00</p>
+    <!-- TOTALS -->
+    <div class="stats">
+      <div class="stat">
+        <h3>Total Deposits</h3>
+        <p class="stat__value" id="deposits">$0.00</p>
+      </div>
+      <div class="stat">
+        <h3>Total Earnings</h3>
+        <p class="stat__value up" id="earnings">$0.00</p>
+      </div>
+      <div class="stat">
+        <h3>Expected Return</h3>
+        <p class="stat__value" id="expected">$0.00</p>
+      </div>
     </div>
 
-    <div class="card">
-      <h3>Active Plan</h3>
-      <p id="activePlan">Loading...</p>
+  </div>
+</section>
+
+<!-- ACTIVITY -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Activity</h2>
     </div>
+    <div class="panel">
+      <ul class="activity" id="activity">
+        <li class="empty" style="display:block;"><p>Loading…</p></li>
+      </ul>
+    </div>
+  </div>
+</section>
 
-  </section>
+</main>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>© 2026 CrownCapital. All rights reserved.</p>
-  </footer>
+<!-- FOOTER (built by header.js) -->
+<div class="site-footer-slot"></div>
 
-  <script src="script.js"></script>
-  <script src="header.js"></script>
+<!-- DASHBOARD DATA -->
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+  authDomain: "crowncapital-invest.firebaseapp.com",
+  projectId: "crowncapital-invest",
+  storageBucket: "crowncapital-invest.firebasestorage.app",
+  messagingSenderId: "9373579357",
+  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+};
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// Plan details, used when the saved record is missing ROI or duration
+const PLANS = {
+  "Starter Plan": { roi: 5, days: 7 },
+  "Pro Plan": { roi: 10, days: 14 },
+  "Elite Plan": { roi: 20, days: 30 }
+};
+
+const $ = id => document.getElementById(id);
+const money = n => Number(n || 0).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const date = t => new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+function countUp(el, end, prefix = "") {
+  const start = performance.now();
+  const step = now => {
+    const k = Math.min((now - start) / 900, 1);
+    el.textContent = prefix + money(end * (1 - Math.pow(1 - k, 3)));
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+let available = 0;
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = "login.html";
+    return;
+  }
+
+  let data = {};
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists()) data = snap.data();
+  } catch (err) {
+    console.error("Dashboard load failed:", err);
+    $("balanceNote").textContent = "Couldn't load your account. Refresh to try again.";
+  }
+
+  render(data);
+  document.body.classList.remove("is-loading-data");
+});
+
+function render(d) {
+  const hasPlan = d.activePlan && d.activePlan !== "none";
+  const info = PLANS[d.activePlan] || {};
+  const amount = Number(d.planAmount) || 0;
+  const roi = Number(d.planROI) || info.roi || 0;
+  const days = Number(d.planDuration) || info.days || 0;
+  const expected = Number(d.expectedReturn) || amount * roi / 100;
+  const start = d.planStart;
+  const end = d.planMaturity || (start && days ? start + days * 864e5 : null);
+
+  available = Number(d.balance) || 0;
+
+  /* Balance + totals */
+  countUp($("balance"), available);
+  countUp($("deposits"), amount, "$");
+  countUp($("earnings"), Number(d.profit) || 0, "+$");
+  countUp($("expected"), expected, "$");
+
+  $("balanceNote").textContent = hasPlan && end && Date.now() < end
+    ? `$${money(amount + expected)} arrives on ${date(end)}`
+    : available > 0 ? "Ready to withdraw" : "Deposit to start earning";
+
+  /* Active plan */
+  const box = $("planStatus");
+  if (!hasPlan) {
+    box.innerHTML = `
+      <h2 class="panel__title">Active Plan</h2>
+      <div class="empty">
+        <p>You don't have an active plan yet.</p>
+        <a class="btn" href="plans.html">Choose a plan</a>
+      </div>`;
+  } else {
+    const now = Date.now();
+    const pct = start && end ? Math.min(100, Math.max(0, ((now - start) / (end - start)) * 100)) : 0;
+    const left = end ? Math.max(0, Math.ceil((end - now) / 864e5)) : 0;
+
+    box.innerHTML = `
+      <h2 class="panel__title">Active Plan</h2>
+      <p class="plan-status__name">${d.activePlan}<small>${roi}% ROI</small></p>
+      <dl class="kv">
+        <div><dt>Invested</dt><dd>$${money(amount)}</dd></div>
+        <div><dt>Return</dt><dd class="up">+$${money(expected)}</dd></div>
+        <div><dt>Payout</dt><dd style="color:var(--gold-light)">$${money(amount + expected)}</dd></div>
+      </dl>
+      <div class="progress" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${Math.round(pct)}">
+        <span id="bar"></span>
+      </div>
+      <div class="progress-label">
+        <span>${start ? date(start) : ""}</span>
+        <span>${left ? left + (left === 1 ? " day left" : " days left") : "Matured"}</span>
+      </div>`;
+    requestAnimationFrame(() => { $("bar").style.width = pct + "%"; });
+  }
+
+  /* Activity */
+  const items = [];
+  if (hasPlan && start) {
+    items.push({ icon: "↓", title: `Deposit for ${d.activePlan}`, when: date(start), amt: `+$${money(amount)}`, cls: "" });
+  }
+  if (Number(d.profit) > 0) {
+    items.push({ icon: "★", title: "Earnings credited", when: end ? date(Math.min(end, Date.now())) : "", amt: `+$${money(d.profit)}`, cls: "up" });
+  }
+  if (d.createdAt) {
+    items.push({ icon: "✓", title: "Account opened", when: date(d.createdAt), amt: "", cls: "" });
+  }
+
+  $("activity").innerHTML = items.length
+    ? items.map(i => `
+        <li>
+          <span class="activity__icon" aria-hidden="true">${i.icon}</span>
+          <span class="activity__main"><strong>${i.title}</strong><span>${i.when}</span></span>
+          <span class="activity__amt ${i.cls}">${i.amt}</span>
+        </li>`).join("")
+    : `<li class="empty" style="display:block;"><p>No activity yet. Your deposits and earnings will show here.</p></li>`;
+}
+
+/* =========================
+   WITHDRAW
+========================= */
+const toggle = $("withdrawToggle");
+const form = $("withdrawForm");
+const note = $("wNote");
+
+toggle.addEventListener("click", () => {
+  form.hidden = !form.hidden;
+  toggle.setAttribute("aria-expanded", !form.hidden);
+  if (!form.hidden) $("wAmount").focus();
+});
+
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const value = parseFloat($("wAmount").value);
+
+  if (!value || value <= 0) {
+    note.className = "form-note down";
+    note.textContent = "Enter an amount above $0.";
+    return;
+  }
+  if (value > available) {
+    note.className = "form-note down";
+    note.textContent = `You can withdraw up to $${money(available)}.`;
+    return;
+  }
+
+  const btn = form.querySelector("button[type=submit]");
+  btn.disabled = true;
+  btn.textContent = "Sending…";
+
+  setTimeout(() => {
+    note.className = "form-note up";
+    note.textContent = `Withdrawal of $${money(value)} requested. It will be processed within 24 hours.`;
+    btn.textContent = "Requested";
+    form.reset();
+  }, 900);
+});
+</script>
 
 </body>
 </html>
