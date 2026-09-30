@@ -1,10 +1,5 @@
-const container = document.querySelector(".site-header");
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-import {
-  getAuth,
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
@@ -15,139 +10,107 @@ const firebaseConfig = {
   appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
 };
 
-const app = initializeApp(firebaseConfig);
+// Reuse the app if the page already started one (dashboard, account, login do)
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
-function getPage() {
-  let page = window.location.pathname.split("/").pop();
-  if (!page || page === "/") page = "index.html";
-  return page;
+/* =========================
+   FONTS (so every page gets them)
+========================= */
+if (!document.querySelector('link[data-cc-fonts]')) {
+  const pre = document.createElement("link");
+  pre.rel = "preconnect";
+  pre.href = "https://fonts.gstatic.com";
+  pre.crossOrigin = "";
+  const fonts = document.createElement("link");
+  fonts.rel = "stylesheet";
+  fonts.dataset.ccFonts = "";
+  fonts.href = "https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap";
+  document.head.append(pre, fonts);
 }
 
-const current = getPage();
+/* =========================
+   CURRENT PAGE
+========================= */
+let current = window.location.pathname.split("/").pop();
+if (!current) current = "index.html";
+
+const links = [
+  ["index.html", "Home"],
+  ["plans.html", "Plans"],
+  ["dashboard.html", "Dashboard"]
+];
+
+const navLinks = links.map(([href, label]) => `
+  <a class="cc-nav__link${current === href ? " is-active" : ""}" href="${href}"
+     ${current === href ? 'aria-current="page"' : ""}>${label}</a>
+`).join("");
 
 /* =========================
-   HEADER SHELL (STATIC)
+   HEADER MARKUP
 ========================= */
+const container = document.querySelector(".site-header");
 
 container.innerHTML = `
-<header style="
-  font-family: Arial, sans-serif;
-  background: linear-gradient(180deg, #0f0f0f 0%, #0b0b0b 100%);
-  border-bottom: 1px solid rgba(255,255,255,0.06);
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-">
-
-  <!-- LOGO -->
-  <div style="display:flex;justify-content:center;padding:22px 0 10px;">
-    <img 
-      src="9468D5BC-D608-461F-8FD0-D934C8A0A490.png"
-      style="height:82px;object-fit:contain;
-      filter: drop-shadow(0 6px 18px rgba(176,141,42,0.18));"
-    >
-  </div>
-
-  <!-- NAV -->
-  <nav style="
-    display:flex;
-    justify-content:center;
-    gap:30px;
-    padding:12px 10px 18px;
-    flex-wrap:wrap;
-  ">
-
-    ${nav("index.html","Home")}
-    ${nav("plans.html","Plans")}
-    ${nav("dashboard.html","Dashboard")}
-
-    <!-- AUTH -->
-    <a id="authLink" href="#" style="
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      height:38px;
-      padding:0 14px;
-      box-sizing:border-box;
-
-      text-decoration:none;
-      font-size:14px;
-      border-radius:10px;
-      transition:0.25s ease;
-
-      color:rgba(255,255,255,0.45);
-      border:1px solid rgba(255,255,255,0.06);
-
-      pointer-events:none;
-      opacity:0.5;
-    ">
-      Loading...
+<header class="cc-header">
+  <div class="wrap cc-header__inner">
+    <a class="cc-brand" href="index.html" aria-label="Crown Capital home">
+      <img src="logo-mark.png" alt="" width="45" height="34">
+      <span>Crown Capital</span>
     </a>
 
-  </nav>
+    <button class="cc-menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="ccNav">
+      <span></span>
+    </button>
 
+    <nav class="cc-nav" id="ccNav" aria-label="Main">
+      ${navLinks}
+      <a id="authLink" class="cc-nav__link cc-nav__auth is-loading" href="login.html">Login</a>
+      <a id="startLink" class="btn" href="login.html">Get started</a>
+    </nav>
+  </div>
 </header>
 `;
 
 /* =========================
-   NAV LINK
+   MOBILE MENU
 ========================= */
+const header = container.querySelector(".cc-header");
+const menuBtn = container.querySelector(".cc-menu-btn");
 
-function nav(href, label) {
-  const active = current === href;
+menuBtn.addEventListener("click", () => {
+  const open = header.classList.toggle("is-open");
+  menuBtn.setAttribute("aria-expanded", open);
+  menuBtn.setAttribute("aria-label", open ? "Close menu" : "Open menu");
+});
 
-  return `
-    <a href="${href}" style="
-      display:flex;
-      align-items:center;
-      justify-content:center;
-
-      height:38px;
-      padding:0 14px;
-      box-sizing:border-box;
-
-      text-decoration:none;
-      font-size:14px;
-      border-radius:10px;
-      transition:0.25s ease;
-
-      color:${active ? "#ffffff" : "rgba(255,255,255,0.65)"};
-      background:${active ? "rgba(255,255,255,0.06)" : "transparent"};
-      border:1px solid ${active ? "rgba(255,255,255,0.12)" : "transparent"};
-    ">
-      ${label}
-    </a>
-  `;
-}
+container.querySelectorAll(".cc-nav a").forEach(a =>
+  a.addEventListener("click", () => {
+    header.classList.remove("is-open");
+    menuBtn.setAttribute("aria-expanded", "false");
+  })
+);
 
 /* =========================
-   AUTH STATE (NO FLICKER)
+   AUTH STATE
 ========================= */
-
 const authLink = document.getElementById("authLink");
+const startLink = document.getElementById("startLink");
 
 onAuthStateChanged(auth, (user) => {
+  authLink.classList.remove("is-loading");
 
   if (user) {
     authLink.textContent = "Account";
     authLink.href = "account.html";
-
-    authLink.style.color = "#ffffff";
-    authLink.style.border = "1px solid rgba(255,255,255,0.12)";
-    authLink.style.background = "rgba(255,255,255,0.06)";
-    authLink.style.pointerEvents = "auto";
-    authLink.style.opacity = "1";
+    authLink.classList.toggle("is-active", current === "account.html");
+    startLink.textContent = "Invest now";
+    startLink.href = "plans.html";
   } else {
     authLink.textContent = "Login";
     authLink.href = "login.html";
-
-    authLink.style.color = "rgba(255,255,255,0.65)";
-    authLink.style.border = "1px solid rgba(255,255,255,0.06)";
-    authLink.style.background = "transparent";
-    authLink.style.pointerEvents = "auto";
-    authLink.style.opacity = "1";
+    authLink.classList.toggle("is-active", current === "login.html");
+    startLink.textContent = "Get started";
+    startLink.href = "login.html";
   }
-
 });
