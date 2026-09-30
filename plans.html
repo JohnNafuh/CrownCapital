@@ -2,140 +2,216 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Investment Plans - CrownCapital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Investment Plans — Crown Capital</title>
+  <meta name="description" content="Compare Crown Capital investment plans: Starter, Pro and Elite. See returns, durations and payouts." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="logo-mark.png" />
 
-  <link rel="stylesheet" href="style.css"/>
-
-  <style>
-    .plan-card {
-      transition: 0.3s ease;
-      text-decoration: none;
-      position: relative;
-    }
-
-    .plan-card:hover {
-      transform: translateY(-6px);
-      border: 1px solid #b08d2a;
-    }
-
-    .plan-price {
-      font-size: 24px;
-      color: #b08d2a;
-      font-weight: bold;
-      margin: 10px 0;
-    }
-
-    .plan-desc {
-      color: #aaa;
-      font-size: 14px;
-    }
-
-    /* INVEST BUTTON */
-    .invest-btn {
-      margin-top: 14px;
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 12px;
-      border: 1px solid rgba(176,141,42,0.35);
-      background: linear-gradient(180deg, #b08d2a, #8f7322);
-      color: #000;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.25s ease;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-      position: relative;
-      overflow: hidden;
-    }
-
-    .invest-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 15px 35px rgba(176,141,42,0.25);
-    }
-
-    .invest-btn:active {
-      transform: scale(0.98);
-    }
-
-    .invest-btn:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
-
-    .invest-btn::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: -60%;
-      width: 50%;
-      height: 100%;
-      background: rgba(255,255,255,0.25);
-      transform: skewX(-20deg);
-    }
-
-    .invest-btn:hover::after {
-      left: 120%;
-      transition: 0.5s;
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
 
+<!-- HEADER -->
 <div class="site-header"></div>
 <script type="module" src="header.js"></script>
 
+<main>
+
 <!-- TITLE -->
-<section class="hero" style="padding: 50px 20px 30px 20px;">
-  <h2>Investment Plans</h2>
-  <p>
-    Select a plan that aligns with your financial goals, risk preference, and long-term capital growth strategy.
-  </p>
+<section class="page-head">
+  <div class="wrap">
+    <h1>Investment Plans</h1>
+    <p>Select a plan that aligns with your financial goals, risk preference, and long-term capital growth strategy.</p>
+  </div>
 </section>
 
 <!-- PLANS -->
-<section class="features">
+<section class="section--tight">
+  <div class="wrap">
+    <div class="plans">
+      <div class="plan">
+        <h3>Starter Plan</h3>
+        <p class="plan__tag">Low risk, beginner friendly</p>
+        <p class="plan__roi">5% <small>ROI</small></p>
+        <ul>
+          <li><span>Investment</span><span class="num">$1,500</span></li>
+          <li><span>Duration</span><span>7 days</span></li>
+          <li><span>Profit</span><span class="num up">+$75</span></li>
+          <li><span>Total payout</span><strong class="num">$1,575</strong></li>
+          <li><span>Support</span><span>Standard</span></li>
+        </ul>
+        <button class="invest-btn" type="button" onclick="investPlan(this, 'Starter Plan', 5, 7)">Invest now</button>
+      </div>
 
-  <div class="card plan-card">
-    <h3>Starter Plan</h3>
-    <p class="plan-price">5% ROI</p>
-    <small class="plan-desc">Low risk • Beginner friendly</small>
+      <div class="plan plan--featured">
+        <span class="plan__badge">Most popular</span>
+        <h3>Pro Plan</h3>
+        <p class="plan__tag">Balanced growth</p>
+        <p class="plan__roi">10% <small>ROI</small></p>
+        <ul>
+          <li><span>Investment</span><span class="num">$3,500</span></li>
+          <li><span>Duration</span><span>14 days</span></li>
+          <li><span>Profit</span><span class="num up">+$350</span></li>
+          <li><span>Total payout</span><strong class="num">$3,850</strong></li>
+          <li><span>Support</span><span>Priority</span></li>
+        </ul>
+        <button class="invest-btn" type="button" onclick="investPlan(this, 'Pro Plan', 10, 14)">Invest now</button>
+      </div>
 
-    <button class="invest-btn"
-      onclick="investPlan(this, 'Starter Plan', 5, 7)">
-      Invest Now
-    </button>
+      <div class="plan">
+        <h3>Elite Plan</h3>
+        <p class="plan__tag">High return, high reward</p>
+        <p class="plan__roi">20% <small>ROI</small></p>
+        <ul>
+          <li><span>Investment</span><span class="num">$6,000</span></li>
+          <li><span>Duration</span><span>30 days</span></li>
+          <li><span>Profit</span><span class="num up">+$1,200</span></li>
+          <li><span>Total payout</span><strong class="num">$7,200</strong></li>
+          <li><span>Support</span><span>Dedicated manager</span></li>
+        </ul>
+        <button class="invest-btn" type="button" onclick="investPlan(this, 'Elite Plan', 20, 30)">Invest now</button>
+      </div>
+    </div>
   </div>
-
-  <div class="card plan-card">
-    <h3>Pro Plan</h3>
-    <p class="plan-price">10% ROI</p>
-    <small class="plan-desc">Balanced growth</small>
-
-    <button class="invest-btn"
-      onclick="investPlan(this, 'Pro Plan', 10, 14)">
-      Invest Now
-    </button>
-  </div>
-
-  <div class="card plan-card">
-    <h3>Elite Plan</h3>
-    <p class="plan-price">20% ROI</p>
-    <small class="plan-desc">High return • High reward</small>
-
-    <button class="invest-btn"
-      onclick="investPlan(this, 'Elite Plan', 20, 30)">
-      Invest Now
-    </button>
-  </div>
-
 </section>
 
-<footer>
-  <p>© 2026 CrownCapital. All rights reserved.</p>
+<!-- RETURNS CALCULATOR -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="calc">
+      <div>
+        <h2>See your returns</h2>
+        <p>Pick a plan to see what you put in, what you earn and when it pays out.</p>
+        <div class="seg" role="group" aria-label="Choose a plan">
+          <button type="button" data-plan="0" aria-pressed="false">Starter</button>
+          <button type="button" data-plan="1" aria-pressed="true">Pro</button>
+          <button type="button" data-plan="2" aria-pressed="false">Elite</button>
+        </div>
+      </div>
+
+      <div class="calc__out" aria-live="polite">
+        <div><span>You invest</span><strong id="cIn">$3,500</strong></div>
+        <div><span>You earn</span><strong id="cEarn" class="up">+$350</strong></div>
+        <div class="is-total"><span>Total payout</span><strong id="cTotal">$3,850</strong></div>
+        <div><span>Paid out on</span><strong id="cDate">&nbsp;</strong></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMPARISON -->
+<section class="section--tight">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Compare plans</h2>
+    </div>
+
+    <div class="table-wrap">
+      <table class="compare">
+        <thead>
+          <tr>
+            <th scope="col"><span class="sr-only">Feature</span></th>
+            <th scope="col">Starter</th>
+            <th scope="col" class="is-pro">Pro</th>
+            <th scope="col">Elite</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><th scope="row">ROI</th><td>5%</td><td class="is-pro">10%</td><td>20%</td></tr>
+          <tr><th scope="row">Investment</th><td>$1,500</td><td class="is-pro">$3,500</td><td>$6,000</td></tr>
+          <tr><th scope="row">Duration</th><td>7 days</td><td class="is-pro">14 days</td><td>30 days</td></tr>
+          <tr><th scope="row">Total payout</th><td>$1,575</td><td class="is-pro">$3,850</td><td>$7,200</td></tr>
+          <tr><th scope="row">Live dashboard</th><td class="yes">Included</td><td class="is-pro yes">Included</td><td class="yes">Included</td></tr>
+          <tr><th scope="row">Risk level</th><td>Low</td><td class="is-pro">Medium</td><td>High</td></tr>
+          <tr><th scope="row">Support</th><td>Standard</td><td class="is-pro">Priority</td><td>Dedicated manager</td></tr>
+          <tr><th scope="row">Run more than one plan</th><td class="yes">Yes</td><td class="is-pro yes">Yes</td><td class="yes">Yes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="cc-brand" href="index.html">
+          <img src="logo-mark.png" alt="" width="45" height="34">
+          <span>Crown Capital</span>
+        </a>
+        <p>A modern investment platform designed for smart financial growth.</p>
+      </div>
+      <div>
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="plans.html">Investment Plans</a></li>
+          <li><a href="dashboard.html">Dashboard</a></li>
+          <li><a href="wallet.html">Wallet</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Account</h4>
+        <ul>
+          <li><a href="login.html">Login</a></li>
+          <li><a href="login.html">Create account</a></li>
+          <li><a href="account.html">My account</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="mailto:support@crowncapital.com">support@crowncapital.com</a></li>
+          <li><a href="#how-it-works">How it works</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 CrownCapital. All rights reserved.</p>
+      <p>Your Empire Starts Here</p>
+    </div>
+  </div>
 </footer>
 
-<!-- FIREBASE -->
+<!-- RETURNS CALCULATOR -->
+<script>
+(function () {
+  const PLANS = [
+    { amount: 1500, roi: 5, days: 7 },
+    { amount: 3500, roi: 10, days: 14 },
+    { amount: 6000, roi: 20, days: 30 }
+  ];
+  const fmt = n => "$" + n.toLocaleString("en-US");
+  const buttons = document.querySelectorAll(".seg button");
+
+  function show(i) {
+    const p = PLANS[i];
+    const earn = p.amount * p.roi / 100;
+    const date = new Date(Date.now() + p.days * 864e5);
+
+    document.getElementById("cIn").textContent = fmt(p.amount);
+    document.getElementById("cEarn").textContent = "+" + fmt(earn);
+    document.getElementById("cTotal").textContent = fmt(p.amount + earn);
+    document.getElementById("cDate").textContent =
+      date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
+
+    buttons.forEach(b => b.setAttribute("aria-pressed", b.dataset.plan == i));
+  }
+
+  buttons.forEach(b => b.addEventListener("click", () => show(+b.dataset.plan)));
+  show(1);
+})();
+</script>
+
+<!-- FIREBASE + INVEST -->
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
@@ -158,28 +234,26 @@ onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
 });
 
-window.investPlan = function(btn, planName, roi, duration) {
+const AMOUNTS = { "Starter Plan": 1500, "Pro Plan": 3500, "Elite Plan": 6000 };
 
+window.investPlan = function (btn, planName, roi, duration) {
+
+  // Not logged in: send them to log in instead of a pop-up
   if (!currentUser) {
-    alert("Login required");
+    window.location.href = "login.html";
     return;
   }
 
-  // prevent double click
   btn.disabled = true;
-  btn.innerText = "Processing...";
+  btn.textContent = "Processing...";
 
-  let amount = 1500;
-
-  if (planName === "Pro Plan") amount = 3500;
-  if (planName === "Elite Plan") amount = 6000;
+  const amount = AMOUNTS[planName];
 
   setTimeout(() => {
     window.location.href =
       `payment.html?plan=${encodeURIComponent(planName)}&amount=${amount}&roi=${roi}&duration=${duration}`;
   }, 800);
 };
-
 </script>
 
 </body>
