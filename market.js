@@ -12,14 +12,15 @@ const SETTINGS = {
     points: 60            // points on the chart
   },
   ticker: [
-    { sym: "BTC/USD", px: 67240.5, dp: 2, vol: 0.0009 },
-    { sym: "ETH/USD", px: 3182.4, dp: 2, vol: 0.0011 },
-    { sym: "NASDAQ", px: 18422.7, dp: 2, vol: 0.0004 },
-    { sym: "S&P 500", px: 5781.3, dp: 2, vol: 0.0003 },
-    { sym: "GOLD", px: 2641.8, dp: 2, vol: 0.0003 },
-    { sym: "EUR/USD", px: 1.0845, dp: 4, vol: 0.0002 },
-    { sym: "SOL/USD", px: 152.36, dp: 2, vol: 0.0014 },
-    { sym: "OIL", px: 74.21, dp: 2, vol: 0.0006 }
+    { sym: "S&P 500", px: 5781.3, dp: 2, vol: 0.00015 },
+    { sym: "NASDAQ", px: 18422.7, dp: 2, vol: 0.0002 },
+    { sym: "DOW JONES", px: 42313.0, dp: 2, vol: 0.00012 },
+    { sym: "FTSE 100", px: 8284.9, dp: 2, vol: 0.00012 },
+    { sym: "GOLD", px: 2641.8, dp: 2, vol: 0.00015 },
+    { sym: "CRUDE OIL", px: 74.21, dp: 2, vol: 0.0003 },
+    { sym: "EUR/USD", px: 1.0845, dp: 4, vol: 0.0001 },
+    { sym: "GBP/USD", px: 1.3012, dp: 4, vol: 0.0001 },
+    { sym: "US 10Y", px: 4.126, dp: 3, vol: 0.0004 }
   ]
 };
 
@@ -143,7 +144,7 @@ const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
   }
 
   // Give each asset a starting day change so it isn't all 0.00%
-  items.forEach((t, i) => { t.base = gauss() * 1.6; paint(i); });
+  items.forEach((t, i) => { t.base = gauss() * 0.6; paint(i); });
 
   setInterval(() => {
     const i = Math.floor(Math.random() * items.length);
@@ -151,7 +152,7 @@ const gauss = () => (Math.random() + Math.random() + Math.random() - 1.5) / 1.5;
     const move = t.px * t.vol * gauss();
     t.px += move;
     paint(i, Math.sign(move));
-  }, 900);
+  }, 2200);
 })();
 
 /* =========================

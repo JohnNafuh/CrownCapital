@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css?v=5" />
+  <link rel="stylesheet" href="style.css?v=6" />
 </head>
 
 <body>
 
 <!-- HEADER -->
 <div class="site-header"></div>
-<script type="module" src="header.js?v=5"></script>
+<script type="module" src="header.js?v=6"></script>
 
 <!-- PRICE TICKER -->
 <div class="ticker" aria-label="Market prices">
@@ -131,65 +131,6 @@
   </div>
 </section>
 
-<hr class="rule" data-show="out" />
-
-<!-- HOW IT WORKS (logged-out only) -->
-<section class="section" id="how-it-works" data-show="out">
-  <div class="wrap">
-    <div class="section__head">
-      <h2>Smart Investing Made Simple</h2>
-      <p>From sign-up to your first return in three steps.</p>
-    </div>
-
-    <div class="steps">
-      <div class="step">
-        <h3>Create your account</h3>
-        <p>Sign up with your email in under a minute and secure it with a password only you know.</p>
-      </div>
-      <div class="step">
-        <h3>Choose a plan</h3>
-        <p>Pick Starter, Pro or Elite based on how much you want to invest and for how long.</p>
-      </div>
-      <div class="step">
-        <h3>Watch it grow</h3>
-        <p>Follow your balance, profit and every trade live from your dashboard.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="rule" />
-
-<!-- TRADING DESK -->
-<section class="section">
-  <div class="wrap">
-    <div class="section__head">
-      <h2>Live Trading Desk</h2>
-      <p>Institutional-level trading activity across global markets.</p>
-    </div>
-
-    <div class="desk">
-      <div class="desk__item">
-        <h3>Open Positions</h3>
-        <p class="desk__big up">+6 Active Trades</p>
-        <p class="desk__small">BTC, ETH, NASDAQ and GOLD</p>
-      </div>
-      <div class="desk__item">
-        <h3>Live Orders</h3>
-        <p class="desk__big" style="color: var(--gold-light);">$8.7M Pending</p>
-        <p class="desk__small">12 buy and 5 sell orders</p>
-      </div>
-      <div class="desk__item">
-        <h3>Daily PnL</h3>
-        <p class="desk__big up">+$642,310</p>
-        <p class="desk__small">+4.92% portfolio growth</p>
-      </div>
-    </div>
-
-    </div>
-  </div>
-</section>
-
 <hr class="rule" />
 
 <!-- PLANS PREVIEW -->
@@ -217,6 +158,67 @@
 
     <div class="plans__more">
       <a class="btn" href="plans.html">Compare all plans</a>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- TRADING DESK -->
+<section class="section">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Live Trading Desk</h2>
+      <p>Institutional-level trading activity across global markets.</p>
+    </div>
+
+    <div class="desk">
+      <div class="desk__item">
+        <h3>Open Positions</h3>
+        <p class="desk__big up">+6</p>
+        <p class="desk__small">Active trades</p>
+      </div>
+      <div class="desk__item">
+        <h3>Live Orders</h3>
+        <p class="desk__big" style="color: var(--gold-light);">$8.7M</p>
+        <p class="desk__small">12 buy, 5 sell</p>
+      </div>
+      <div class="desk__item">
+        <h3>Daily PnL</h3>
+        <p class="desk__big up">+$642,310</p>
+        <p class="desk__small">+4.92% growth</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="rule" />
+
+<!-- HOW IT WORKS -->
+<section class="section" id="how-it-works">
+  <div class="wrap">
+    <div class="section__head">
+      <h2>Smart Investing Made Simple</h2>
+      <p>From sign-up to your first return in three steps.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step" data-show="out">
+        <h3>Create your account</h3>
+        <p>Sign up with your email in under a minute and secure it with a password only you know.</p>
+      </div>
+      <div class="step">
+        <h3>Choose a plan</h3>
+        <p>Pick Starter, Pro or Elite based on how much you want to invest and for how long.</p>
+      </div>
+      <div class="step" data-show="in">
+        <h3>Pay securely</h3>
+        <p>Complete payment by card, bank transfer or crypto. Your plan starts right away.</p>
+      </div>
+      <div class="step">
+        <h3>Watch it grow</h3>
+        <p>Follow your balance, profit and every trade live from your dashboard.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -259,12 +261,14 @@
 <hr class="rule" />
 
 <!-- RECENT TRADES -->
-<section class="section">
+<section class="section section--compact">
   <div class="wrap">
-    <div class="section__head">
-      <h2>Recent Trades</h2>
-      <p>Closed positions from today's session.</p>
-    </div>
+    <details class="trades-toggle">
+      <summary>
+        <span class="trades-toggle__title">Recent Trades</span>
+        <span class="trades-toggle__meta">7 closed today</span>
+        <span class="trades-toggle__btn" aria-hidden="true"></span>
+      </summary>
 
     <div class="table-wrap">
       <table class="trades">
@@ -282,7 +286,7 @@
         <tbody>
           <tr>
             <td class="muted">14:32</td>
-            <td>BTC/USD</td>
+            <td>AAPL</td>
             <td><span class="pill pill--buy">Buy</span></td>
             <td>$120,000</td>
             <td class="up">+$14,240</td>
@@ -290,7 +294,7 @@
           </tr>
           <tr>
             <td class="muted">13:58</td>
-            <td>ETH/USD</td>
+            <td>GBP/USD</td>
             <td><span class="pill pill--sell">Sell</span></td>
             <td>$85,000</td>
             <td class="up">+$6,120</td>
@@ -322,7 +326,7 @@
           </tr>
           <tr>
             <td class="muted">10:05</td>
-            <td>SOL/USD</td>
+            <td>MSFT</td>
             <td><span class="pill pill--buy">Buy</span></td>
             <td>$42,500</td>
             <td class="up">+$2,915</td>
@@ -338,6 +342,8 @@
           </tr>
         </tbody>
       </table>
+    </div>
+    </details>
   </div>
 </section>
 
@@ -389,6 +395,6 @@
 <div class="site-footer-slot"></div>
 
 
-<script src="market.js?v=5"></script>
+<script src="market.js?v=6"></script>
 </body>
 </html>

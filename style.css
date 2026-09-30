@@ -626,6 +626,51 @@ p { margin: 0 0 1em; }
 .pill--sell { background: rgba(224, 82, 82, 0.12); color: var(--down); }
 .status { color: var(--muted); }
 
+/* Trading desk: always one compact row */
+.desk { grid-template-columns: repeat(3, 1fr) !important; gap: 8px; }
+.desk__item { padding: 12px 14px; }
+.desk__item h3 { font-size: 11px; margin-bottom: 2px; }
+.desk__big { font-size: 20px; margin: 0; line-height: 1.2; }
+.desk__small { font-size: 11px; }
+
+/* Recent trades: a single line that opens the table */
+.section--compact { padding: 28px 0; }
+.trades-toggle {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  overflow: hidden;
+}
+.trades-toggle summary {
+  list-style: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+}
+.trades-toggle summary::-webkit-details-marker { display: none; }
+.trades-toggle__title { font-family: var(--serif); font-size: 16px; font-weight: 600; }
+.trades-toggle__meta { color: var(--muted); font-size: 12px; flex: 1; }
+.trades-toggle__btn {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  color: var(--gold-light);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.trades-toggle__btn::before { content: "View"; }
+.trades-toggle[open] .trades-toggle__btn::before { content: "Hide"; }
+.trades-toggle summary:hover .trades-toggle__btn { background: rgba(212, 175, 55, 0.08); }
+.trades-toggle .table-wrap {
+  border: 0;
+  border-top: 1px solid var(--line);
+  border-radius: 0;
+  background: transparent;
+}
+
 /* Plans preview */
 .plans {
   display: grid;
@@ -867,6 +912,131 @@ p { margin: 0 0 1em; }
 }
 
 /* =========================================================
+   WALLET PAGE
+========================================================= */
+.wallet-top {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.panel {
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--surface);
+}
+.panel__title {
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted);
+  margin: 0 0 6px;
+}
+
+/* Balance — the bold element on this page */
+.balance-card {
+  position: relative;
+  border-color: var(--line-strong);
+  background:
+    radial-gradient(ellipse at 100% 0%, rgba(212, 175, 55, 0.16), transparent 60%),
+    linear-gradient(180deg, #171717, #111111);
+}
+.balance-card__value {
+  font-family: var(--serif);
+  font-size: clamp(30px, 3.4vw, 40px);
+  font-weight: 600;
+  line-height: 1.1;
+  margin: 0 0 4px;
+  font-variant-numeric: tabular-nums;
+}
+.balance-card__value .currency { color: var(--gold); margin-right: 2px; }
+.balance-card__actions { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.balance-card__actions .btn { margin: 0; }
+
+/* Withdraw form */
+.withdraw { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.withdraw__row { display: flex; gap: 8px; flex-wrap: wrap; }
+.field {
+  flex: 1 1 140px;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 13px;
+}
+.field:focus { outline: none; border-color: var(--gold); }
+.withdraw .btn { margin: 0; }
+.form-note { font-size: 12px; margin: 8px 0 0; min-height: 1em; }
+
+/* Active plan */
+.plan-status__name { font-family: var(--serif); font-size: 22px; font-weight: 600; margin: 0 0 12px; }
+.plan-status__name small { font-family: var(--sans); font-size: 12px; font-weight: 500; color: var(--gold-light); margin-left: 6px; }
+.kv { display: grid; gap: 6px; font-size: 13px; margin: 0 0 14px; }
+.kv div { display: flex; justify-content: space-between; gap: 12px; }
+.kv dt { color: var(--muted); }
+.kv dd { margin: 0; font-variant-numeric: tabular-nums; }
+.progress {
+  height: 6px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.progress span {
+  display: block;
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--gold-grad);
+  transition: width 1s ease;
+}
+.progress-label { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); margin-top: 6px; }
+
+.empty { text-align: center; padding: 10px 0; }
+.empty p { color: var(--muted); margin: 0 0 4px; }
+.empty .btn { margin-top: 10px; }
+
+/* Activity */
+.activity { list-style: none; margin: 0; padding: 0; }
+.activity li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.07);
+  font-size: 13px;
+}
+.activity li:last-child { border-bottom: 0; }
+.activity__icon {
+  width: 30px;
+  height: 30px;
+  flex: none;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(212, 175, 55, 0.1);
+  color: var(--gold);
+  font-size: 14px;
+}
+.activity__main { flex: 1; min-width: 0; }
+.activity__main strong { display: block; font-weight: 500; }
+.activity__main span { color: var(--muted); font-size: 12px; }
+.activity__amt { font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+.stat__value.up { color: var(--up); }
+
+.is-loading-data .balance-card__value,
+.is-loading-data .stat__value,
+.is-loading-data .plan-status { opacity: 0.4; }
+
+@media (max-width: 820px) {
+  .wallet-top { grid-template-columns: 1fr; }
+}
+
+/* =========================================================
    FOOTER
 ========================================================= */
 footer {
@@ -914,8 +1084,23 @@ html:not([data-auth="out"]) [data-show="out"] { display: none !important; }
   .section--tight { padding: 0 0 36px; }
   .home-hero { padding: 28px 0 36px; }
   .home-hero__grid { gap: 28px; }
-  .stats { grid-template-columns: 1fr; }
-  .stat + .stat { border-left: 0; border-top: 1px solid var(--line); }
+  .stat { padding: 12px 12px; }
+  .stat h3 { font-size: 11px; }
+  .stat__value { font-size: 17px; margin-bottom: 6px; }
+  .desk__item { padding: 10px; }
+  .desk__big { font-size: 15px; }
+  .desk__small, .desk__item h3 { font-size: 10px; }
+  .section--compact { padding: 22px 0; }
+  .steps { gap: 8px; }
+  .step {
+    display: grid;
+    grid-template-columns: 28px 1fr;
+    column-gap: 12px;
+    padding: 12px 14px;
+  }
+  .step::before { grid-row: span 2; margin: 0; }
+  .step h3 { font-size: 15px; margin: 0; }
+  .step p { font-size: 12px; }
   .market-card { padding: 16px; }
   .market-stats { gap: 8px; }
   .market-stats p { font-size: 13px; }
