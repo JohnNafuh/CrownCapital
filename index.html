@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=3" />
 </head>
 
 <body>
 
 <!-- HEADER -->
 <div class="site-header"></div>
-<script type="module" src="header.js"></script>
+<script type="module" src="header.js?v=3"></script>
 
 <!-- PRICE TICKER -->
 <div class="ticker" aria-label="Market prices">
@@ -40,7 +40,7 @@
 
       <div class="home-hero__ctas">
         <a class="btn" href="dashboard.html">Enter Dashboard</a>
-        <a class="btn btn--ghost" href="#how-it-works">How it works</a>
+        <a class="btn btn--ghost" href="#how-it-works" data-show="out">How it works</a>
       </div>
 
       <div class="trust">
@@ -131,10 +131,10 @@
   </div>
 </section>
 
-<hr class="rule" />
+<hr class="rule" data-show="out" />
 
-<!-- HOW IT WORKS -->
-<section class="section" id="how-it-works">
+<!-- HOW IT WORKS (logged-out only) -->
+<section class="section" id="how-it-works" data-show="out">
   <div class="wrap">
     <div class="section__head">
       <h2>Smart Investing Made Simple</h2>
@@ -200,39 +200,18 @@
       <p>Choose the plan that fits your goals and how long you want to invest.</p>
     </div>
 
-    <div class="plans">
+    <div class="plans plans--mini">
       <div class="plan">
-        <h3>Starter Plan</h3>
-        <p class="plan__tag">Low risk, beginner friendly</p>
+        <h3>Starter</h3>
         <p class="plan__roi">5% <small>ROI</small></p>
-        <ul>
-          <li><span>Investment</span><span class="num">$1,500</span></li>
-          <li><span>Duration</span><span>7 days</span></li>
-          <li><span>Withdrawals</span><span>Anytime after term</span></li>
-        </ul>
       </div>
-
       <div class="plan plan--featured">
-        <span class="plan__badge">Most popular</span>
-        <h3>Pro Plan</h3>
-        <p class="plan__tag">Balanced growth</p>
+        <h3>Pro</h3>
         <p class="plan__roi">10% <small>ROI</small></p>
-        <ul>
-          <li><span>Investment</span><span class="num">$3,500</span></li>
-          <li><span>Duration</span><span>14 days</span></li>
-          <li><span>Withdrawals</span><span>Anytime after term</span></li>
-        </ul>
       </div>
-
       <div class="plan">
-        <h3>Elite Plan</h3>
-        <p class="plan__tag">High return, high reward</p>
+        <h3>Elite</h3>
         <p class="plan__roi">20% <small>ROI</small></p>
-        <ul>
-          <li><span>Investment</span><span class="num">$6,000</span></li>
-          <li><span>Duration</span><span>30 days</span></li>
-          <li><span>Withdrawals</span><span>Anytime after term</span></li>
-        </ul>
       </div>
     </div>
 
@@ -373,7 +352,7 @@
     </div>
 
     <div class="faq">
-      <details>
+      <details data-show="out">
         <summary>How do I start investing?</summary>
         <p>Create an account, choose a plan and complete payment. Your investment shows on your dashboard straight away.</p>
       </details>
@@ -410,6 +389,6 @@
 <div class="site-footer-slot"></div>
 
 
-<script src="market.js"></script>
+<script src="market.js?v=3"></script>
 </body>
 </html>

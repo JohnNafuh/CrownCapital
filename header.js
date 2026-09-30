@@ -66,7 +66,7 @@ container.innerHTML = `
     <nav class="cc-nav" id="ccNav" aria-label="Main">
       ${navLinks}
       <a id="authLink" class="cc-nav__link cc-nav__auth is-loading" href="login.html">Login</a>
-      <a id="startLink" class="btn" href="login.html">Get started</a>
+      <a id="startLink" class="btn" href="login.html" hidden>Get started</a>
     </nav>
   </div>
 </header>
@@ -139,12 +139,12 @@ onAuthStateChanged(auth, (user) => {
     authLink.textContent = "Account";
     authLink.href = "account.html";
     authLink.classList.toggle("is-active", current === "account.html");
-    startLink.textContent = "Invest now";
-    startLink.href = "plans.html";
+    startLink.hidden = true;
   } else {
     authLink.textContent = "Login";
     authLink.href = "login.html";
     authLink.classList.toggle("is-active", current === "login.html");
+    startLink.hidden = false;
     startLink.textContent = "Get started";
     startLink.href = "login.html";
   }

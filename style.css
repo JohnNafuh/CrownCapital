@@ -76,6 +76,8 @@ p { margin: 0 0 1em; }
   padding: 0 20px;
 }
 
+[hidden] { display: none !important; }
+
 :focus-visible {
   outline: 2px solid var(--gold);
   outline-offset: 3px;
@@ -683,6 +685,13 @@ p { margin: 0 0 1em; }
   font-size: 11px;
   font-weight: 600;
 }
+
+/* Compact preview on the homepage: name + ROI only */
+.plans--mini { grid-template-columns: repeat(3, 1fr) !important; gap: 10px; max-width: 640px; margin: 0 auto; }
+.plans--mini .plan { padding: 14px 10px; text-align: center; }
+.plans--mini .plan h3 { font-size: 15px; margin-bottom: 4px; }
+.plans--mini .plan__roi { font-size: 26px; margin: 0; }
+.plans--mini .plan--featured { transform: none; }
 
 /* Testimonials */
 .quotes {
