@@ -869,27 +869,25 @@ footer {
   padding: 28px;
   text-align: center;
 }
-footer.site-footer { text-align: left; padding: 32px 0 16px; margin-top: 0; }
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1.6fr 1fr 1fr 1fr;
-  gap: 24px;
-  padding-bottom: 22px;
-  border-bottom: 1px solid var(--line);
-}
-.footer-grid .cc-brand { margin-bottom: 14px; }
-.footer-grid h4 { color: var(--text); font-size: 13px; margin-bottom: 10px; }
-.footer-grid ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
-.footer-grid a { text-decoration: none; color: var(--muted); transition: color 0.2s ease; }
-.footer-grid a:hover { color: var(--gold-light); }
-.footer-bottom {
+footer.site-footer { text-align: left; padding: 24px 0 18px; margin-top: 0; }
+.footer-top {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding-top: 16px;
-  font-size: 12px;
+  gap: 16px 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
 }
+.footer-links { display: flex; flex-wrap: wrap; gap: 6px 20px; }
+.footer-links a { text-decoration: none; color: var(--muted); transition: color 0.2s ease; }
+.footer-links a:hover { color: var(--gold-light); }
+.footer-bottom { margin: 0; padding-top: 14px; font-size: 12px; }
+
+/* Show things only to logged-in ("in") or logged-out ("out") visitors.
+   Both stay hidden until the login check finishes, so nothing flickers. */
+html:not([data-auth="in"]) [data-show="in"],
+html:not([data-auth="out"]) [data-show="out"] { display: none !important; }
 
 /* =========================================================
    RESPONSIVE
@@ -900,7 +898,6 @@ footer.site-footer { text-align: left; padding: 32px 0 16px; margin-top: 0; }
   .plan--featured { transform: none; }
   .plans { row-gap: 20px; }
   .faq-grid { grid-template-columns: 1fr; gap: 16px; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
 }
 
 @media (max-width: 680px) {
@@ -915,7 +912,6 @@ footer.site-footer { text-align: left; padding: 32px 0 16px; margin-top: 0; }
   .market-stats p { font-size: 13px; }
   .cta-band { padding: 28px 18px; }
   .home-hero__ctas .btn { flex: 1 1 100%; text-align: center; }
-  .footer-grid { grid-template-columns: 1fr; }
 }
 
 @media (prefers-reduced-motion: reduce) {

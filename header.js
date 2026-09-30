@@ -92,6 +92,38 @@ container.querySelectorAll(".cc-nav a").forEach(a =>
 );
 
 /* =========================
+   FOOTER (any page with .site-footer-slot)
+   Items marked data-show="in" / "out" only appear
+   when the visitor is logged in / logged out.
+========================= */
+const footerSlot = document.querySelector(".site-footer-slot");
+
+if (footerSlot) {
+  footerSlot.outerHTML = `
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-top">
+      <a class="cc-brand" href="index.html" aria-label="Crown Capital home">
+        <img src="logo-mark.png" alt="" width="45" height="34">
+        <span>Crown Capital</span>
+      </a>
+
+      <nav class="footer-links" aria-label="Footer">
+        <a href="plans.html">Plans</a>
+        <a href="dashboard.html">Dashboard</a>
+        <a href="wallet.html" data-show="in">Wallet</a>
+        <a href="account.html" data-show="in">Account</a>
+        <a href="login.html" data-show="out">Login</a>
+        <a href="mailto:support@crowncapital.com">Support</a>
+      </nav>
+    </div>
+
+    <p class="footer-bottom">© ${new Date().getFullYear()} CrownCapital. All rights reserved.</p>
+  </div>
+</footer>`;
+}
+
+/* =========================
    AUTH STATE
 ========================= */
 const authLink = document.getElementById("authLink");
@@ -99,6 +131,9 @@ const startLink = document.getElementById("startLink");
 
 onAuthStateChanged(auth, (user) => {
   authLink.classList.remove("is-loading");
+
+  // Lets any page show/hide [data-show="in"] and [data-show="out"]
+  document.documentElement.dataset.auth = user ? "in" : "out";
 
   if (user) {
     authLink.textContent = "Account";
