@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css?v=9" />
+  <link rel="stylesheet" href="style.css?v=10" />
 </head>
 
 <body class="is-loading-data">
@@ -26,7 +26,7 @@
   <div class="wrap">
     <a class="back-link" href="plans.html">← Back to plans</a>
     <h1>Checkout</h1>
-    <p>Review your plan, choose how to pay, and you're invested.</p>
+    <p>Review your plan and payment options.</p>
   </div>
 </section>
 
@@ -53,50 +53,51 @@
         </dl>
       </div>
 
-      <form class="panel" id="payForm" novalidate>
+      <div class="panel" id="payForm">
         <h2 class="panel__title">Payment</h2>
 
         <fieldset class="methods">
           <legend>Choose a payment method</legend>
+
           <label class="method">
-            <input type="radio" name="method" value="card" checked>
+            <input type="radio" name="method" value="card">
             <span><strong>Debit or credit card</strong><span>Visa, Mastercard, American Express</span></span>
           </label>
+          <div class="means" data-for="card" hidden>
+            <p class="means__note">Card payments aren't available right now. Please check back soon.</p>
+          </div>
+
           <label class="method">
             <input type="radio" name="method" value="bank">
-            <span><strong>Bank transfer</strong><span>ACH or wire, 1 to 2 business days</span></span>
+            <span><strong>Bank transfer</strong><span>ACH or wire</span></span>
           </label>
+          <div class="means" data-for="bank" hidden>
+            <span class="mean" aria-disabled="true">ACH transfer</span>
+            <span class="mean" aria-disabled="true">Wire transfer</span>
+            <p class="means__note">Bank transfers are temporarily unavailable.</p>
+          </div>
+
           <label class="method">
             <input type="radio" name="method" value="crypto">
             <span><strong>Crypto</strong><span>USDT, BTC or ETH</span></span>
           </label>
+          <div class="means" data-for="crypto" hidden>
+            <span class="mean" aria-disabled="true">USDT</span>
+            <span class="mean" aria-disabled="true">Bitcoin</span>
+            <span class="mean" aria-disabled="true">Ethereum</span>
+            <p class="means__note">Crypto deposits are temporarily unavailable.</p>
+          </div>
         </fieldset>
+
+        <p class="means__loading" id="loading" hidden>
+          <span class="spinner" aria-hidden="true"></span><span id="loadingText">Loading…</span>
+        </p>
 
         <p class="form-error" id="error" role="alert" hidden></p>
 
-        <button class="btn pay-btn" type="submit" id="payBtn">Pay</button>
-        <p class="secure-note">
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-          Payments are encrypted end to end.
-        </p>
-      </form>
-
-    </div>
-
-    <!-- SUCCESS (shown after payment) -->
-    <div class="panel success" id="success" hidden>
-      <div class="success__icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>
+        <button class="btn pay-btn" type="button" id="payBtn" disabled>Payments not available yet</button>
       </div>
-      <h2>You're invested</h2>
-      <p id="okText"></p>
-      <dl class="kv">
-        <div><dt>Plan</dt><dd id="okPlan"></dd></div>
-        <div><dt>Invested</dt><dd id="okAmount"></dd></div>
-        <div><dt>Pays out on</dt><dd id="okEnd"></dd></div>
-        <div class="kv-total"><dt>Total payout</dt><dd id="okPayout"></dd></div>
-      </dl>
-      <a class="btn pay-btn" href="dashboard.html">Go to dashboard</a>
+
     </div>
 
   </div>
@@ -110,7 +111,7 @@
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
@@ -162,7 +163,6 @@ function renderSummary() {
   $("sStart").textContent = day(start);
   $("sEnd").textContent = day(end);
   $("sPayout").textContent = money(payout);
-  $("payBtn").textContent = "Pay " + money(plan.amount);
 }
 
 let userRef = null;
@@ -185,59 +185,37 @@ onAuthStateChanged(auth, async (user) => {
       const box = $("error");
       box.innerHTML = `Your <strong>${d.activePlan}</strong> is still running until ${day(d.planMaturity)}. You can start a new plan after it pays out. <a href="dashboard.html">View dashboard</a>`;
       box.hidden = false;
-      $("payBtn").disabled = true;
     }
   } catch (err) {
     console.error(err);
   }
 });
 
-/* PAY (simulated) */
-$("payForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  if (!userRef || !plan) return;
+/* PAYMENT METHODS
+   Payments are switched off for now: nothing here charges anyone
+   or starts a plan. Each method loads briefly, then shows its options
+   as unavailable. No account numbers or wallet addresses are shown. */
+const LOADING = {
+  card: "Connecting to card processor…",
+  bank: "Loading transfer options…",
+  crypto: "Loading crypto options…"
+};
+const loading = $("loading");
+let timer = null;
 
-  const btn = $("payBtn");
-  btn.disabled = true;
-  btn.textContent = "Processing payment…";
-  $("error").hidden = true;
+document.querySelectorAll('input[name="method"]').forEach(radio => {
+  radio.addEventListener("change", () => {
+    clearTimeout(timer);
+    document.querySelectorAll(".means").forEach(box => (box.hidden = true));
 
-  const method = new FormData(e.target).get("method");
-  const { start, end } = dates();
+    $("loadingText").textContent = LOADING[radio.value];
+    loading.hidden = false;
 
-  try {
-    // Simulated payment delay
-    await new Promise(r => setTimeout(r, 1600));
-
-    await setDoc(userRef, {
-      activePlan: planName,
-      planROI: plan.roi,
-      planDuration: plan.days,
-      planAmount: plan.amount,
-      expectedReturn: profit,
-      planPayout: payout,
-      paymentMethod: method,
-      planStart: start,
-      planMaturity: end
-    }, { merge: true });
-
-    $("okText").textContent = `Payment received. Your ${planName} started today.`;
-    $("okPlan").textContent = planName;
-    $("okAmount").textContent = money(plan.amount);
-    $("okEnd").textContent = day(end);
-    $("okPayout").textContent = money(payout);
-
-    $("checkout").hidden = true;
-    document.querySelector(".page-head").hidden = true;
-    $("success").hidden = false;
-    window.scrollTo(0, 0);
-  } catch (err) {
-    console.error(err);
-    $("error").textContent = `Payment couldn't be completed (${err?.code || "error"}). Try again.`;
-    $("error").hidden = false;
-    btn.disabled = false;
-    btn.textContent = "Pay " + money(plan.amount);
-  }
+    timer = setTimeout(() => {
+      loading.hidden = true;
+      document.querySelector(`.means[data-for="${radio.value}"]`).hidden = false;
+    }, radio.value === "card" ? 1600 : 1100);
+  });
 });
 </script>
 
