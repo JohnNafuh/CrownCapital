@@ -103,9 +103,12 @@ function friendly(err) {
     "auth/user-not-found": "Email or password is incorrect.",
     "auth/user-disabled": "This account has been disabled. Contact support@crowncapital.com.",
     "auth/too-many-requests": "Too many attempts. Wait a few minutes and try again.",
-    "auth/network-request-failed": "No connection. Check your internet and try again."
+    "auth/network-request-failed": "No connection. Check your internet and try again.",
+    "auth/operation-not-allowed": "Email sign-up is turned off for this site. Contact support@crowncapital.com.",
+    "auth/unauthorized-domain": "This website isn't approved for sign-in yet. Contact support@crowncapital.com."
   };
-  return map[err?.code] || "Something went wrong. Try again in a moment.";
+  console.error(err);
+  return map[err?.code] || `Something went wrong (${err?.code || "unknown error"}). Try again in a moment.`;
 }
 
 // Everyone lands on the homepage after logging in or signing up
