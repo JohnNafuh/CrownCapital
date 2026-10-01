@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Log in — Crown Capital</title>
-  <meta name="description" content="Log in to your Crown Capital account." />
+  <title>Create your account — Crown Capital</title>
+  <meta name="description" content="Open a Crown Capital account in under a minute." />
   <meta name="theme-color" content="#0A0A0A" />
   <link rel="icon" href="logo-mark.png" />
 
@@ -24,8 +24,8 @@
   <section class="wrap auth">
 
     <div class="auth__pitch">
-      <h1>Welcome back</h1>
-      <p>Log in to see your balance, your plan's progress and your next payout.</p>
+      <h1>Your Empire Starts Here</h1>
+      <p>Open your Crown Capital account in under a minute and choose a plan when you're ready.</p>
       <ul class="perks">
         <li>
           <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
@@ -43,29 +43,41 @@
     </div>
 
     <div class="auth-card">
-      <h2>Log in</h2>
-      <p>Use the email you signed up with.</p>
+      <h2>Create your account</h2>
+      <p>No deposit needed to sign up.</p>
 
-      <form class="form" id="loginForm" novalidate>
+      <form class="form" id="signupForm" novalidate>
+        <label>Full name
+          <input class="field" id="name" type="text" autocomplete="name" placeholder="Jane Smith" required>
+        </label>
+
         <label>Email
           <input class="field" id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
         </label>
 
-        <label>
-          <span class="label-row">Password <button class="link-btn" type="button" id="forgotBtn">Forgot password?</button></span>
+        <label>Password
           <span class="pw">
-            <input class="field" id="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+            <input class="field" id="password" type="password" autocomplete="new-password" placeholder="Create a password" required aria-describedby="pwRules">
             <button class="pw__toggle" type="button" aria-label="Show password">Show</button>
           </span>
         </label>
+        <ul class="rules" id="pwRules">
+          <li data-rule="len">8+ characters</li>
+          <li data-rule="letter">A letter</li>
+          <li data-rule="num">A number</li>
+        </ul>
+
+        <label class="check">
+          <input type="checkbox" id="terms">
+          <span>I agree to Crown Capital's terms of service and privacy policy.</span>
+        </label>
 
         <p class="form-error" id="error" role="alert" hidden></p>
-        <p class="form-ok" id="ok" role="status" hidden></p>
 
-        <button class="btn" type="submit" id="submitBtn">Log in</button>
+        <button class="btn" type="submit" id="submitBtn">Create account</button>
       </form>
 
-      <p class="auth-switch">New to Crown Capital? <a href="signup.html" id="signupLink">Create an account</a></p>
+      <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>
     </div>
 
   </section>
@@ -77,8 +89,10 @@
 <script type="module">
 import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
 import {
-  getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail
+  getAuth, onAuthStateChanged, createUserWithEmailAndPassword,
+  updateProfile, sendEmailVerification
 } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
 
 const firebaseConfig = {
   apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
@@ -91,6 +105,7 @@ const firebaseConfig = {
 
 const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
+const db = getFirestore(app);
 
 // Plain-English versions of Firebase errors
 function friendly(err) {
@@ -126,59 +141,77 @@ document.querySelectorAll(".pw__toggle").forEach(btn => {
 });
 
 const $ = id => document.getElementById(id);
-
-// Keep ?next= when switching to sign-up
-const next = new URLSearchParams(location.search).get("next");
-if (next) $("signupLink").href = "signup.html?next=" + encodeURIComponent(next);
+let creating = false;
 
 // Already logged in? Skip this page.
 onAuthStateChanged(auth, (user) => {
-  if (user) location.replace(nextPage());
+  if (user && !creating) location.replace(nextPage());
 });
 
-function showError(html) {
-  $("ok").hidden = true;
-  $("error").innerHTML = html;
-  $("error").hidden = false;
+/* Live password checklist */
+const RULES = {
+  len: v => v.length >= 8,
+  letter: v => /[a-z]/i.test(v),
+  num: v => /\d/.test(v)
+};
+const pwOk = v => Object.values(RULES).every(fn => fn(v));
+
+$("password").addEventListener("input", (e) => {
+  document.querySelectorAll("[data-rule]").forEach(li => {
+    li.classList.toggle("ok", RULES[li.dataset.rule](e.target.value));
+  });
+});
+
+function showError(html, field) {
+  const box = $("error");
+  box.innerHTML = html;
+  box.hidden = false;
+  document.querySelectorAll(".field").forEach(f => f.removeAttribute("aria-invalid"));
+  if (field) { field.setAttribute("aria-invalid", "true"); field.focus(); }
 }
 
-$("loginForm").addEventListener("submit", async (e) => {
+/* Submit */
+$("signupForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   $("error").hidden = true;
-  $("ok").hidden = true;
 
+  const name = $("name").value.trim();
   const email = $("email").value.trim();
   const password = $("password").value;
-  if (!email || !password) return showError("Enter your email and password.");
+
+  if (!name) return showError("Enter your full name.", $("name"));
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return showError("Enter a valid email address.", $("email"));
+  if (!pwOk(password)) return showError("Your password needs 8+ characters, a letter and a number.", $("password"));
+  if (!$("terms").checked) return showError("Please agree to the terms to continue.", $("terms"));
 
   const btn = $("submitBtn");
   btn.disabled = true;
-  btn.textContent = "Logging in…";
+  btn.textContent = "Creating your account…";
+  creating = true;
 
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const { user } = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(user, { displayName: name });
+
+    await setDoc(doc(db, "users", user.uid), {
+      name,
+      email,
+      balance: 0,
+      profit: 0,
+      activePlan: "none",
+      prefs: { payouts: true, market: false, offers: false },
+      createdAt: Date.now()
+    });
+
+    // Sends a real verification email; don't block sign-up if it fails
+    sendEmailVerification(user).catch(() => {});
+
     location.replace(nextPage());
   } catch (err) {
+    creating = false;
     btn.disabled = false;
-    btn.textContent = "Log in";
-    showError(friendly(err));
-  }
-});
-
-$("forgotBtn").addEventListener("click", async () => {
-  const email = $("email").value.trim();
-  if (!email) {
-    showError("Enter your email above, then tap “Forgot password?” again.");
-    $("email").focus();
-    return;
-  }
-  try {
-    await sendPasswordResetEmail(auth, email);
-    $("error").hidden = true;
-    $("ok").textContent = `If ${email} has an account, a reset link is on its way. Check your inbox.`;
-    $("ok").hidden = false;
-  } catch (err) {
-    showError(friendly(err));
+    btn.textContent = "Create account";
+    showError(friendly(err), err?.code === "auth/email-already-in-use" || err?.code === "auth/invalid-email" ? $("email") : null);
   }
 });
 </script>
