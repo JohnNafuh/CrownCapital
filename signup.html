@@ -123,10 +123,9 @@ function friendly(err) {
   return map[err?.code] || "Something went wrong. Try again in a moment.";
 }
 
-// Only allow redirects to pages on this site (e.g. ?next=plans.html)
+// Everyone lands on the homepage after logging in or signing up
 function nextPage() {
-  const next = new URLSearchParams(location.search).get("next") || "";
-  return /^[a-z0-9-]+\.html$/i.test(next) ? next : "dashboard.html";
+  return "index.html";
 }
 
 // Show / hide password
