@@ -124,7 +124,13 @@ if (footerSlot) {
       </nav>
     </div>
 
-    <p class="footer-bottom">© ${new Date().getFullYear()} CrownCapital. All rights reserved.</p>
+    <div class="footer-legal">
+      <p class="footer-bottom">© ${new Date().getFullYear()} CrownCapital. All rights reserved.</p>
+      <nav aria-label="Legal">
+        ${footerLink("terms.html", "Terms")}
+        ${footerLink("privacy.html", "Privacy")}
+      </nav>
+    </div>
   </div>
 </footer>`;
 }
