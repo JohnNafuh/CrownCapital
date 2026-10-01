@@ -2,106 +2,315 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Account - CrownCapital</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Account — Crown Capital</title>
+  <meta name="description" content="Manage your Crown Capital profile, security and notifications." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="logo-mark.png" />
 
-  <link rel="stylesheet" href="./style.css">
-
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
-    import {
-      getAuth,
-      onAuthStateChanged,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
-      authDomain: "crowncapital-invest.firebaseapp.com",
-      projectId: "crowncapital-invest",
-      storageBucket: "crowncapital-invest.firebasestorage.app",
-      messagingSenderId: "9373579357",
-      appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        window.location.href = "login.html";
-        return;
-      }
-
-      document.getElementById("email").innerText = user.email;
-    });
-
-    window.logout = function () {
-      signOut(auth).then(() => {
-        window.location.href = "login.html";
-      });
-    };
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css?v=7" />
 </head>
 
-<body>
+<body class="is-loading-data">
 
 <!-- HEADER -->
 <div class="site-header"></div>
-<script type="module" src="header.js"></script>
+<script type="module" src="header.js?v=7"></script>
 
-<!-- ACCOUNT HEADER -->
-<section class="hero" style="
-  padding: 60px 20px 30px;
-  text-align: center;
-  background: radial-gradient(circle at top, #1a1d24, #0b0d12);
-">
+<main>
 
-  <div style="font-size:12px; letter-spacing:2px; color:rgba(255,255,255,0.5);">
-    ACCOUNT CENTER
+<!-- TITLE -->
+<section class="page-head">
+  <div class="wrap">
+    <h1>Account</h1>
+    <p>Your profile, security and notification settings.</p>
   </div>
-
-  <h1 style="margin:10px 0;">My Profile</h1>
-
-  <p id="email" style="color:rgba(255,255,255,0.6); font-size:13px;"></p>
-
-  <button onclick="logout()" class="btn" style="margin-top:18px;">
-    Logout
-  </button>
 </section>
 
-<!-- ACCOUNT ACTIONS -->
-<section class="features">
+<section class="section--tight">
+  <div class="wrap account">
 
-  <div class="card">
-    <h3>Deposit Funds</h3>
-    <p style="font-size:13px; color:rgba(255,255,255,0.6);">
-      Add money to activate investment plans
-    </p>
-    <button class="btn">Deposit</button>
+    <!-- PROFILE -->
+    <aside class="panel profile">
+      <div class="profile__avatar" id="avatar" aria-hidden="true">·</div>
+      <p class="profile__name" id="pName">&nbsp;</p>
+      <p class="profile__email" id="pEmail">&nbsp;</p>
+      <span class="badge" id="pVerified" hidden></span>
+
+      <dl class="profile__meta">
+        <div><dt>Member since</dt><dd id="pSince">–</dd></div>
+        <div><dt>Last sign-in</dt><dd id="pLast">–</dd></div>
+        <div><dt>Active plan</dt><dd id="pPlan">–</dd></div>
+      </dl>
+    </aside>
+
+    <div class="settings">
+
+      <!-- PROFILE DETAILS -->
+      <div class="panel">
+        <h2 class="settings__title">Profile</h2>
+        <form class="row row--form" id="nameForm" novalidate>
+          <label class="sr-only" for="nameInput">Display name</label>
+          <input class="field" id="nameInput" type="text" maxlength="40" placeholder="Your name" autocomplete="name">
+          <button class="btn" type="submit">Save name</button>
+        </form>
+        <p class="row-note" id="nameNote" aria-live="polite"></p>
+
+        <div class="row">
+          <div class="row__text">
+            <strong>Email</strong>
+            <span id="rowEmail">&nbsp;</span>
+          </div>
+          <div class="row__action">
+            <button class="btn btn--ghost" type="button" id="verifyBtn" hidden>Verify email</button>
+          </div>
+        </div>
+        <p class="row-note" id="verifyNote" aria-live="polite"></p>
+      </div>
+
+      <!-- SECURITY -->
+      <div class="panel">
+        <h2 class="settings__title">Security</h2>
+        <div class="row">
+          <div class="row__text">
+            <strong>Password</strong>
+            <span>We'll email you a secure link to set a new one.</span>
+          </div>
+          <div class="row__action">
+            <button class="btn btn--ghost" type="button" id="resetBtn">Change password</button>
+          </div>
+        </div>
+        <p class="row-note" id="resetNote" aria-live="polite"></p>
+
+        <div class="row">
+          <div class="row__text">
+            <strong>Sign out</strong>
+            <span>Log out of Crown Capital on this device.</span>
+          </div>
+          <div class="row__action">
+            <button class="btn btn--danger" type="button" id="logoutBtn">Log out</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NOTIFICATIONS -->
+      <div class="panel">
+        <h2 class="settings__title">Notifications</h2>
+        <div class="row">
+          <div class="row__text">
+            <strong>Plan payouts</strong>
+            <span>Email me when a plan matures and pays out.</span>
+          </div>
+          <label class="switch"><input type="checkbox" data-pref="payouts" aria-label="Plan payout emails"><span></span></label>
+        </div>
+        <div class="row">
+          <div class="row__text">
+            <strong>Market updates</strong>
+            <span>A short weekly summary of how the markets moved.</span>
+          </div>
+          <label class="switch"><input type="checkbox" data-pref="market" aria-label="Market update emails"><span></span></label>
+        </div>
+        <div class="row">
+          <div class="row__text">
+            <strong>New plans and offers</strong>
+            <span>Hear first when new plans launch.</span>
+          </div>
+          <label class="switch"><input type="checkbox" data-pref="offers" aria-label="New plan and offer emails"><span></span></label>
+        </div>
+        <p class="row-note" id="prefNote" aria-live="polite"></p>
+      </div>
+
+      <!-- HELP -->
+      <div class="panel">
+        <h2 class="settings__title">Help</h2>
+        <div class="row">
+          <div class="row__text">
+            <strong>Contact support</strong>
+            <span>support@crowncapital.com, around the clock.</span>
+          </div>
+          <div class="row__action">
+            <a class="btn btn--ghost" href="mailto:support@crowncapital.com">Email us</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
-
-  <div class="card">
-    <h3>Withdraw</h3>
-    <p style="font-size:13px; color:rgba(255,255,255,0.6);">
-      Request payout from earnings
-    </p>
-    <button class="btn">Withdraw</button>
-  </div>
-
-  <div class="card">
-    <h3>Security</h3>
-    <p style="font-size:13px; color:rgba(255,255,255,0.6);">
-      Manage login access & protection
-    </p>
-    <button class="btn">Manage</button>
-  </div>
-
 </section>
 
-<footer>
-  <p>© 2026 CrownCapital. All rights reserved.</p>
-</footer>
+</main>
+
+<!-- FOOTER (built by header.js) -->
+<div class="site-footer-slot"></div>
+
+<!-- ACCOUNT -->
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signOut,
+  updateProfile, sendPasswordResetEmail, sendEmailVerification
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+  authDomain: "crowncapital-invest.firebaseapp.com",
+  projectId: "crowncapital-invest",
+  storageBucket: "crowncapital-invest.firebasestorage.app",
+  messagingSenderId: "9373579357",
+  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+};
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const $ = id => document.getElementById(id);
+const date = t => t ? new Date(t).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "–";
+
+function note(el, text, ok = true) {
+  el.textContent = text;
+  el.className = "row-note " + (ok ? "up" : "down");
+}
+
+// Turn Firebase error codes into plain sentences
+function friendly(err) {
+  const map = {
+    "auth/too-many-requests": "Too many attempts. Wait a few minutes and try again.",
+    "auth/network-request-failed": "No connection. Check your internet and try again.",
+    "auth/requires-recent-login": "Please log out and back in, then try again."
+  };
+  return map[err?.code] || "That didn't work. Try again in a moment.";
+}
+
+let user = null;
+let userRef = null;
+let userData = {};
+
+onAuthStateChanged(auth, async (u) => {
+  if (!u) {
+    window.location.href = "login.html";
+    return;
+  }
+  user = u;
+  userRef = doc(db, "users", u.uid);
+
+  let data = {};
+  try {
+    const snap = await getDoc(userRef);
+    if (snap.exists()) data = snap.data();
+  } catch (err) {
+    console.error("Account load failed:", err);
+  }
+
+  userData = data;
+  renderProfile(data);
+  renderPrefs(data.prefs || {});
+  document.body.classList.remove("is-loading-data");
+});
+
+function displayName() {
+  return user.displayName || user.email.split("@")[0];
+}
+
+function renderProfile(data) {
+  const name = displayName();
+  $("avatar").textContent = name.charAt(0).toUpperCase();
+  $("pName").textContent = name;
+  $("pEmail").textContent = user.email;
+  $("rowEmail").textContent = user.email;
+  $("nameInput").value = user.displayName || "";
+
+  const badge = $("pVerified");
+  badge.hidden = false;
+  if (user.emailVerified) {
+    badge.textContent = "Verified";
+    badge.className = "badge badge--ok";
+  } else {
+    badge.textContent = "Email not verified";
+    badge.className = "badge badge--warn";
+    $("verifyBtn").hidden = false;
+  }
+
+  $("pSince").textContent = date(data.createdAt || user.metadata.creationTime);
+  $("pLast").textContent = date(user.metadata.lastSignInTime);
+  $("pPlan").textContent = data.activePlan && data.activePlan !== "none" ? data.activePlan : "None";
+}
+
+/* NAME */
+$("nameForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const value = $("nameInput").value.trim();
+  const msg = $("nameNote");
+  if (!value) return note(msg, "Enter a name first.", false);
+
+  const btn = e.target.querySelector("button");
+  btn.disabled = true;
+  try {
+    await updateProfile(user, { displayName: value });
+    await setDoc(userRef, { name: value }, { merge: true });
+    renderProfile(userData);
+    note(msg, "Name saved.");
+  } catch (err) {
+    note(msg, friendly(err), false);
+  }
+  btn.disabled = false;
+});
+
+/* VERIFY EMAIL */
+$("verifyBtn").addEventListener("click", async (e) => {
+  e.target.disabled = true;
+  try {
+    await sendEmailVerification(user);
+    note($("verifyNote"), `Verification link sent to ${user.email}.`);
+  } catch (err) {
+    note($("verifyNote"), friendly(err), false);
+    e.target.disabled = false;
+  }
+});
+
+/* PASSWORD */
+$("resetBtn").addEventListener("click", async (e) => {
+  e.target.disabled = true;
+  try {
+    await sendPasswordResetEmail(auth, user.email);
+    note($("resetNote"), `Password link sent to ${user.email}. Check your inbox.`);
+  } catch (err) {
+    note($("resetNote"), friendly(err), false);
+  }
+  setTimeout(() => (e.target.disabled = false), 30000);
+});
+
+/* LOG OUT */
+$("logoutBtn").addEventListener("click", () => {
+  signOut(auth).then(() => (window.location.href = "login.html"));
+});
+
+/* NOTIFICATIONS */
+const DEFAULT_PREFS = { payouts: true, market: false, offers: false };
+
+function renderPrefs(saved) {
+  const prefs = { ...DEFAULT_PREFS, ...saved };
+  document.querySelectorAll("[data-pref]").forEach(input => {
+    input.checked = !!prefs[input.dataset.pref];
+  });
+}
+
+document.querySelectorAll("[data-pref]").forEach(input => {
+  input.addEventListener("change", async () => {
+    try {
+      await setDoc(userRef, { prefs: { [input.dataset.pref]: input.checked } }, { merge: true });
+      note($("prefNote"), "Saved.");
+    } catch (err) {
+      input.checked = !input.checked;
+      note($("prefNote"), friendly(err), false);
+    }
+  });
+});
+</script>
 
 </body>
 </html>
