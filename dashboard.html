@@ -128,11 +128,11 @@ const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Plan details, used when the saved record is missing ROI or duration
+// Plan details (ROI is daily). Used when the saved record is missing ROI or duration
 const PLANS = {
   "Starter Plan": { roi: 5, days: 7 },
-  "Pro Plan": { roi: 10, days: 14 },
-  "Elite Plan": { roi: 20, days: 30 }
+  "Pro Plan": { roi: 8, days: 14 },
+  "Elite Plan": { roi: 10, days: 30 }
 };
 
 const $ = id => document.getElementById(id);
@@ -176,7 +176,8 @@ function render(d) {
   const amount = Number(d.planAmount) || 0;
   const roi = Number(d.planROI) || info.roi || 0;
   const days = Number(d.planDuration) || info.days || 0;
-  const expected = Number(d.expectedReturn) || amount * roi / 100;
+  // ROI is daily, so the return is ROI x number of days
+  const expected = amount * roi / 100 * days;
   const start = d.planStart;
   const end = d.planMaturity || (start && days ? start + days * 864e5 : null);
 
@@ -208,7 +209,7 @@ function render(d) {
 
     box.innerHTML = `
       <h2 class="panel__title">Active Plan</h2>
-      <p class="plan-status__name">${d.activePlan}<small>${roi}% ROI</small></p>
+      <p class="plan-status__name">${d.activePlan}<small>${roi}% daily ROI</small></p>
       <dl class="kv">
         <div><dt>Invested</dt><dd>$${money(amount)}</dd></div>
         <div><dt>Return</dt><dd class="up">+$${money(expected)}</dd></div>

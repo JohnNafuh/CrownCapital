@@ -37,12 +37,12 @@
       <div class="plan">
         <h3>Starter Plan</h3>
         <p class="plan__tag">Low risk, beginner friendly</p>
-        <p class="plan__roi">5% <small>ROI</small></p>
+        <p class="plan__roi">5% <small>daily ROI</small></p>
         <ul>
-          <li><span>Investment</span><span class="num">$1,500</span></li>
+          <li><span>Investment</span><span class="num">$3,500</span></li>
           <li><span>Duration</span><span>7 days</span></li>
-          <li><span>Profit</span><span class="num up">+$75</span></li>
-          <li><span>Total payout</span><strong class="num">$1,575</strong></li>
+          <li><span>Profit</span><span class="num up">+$1,225</span></li>
+          <li><span>Total payout</span><strong class="num">$4,725</strong></li>
           <li><span>Support</span><span>Standard</span></li>
         </ul>
         <button class="invest-btn" type="button" onclick="investPlan(this, 'Starter Plan', 5, 7)">Invest now</button>
@@ -52,29 +52,29 @@
         <span class="plan__badge">Most popular</span>
         <h3>Pro Plan</h3>
         <p class="plan__tag">Balanced growth</p>
-        <p class="plan__roi">10% <small>ROI</small></p>
+        <p class="plan__roi">8% <small>daily ROI</small></p>
         <ul>
-          <li><span>Investment</span><span class="num">$3,500</span></li>
+          <li><span>Investment</span><span class="num">$6,200</span></li>
           <li><span>Duration</span><span>14 days</span></li>
-          <li><span>Profit</span><span class="num up">+$350</span></li>
-          <li><span>Total payout</span><strong class="num">$3,850</strong></li>
+          <li><span>Profit</span><span class="num up">+$6,944</span></li>
+          <li><span>Total payout</span><strong class="num">$13,144</strong></li>
           <li><span>Support</span><span>Priority</span></li>
         </ul>
-        <button class="invest-btn" type="button" onclick="investPlan(this, 'Pro Plan', 10, 14)">Invest now</button>
+        <button class="invest-btn" type="button" onclick="investPlan(this, 'Pro Plan', 8, 14)">Invest now</button>
       </div>
 
       <div class="plan">
         <h3>Elite Plan</h3>
         <p class="plan__tag">High return, high reward</p>
-        <p class="plan__roi">20% <small>ROI</small></p>
+        <p class="plan__roi">10% <small>daily ROI</small></p>
         <ul>
-          <li><span>Investment</span><span class="num">$6,000</span></li>
+          <li><span>Investment</span><span class="num">$10,500</span></li>
           <li><span>Duration</span><span>30 days</span></li>
-          <li><span>Profit</span><span class="num up">+$1,200</span></li>
-          <li><span>Total payout</span><strong class="num">$7,200</strong></li>
+          <li><span>Profit</span><span class="num up">+$31,500</span></li>
+          <li><span>Total payout</span><strong class="num">$42,000</strong></li>
           <li><span>Support</span><span>Dedicated manager</span></li>
         </ul>
-        <button class="invest-btn" type="button" onclick="investPlan(this, 'Elite Plan', 20, 30)">Invest now</button>
+        <button class="invest-btn" type="button" onclick="investPlan(this, 'Elite Plan', 10, 30)">Invest now</button>
       </div>
     </div>
   </div>
@@ -95,9 +95,9 @@
       </div>
 
       <div class="calc__out" aria-live="polite">
-        <div><span>You invest</span><strong id="cIn">$3,500</strong></div>
-        <div><span>You earn</span><strong id="cEarn" class="up">+$350</strong></div>
-        <div class="is-total"><span>Total payout</span><strong id="cTotal">$3,850</strong></div>
+        <div><span>You invest</span><strong id="cIn">$6,200</strong></div>
+        <div><span>You earn</span><strong id="cEarn" class="up">+$6,944</strong></div>
+        <div class="is-total"><span>Total payout</span><strong id="cTotal">$13,144</strong></div>
         <div><span>Paid out on</span><strong id="cDate">&nbsp;</strong></div>
       </div>
     </div>
@@ -122,10 +122,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr><th scope="row">ROI</th><td>5%</td><td class="is-pro">10%</td><td>20%</td></tr>
-          <tr><th scope="row">Investment</th><td>$1,500</td><td class="is-pro">$3,500</td><td>$6,000</td></tr>
+          <tr><th scope="row">Daily ROI</th><td>5%</td><td class="is-pro">8%</td><td>10%</td></tr>
+          <tr><th scope="row">Total return</th><td>35%</td><td class="is-pro">112%</td><td>300%</td></tr>
+          <tr><th scope="row">Investment</th><td>$3,500</td><td class="is-pro">$6,200</td><td>$10,500</td></tr>
           <tr><th scope="row">Duration</th><td>7 days</td><td class="is-pro">14 days</td><td>30 days</td></tr>
-          <tr><th scope="row">Total payout</th><td>$1,575</td><td class="is-pro">$3,850</td><td>$7,200</td></tr>
+          <tr><th scope="row">Total payout</th><td>$4,725</td><td class="is-pro">$13,144</td><td>$42,000</td></tr>
           <tr><th scope="row">Live dashboard</th><td class="yes">Included</td><td class="is-pro yes">Included</td><td class="yes">Included</td></tr>
           <tr><th scope="row">Risk level</th><td>Low</td><td class="is-pro">Medium</td><td>High</td></tr>
           <tr><th scope="row">Support</th><td>Standard</td><td class="is-pro">Priority</td><td>Dedicated manager</td></tr>
@@ -146,16 +147,16 @@
 <script>
 (function () {
   const PLANS = [
-    { amount: 1500, roi: 5, days: 7 },
-    { amount: 3500, roi: 10, days: 14 },
-    { amount: 6000, roi: 20, days: 30 }
+    { amount: 3500, roi: 5, days: 7 },
+    { amount: 6200, roi: 8, days: 14 },
+    { amount: 10500, roi: 10, days: 30 }
   ];
   const fmt = n => "$" + n.toLocaleString("en-US");
   const buttons = document.querySelectorAll(".seg button");
 
   function show(i) {
     const p = PLANS[i];
-    const earn = p.amount * p.roi / 100;
+    const earn = p.amount * p.roi / 100 * p.days;
     const date = new Date(Date.now() + p.days * 864e5);
 
     document.getElementById("cIn").textContent = fmt(p.amount);
@@ -195,7 +196,7 @@ onAuthStateChanged(auth, (user) => {
   currentUser = user || null;
 });
 
-const AMOUNTS = { "Starter Plan": 1500, "Pro Plan": 3500, "Elite Plan": 6000 };
+const AMOUNTS = { "Starter Plan": 3500, "Pro Plan": 6200, "Elite Plan": 10500 };
 
 window.investPlan = function (btn, planName, roi, duration) {
 
