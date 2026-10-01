@@ -1,75 +1,244 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payment</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Checkout — Crown Capital</title>
+  <meta name="description" content="Review and pay for your Crown Capital plan." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="logo-mark.png" />
 
-  <link rel="stylesheet" href="style.css">
-
-  <style>
-    .pay-box {
-      max-width: 420px;
-      margin: 60px auto;
-      padding: 22px;
-      border-radius: 18px;
-      background: linear-gradient(180deg, #161a22, #0f131a);
-      border: 1px solid rgba(255,255,255,0.06);
-      text-align: center;
-    }
-
-    .pay-btn {
-      width: 100%;
-      margin-top: 20px;
-      padding: 14px;
-      border: none;
-      border-radius: 12px;
-      background: linear-gradient(135deg, #b08d2a, #d6b146);
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    .pay-btn:hover {
-      transform: translateY(-2px);
-    }
-  </style>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css?v=9" />
 </head>
 
-<body>
+<body class="is-loading-data">
 
+<!-- HEADER -->
 <div class="site-header"></div>
-<script type="module" src="header.js"></script>
+<script type="module" src="header.js?v=9"></script>
 
-<div class="pay-box">
-  <h2>Complete Payment</h2>
+<main>
 
-  <p id="plan">Plan: ...</p>
-  <p id="amount">Amount: ...</p>
+<section class="page-head">
+  <div class="wrap">
+    <a class="back-link" href="plans.html">← Back to plans</a>
+    <h1>Checkout</h1>
+    <p>Review your plan, choose how to pay, and you're invested.</p>
+  </div>
+</section>
 
-  <button class="pay-btn" id="payBtn">Pay Now</button>
-</div>
+<section class="section--tight">
+  <div class="wrap">
 
-<script>
-const params = new URLSearchParams(window.location.search);
+    <!-- CHECKOUT -->
+    <div class="checkout" id="checkout">
 
-const plan = params.get("plan");
-const amount = params.get("amount");
+      <div class="panel summary">
+        <h2 class="panel__title">Your plan</h2>
+        <div class="summary__plan">
+          <h2 id="sPlan">–</h2>
+          <span id="sRoi"></span>
+        </div>
+        <dl class="kv">
+          <div><dt>Investment</dt><dd id="sAmount">–</dd></div>
+          <div><dt>Duration</dt><dd id="sDays">–</dd></div>
+          <div><dt>Total return</dt><dd id="sTotalPct">–</dd></div>
+          <div><dt>Profit</dt><dd id="sProfit" class="up">–</dd></div>
+          <div><dt>Starts</dt><dd id="sStart">–</dd></div>
+          <div><dt>Pays out on</dt><dd id="sEnd">–</dd></div>
+          <div class="kv-total"><dt>Total payout</dt><dd id="sPayout">–</dd></div>
+        </dl>
+      </div>
 
-document.getElementById("plan").innerText = "Plan: " + plan;
-document.getElementById("amount").innerText = "Amount: $" + amount;
+      <form class="panel" id="payForm" novalidate>
+        <h2 class="panel__title">Payment</h2>
 
-document.getElementById("payBtn").onclick = () => {
+        <fieldset class="methods">
+          <legend>Choose a payment method</legend>
+          <label class="method">
+            <input type="radio" name="method" value="card" checked>
+            <span><strong>Debit or credit card</strong><span>Visa, Mastercard, American Express</span></span>
+          </label>
+          <label class="method">
+            <input type="radio" name="method" value="bank">
+            <span><strong>Bank transfer</strong><span>ACH or wire, 1 to 2 business days</span></span>
+          </label>
+          <label class="method">
+            <input type="radio" name="method" value="crypto">
+            <span><strong>Crypto</strong><span>USDT, BTC or ETH</span></span>
+          </label>
+        </fieldset>
 
-  const btn = document.getElementById("payBtn");
-  btn.innerText = "Processing...";
-  btn.disabled = true;
+        <p class="form-error" id="error" role="alert" hidden></p>
 
-  setTimeout(() => {
-    // simulate successful payment
-    window.location.href =
-      `invest-confirm.html?plan=${plan}&paid=true&amount=${amount}`;
-  }, 1500);
+        <button class="btn pay-btn" type="submit" id="payBtn">Pay</button>
+        <p class="secure-note">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Payments are encrypted end to end.
+        </p>
+      </form>
+
+    </div>
+
+    <!-- SUCCESS (shown after payment) -->
+    <div class="panel success" id="success" hidden>
+      <div class="success__icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5 9-10"/></svg>
+      </div>
+      <h2>You're invested</h2>
+      <p id="okText"></p>
+      <dl class="kv">
+        <div><dt>Plan</dt><dd id="okPlan"></dd></div>
+        <div><dt>Invested</dt><dd id="okAmount"></dd></div>
+        <div><dt>Pays out on</dt><dd id="okEnd"></dd></div>
+        <div class="kv-total"><dt>Total payout</dt><dd id="okPayout"></dd></div>
+      </dl>
+      <a class="btn pay-btn" href="dashboard.html">Go to dashboard</a>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- FOOTER (built by header.js) -->
+<div class="site-footer-slot"></div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+  authDomain: "crowncapital-invest.firebaseapp.com",
+  projectId: "crowncapital-invest",
+  storageBucket: "crowncapital-invest.firebasestorage.app",
+  messagingSenderId: "9373579357",
+  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
 };
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+/* Plan details come from here, NOT from the link, so nobody can
+   change the price or ROI by editing the URL. Keep in sync with plans.html. */
+const PLANS = {
+  "Starter Plan": { amount: 3500, roi: 5, days: 7 },
+  "Pro Plan": { amount: 6200, roi: 8, days: 14 },
+  "Elite Plan": { amount: 10500, roi: 10, days: 30 }
+};
+
+const $ = id => document.getElementById(id);
+const money = n => "$" + Number(n).toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const day = t => new Date(t).toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric", year: "numeric" });
+
+const planName = new URLSearchParams(location.search).get("plan");
+const plan = PLANS[planName];
+
+// Unknown or missing plan: send them back to pick one
+if (!plan) location.replace("plans.html");
+
+const profit = plan ? plan.amount * plan.roi / 100 * plan.days : 0;
+const payout = plan ? plan.amount + profit : 0;
+
+function dates() {
+  const start = Date.now();
+  return { start, end: start + plan.days * 864e5 };
+}
+
+function renderSummary() {
+  const { start, end } = dates();
+  $("sPlan").textContent = planName;
+  $("sRoi").textContent = plan.roi + "% daily";
+  $("sAmount").textContent = money(plan.amount);
+  $("sDays").textContent = plan.days + " days";
+  $("sTotalPct").textContent = (plan.roi * plan.days).toLocaleString("en-US") + "%";
+  $("sProfit").textContent = "+" + money(profit);
+  $("sStart").textContent = day(start);
+  $("sEnd").textContent = day(end);
+  $("sPayout").textContent = money(payout);
+  $("payBtn").textContent = "Pay " + money(plan.amount);
+}
+
+let userRef = null;
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    location.href = "login.html";
+    return;
+  }
+  userRef = doc(db, "users", user.uid);
+  if (!plan) return;
+  renderSummary();
+  document.body.classList.remove("is-loading-data");
+
+  // One plan at a time: block a new purchase while one is still running
+  try {
+    const snap = await getDoc(userRef);
+    const d = snap.exists() ? snap.data() : {};
+    if (d.activePlan && d.activePlan !== "none" && d.planMaturity && Date.now() < d.planMaturity) {
+      const box = $("error");
+      box.innerHTML = `Your <strong>${d.activePlan}</strong> is still running until ${day(d.planMaturity)}. You can start a new plan after it pays out. <a href="dashboard.html">View dashboard</a>`;
+      box.hidden = false;
+      $("payBtn").disabled = true;
+    }
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+/* PAY (simulated) */
+$("payForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  if (!userRef || !plan) return;
+
+  const btn = $("payBtn");
+  btn.disabled = true;
+  btn.textContent = "Processing payment…";
+  $("error").hidden = true;
+
+  const method = new FormData(e.target).get("method");
+  const { start, end } = dates();
+
+  try {
+    // Simulated payment delay
+    await new Promise(r => setTimeout(r, 1600));
+
+    await setDoc(userRef, {
+      activePlan: planName,
+      planROI: plan.roi,
+      planDuration: plan.days,
+      planAmount: plan.amount,
+      expectedReturn: profit,
+      planPayout: payout,
+      paymentMethod: method,
+      planStart: start,
+      planMaturity: end
+    }, { merge: true });
+
+    $("okText").textContent = `Payment received. Your ${planName} started today.`;
+    $("okPlan").textContent = planName;
+    $("okAmount").textContent = money(plan.amount);
+    $("okEnd").textContent = day(end);
+    $("okPayout").textContent = money(payout);
+
+    $("checkout").hidden = true;
+    document.querySelector(".page-head").hidden = true;
+    $("success").hidden = false;
+    window.scrollTo(0, 0);
+  } catch (err) {
+    console.error(err);
+    $("error").textContent = `Payment couldn't be completed (${err?.code || "error"}). Try again.`;
+    $("error").hidden = false;
+    btn.disabled = false;
+    btn.textContent = "Pay " + money(plan.amount);
+  }
+});
 </script>
 
 </body>

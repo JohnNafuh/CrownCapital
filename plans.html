@@ -11,14 +11,14 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css?v=8" />
+  <link rel="stylesheet" href="style.css?v=9" />
 </head>
 
 <body>
 
 <!-- HEADER -->
 <div class="site-header"></div>
-<script type="module" src="header.js?v=8"></script>
+<script type="module" src="header.js?v=9"></script>
 
 <main>
 
@@ -130,7 +130,7 @@
           <tr><th scope="row">Live dashboard</th><td class="yes">Included</td><td class="is-pro yes">Included</td><td class="yes">Included</td></tr>
           <tr><th scope="row">Risk level</th><td>Low</td><td class="is-pro">Medium</td><td>High</td></tr>
           <tr><th scope="row">Support</th><td>Standard</td><td class="is-pro">Priority</td><td>Dedicated manager</td></tr>
-          <tr><th scope="row">Run more than one plan</th><td class="yes">Yes</td><td class="is-pro yes">Yes</td><td class="yes">Yes</td></tr>
+          <tr><th scope="row">Withdraw</th><td>After 7 days</td><td class="is-pro">After 14 days</td><td>After 30 days</td></tr>
         </tbody>
       </table>
     </div>
@@ -213,7 +213,7 @@ window.investPlan = function (btn, planName, roi, duration) {
 
   setTimeout(() => {
     window.location.href =
-      `payment.html?plan=${encodeURIComponent(planName)}&amount=${amount}&roi=${roi}&duration=${duration}`;
+      `payment.html?plan=${encodeURIComponent(planName)}`;
   }, 800);
 };
 </script>
