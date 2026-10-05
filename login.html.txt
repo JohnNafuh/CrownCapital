@@ -1,0 +1,186 @@
+<!-- FILENAME: login.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in — Crown Capital</title>
+  <meta name="description" content="Log in to your Crown Capital account." />
+  <meta name="theme-color" content="#0A0A0A" />
+  <link rel="icon" href="logo-mark.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
+  <link rel="stylesheet" href="style.css?v=10" />
+</head>
+
+<body>
+
+<!-- HEADER -->
+<div class="site-header"></div>
+<script type="module" src="header.js?v=10"></script>
+
+<main>
+  <section class="wrap auth">
+
+    <div class="auth__pitch">
+      <h1>Welcome back</h1>
+      <p>Log in to see your balance, your plan's progress and your next payout.</p>
+      <ul class="perks">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg>
+          <div><strong>Plans from $3,500</strong><span>Starter, Pro and Elite, with returns paid at the end of each term.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M7 14l3-3 3 2 4-5"/></svg>
+          <div><strong>Track everything live</strong><span>Your balance, plan progress and payout date on one dashboard.</span></div>
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          <div><strong>Protected from day one</strong><span>256-bit encryption and email verification on every account.</span></div>
+        </li>
+      </ul>
+    </div>
+
+    <div class="auth-card">
+      <h2>Log in</h2>
+      <p>Use the email you signed up with.</p>
+
+      <form class="form" id="loginForm" novalidate>
+        <label>Email
+          <input class="field" id="email" type="email" autocomplete="email" inputmode="email" placeholder="you@example.com" required>
+        </label>
+
+        <label>
+          <span class="label-row">Password <button class="link-btn" type="button" id="forgotBtn">Forgot password?</button></span>
+          <span class="pw">
+            <input class="field" id="password" type="password" autocomplete="current-password" placeholder="Your password" required>
+            <button class="pw__toggle" type="button" aria-label="Show password">Show</button>
+          </span>
+        </label>
+
+        <p class="form-error" id="error" role="alert" hidden></p>
+        <p class="form-ok" id="ok" role="status" hidden></p>
+
+        <button class="btn" type="submit" id="submitBtn">Log in</button>
+      </form>
+
+      <p class="auth-switch">New to Crown Capital? <a href="signup.html" id="signupLink">Create an account</a></p>
+    </div>
+
+  </section>
+</main>
+
+<!-- FOOTER (built by header.js) -->
+<div class="site-footer-slot"></div>
+
+<script type="module">
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+import {
+  getAuth, onAuthStateChanged, signInWithEmailAndPassword, sendPasswordResetEmail
+} from "https://www.gstatic.com/firebasejs/12.13.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDtE70AdxT2k3hVzwxA4MlDM5pvSNJS6Y8",
+  authDomain: "crowncapital-invest.firebaseapp.com",
+  projectId: "crowncapital-invest",
+  storageBucket: "crowncapital-invest.firebasestorage.app",
+  messagingSenderId: "9373579357",
+  appId: "1:9373579357:web:6c86ceeb96d4273137b5b4"
+};
+
+const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Plain-English versions of Firebase errors
+function friendly(err) {
+  const map = {
+    "auth/email-already-in-use": 'An account with this email already exists. <a href="login.html">Log in instead</a>.',
+    "auth/invalid-email": "That email address doesn't look right.",
+    "auth/weak-password": "Choose a stronger password: at least 8 characters with a letter and a number.",
+    "auth/invalid-credential": "Email or password is incorrect.",
+    "auth/wrong-password": "Email or password is incorrect.",
+    "auth/user-not-found": "Email or password is incorrect.",
+    "auth/user-disabled": "This account has been disabled. Contact supportcrowncapital@gmail.com.",
+    "auth/too-many-requests": "Too many attempts. Wait a few minutes and try again.",
+    "auth/network-request-failed": "No connection. Check your internet and try again.",
+    "auth/operation-not-allowed": "Email sign-up is turned off for this site. Contact supportcrowncapital@gmail.com.",
+    "auth/unauthorized-domain": "This website isn't approved for sign-in yet. Contact supportcrowncapital@gmail.com."
+  };
+  console.error(err);
+  return map[err?.code] || `Something went wrong (${err?.code || "unknown error"}). Try again in a moment.`;
+}
+
+// Everyone lands on the homepage after logging in or signing up
+function nextPage() {
+  return "index.html";
+}
+
+// Show / hide password
+document.querySelectorAll(".pw__toggle").forEach(btn => {
+  btn.addEventListener("click", () => {
+    const input = btn.previousElementSibling;
+    const show = input.type === "password";
+    input.type = show ? "text" : "password";
+    btn.textContent = show ? "Hide" : "Show";
+    btn.setAttribute("aria-label", show ? "Hide password" : "Show password");
+  });
+});
+
+const $ = id => document.getElementById(id);
+
+// Already logged in? Skip this page.
+onAuthStateChanged(auth, (user) => {
+  if (user) location.replace(nextPage());
+});
+
+function showError(html) {
+  $("ok").hidden = true;
+  $("error").innerHTML = html;
+  $("error").hidden = false;
+}
+
+$("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("error").hidden = true;
+  $("ok").hidden = true;
+
+  const email = $("email").value.trim();
+  const password = $("password").value;
+  if (!email || !password) return showError("Enter your email and password.");
+
+  const btn = $("submitBtn");
+  btn.disabled = true;
+  btn.textContent = "Logging in…";
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    location.replace(nextPage());
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = "Log in";
+    showError(friendly(err));
+  }
+});
+
+$("forgotBtn").addEventListener("click", async () => {
+  const email = $("email").value.trim();
+  if (!email) {
+    showError("Enter your email above, then tap “Forgot password?” again.");
+    $("email").focus();
+    return;
+  }
+  try {
+    await sendPasswordResetEmail(auth, email);
+    $("error").hidden = true;
+    $("ok").textContent = `If ${email} has an account, a reset link is on its way. Check your inbox.`;
+    $("ok").hidden = false;
+  } catch (err) {
+    showError(friendly(err));
+  }
+});
+</script>
+
+</body>
+</html>
