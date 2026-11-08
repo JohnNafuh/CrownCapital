@@ -555,10 +555,10 @@
                   </span>
                 </div>
 
-                <p class="wallet-caption">Demo wallet address</p>
+                <p class="wallet-caption"></p>
 
                 <div class="wallet-address" id="walletAddress">
-                  DEMO_ETH_ADDRESS_NOT_FOR_DEPOSITS
+                  0x395E6b0c4e7538D1A0A605F92B
                 </div>
 
                 <button class="copy-btn" id="copyBtn" type="button">
@@ -566,8 +566,7 @@
                 </button>
 
                 <p class="wallet-warning">
-                  Demo address only. Do not send cryptocurrency.
-                  These addresses are not connected to a payment wallet.
+                  
                 </p>
 
               </div>
@@ -587,16 +586,16 @@
                   autocomplete="off"
                 >
 
-                <button class="demo-submit"
+                <button class=
                   id="submitBtn" type="button">
-                  Submit demo transaction
+                  Submit transaction
                 </button>
 
                 <div class="pending-box" id="pendingBox" hidden>
 
-                  <strong>◷ Demo reference received</strong>
+                  <strong>◷  reference received</strong>
 
-                  Your sample transaction reference has been submitted.
+                  Your transaction reference has been submitted.
 
                   <p style="margin-top:10px">
                     Reference:
@@ -605,7 +604,7 @@
                   </p>
 
                   <p style="margin-top:8px">
-                    Status: DEMO PENDING
+                    Status: PENDING
                   </p>
 
                   <p style="margin-top:10px">
@@ -703,24 +702,24 @@ const DEMO_WALLETS = {
   ETH: {
     name: "Ethereum (ETH)",
     network: "Ethereum Network",
-    address: "DEMO_ETH_ADDRESS_NOT_FOR_DEPOSITS"
+    address: "0x395E6b0c4e7538D1A0A605F92B"
   },
 
   BTC: {
     name: "Bitcoin (BTC)",
     network: "Bitcoin Network",
-    address: "DEMO_BTC_ADDRESS_NOT_FOR_DEPOSITS"
+    address: "bc1qc3ugu5fxs2495gcxvfa-"
   },
 
   USDT: {
     name: "Tether (USDT)",
     network: "TRON — TRC-20",
-    address: "DEMO_TRC20_ADDRESS_NOT_FOR_DEPOSITS"
+    address: "TC2L7GhcWMVwYrfnEuppJus-"
   }
 };
 
 
-/* DEMO BANK DETAILS */
+/* BANK DETAILS */
 
 const BANK_DEMO = {
   bankName: "DEMO BANK",
@@ -969,7 +968,7 @@ document.querySelectorAll(".crypto-option")
 $("copyBtn").addEventListener("click", () => {
 
   copyText(
-    DEMO_WALLETS[selectedCoin].address,
+    WALLETS[selectedCoin].address,
     $("copyBtn"),
     "Copy address"
   );
@@ -977,7 +976,7 @@ $("copyBtn").addEventListener("click", () => {
 });
 
 
-/* CRYPTO DEMO SUBMISSION */
+/* CRYPTO SUBMISSION */
 
 $("submitBtn").addEventListener("click", () => {
 
@@ -1000,7 +999,7 @@ $("submitBtn").addEventListener("click", () => {
   if (hash.length < 8 || hash.length > 200) {
 
     $("formError").textContent =
-      "Please enter a valid-looking demo reference.";
+      "Please enter a valid-looking reference.";
 
     $("formError").hidden = false;
     return;
