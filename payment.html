@@ -18,6 +18,7 @@
   <style>
     [hidden] { display: none !important; }
 
+    .demo-banner {
       padding: 13px 16px;
       margin-bottom: 20px;
       border: 1px solid rgba(214,174,91,.35);
@@ -275,6 +276,14 @@
 
   <section class="section--tight">
     <div class="wrap">
+
+      <div class="demo-banner">
+        <strong>CROWN CAPITAL — TEST ENVIRONMENT</strong><br>
+        This checkout is currently running in demo mode.
+        The bank and cryptocurrency details displayed here are placeholders.
+        Do not send real funds. Submitting a reference does not verify payment
+        or activate an investment.
+      </div>
 
       <div class="checkout" id="checkout">
 
@@ -546,10 +555,10 @@
                   </span>
                 </div>
 
-                <p class="wallet-caption"></p>
+                <p class="wallet-caption">Demo wallet address</p>
 
                 <div class="wallet-address" id="walletAddress">
-                  0x395E6b0c4e7538D1A0A605F92B
+                  DEMO_ETH_ADDRESS_NOT_FOR_DEPOSITS
                 </div>
 
                 <button class="copy-btn" id="copyBtn" type="button">
@@ -557,7 +566,8 @@
                 </button>
 
                 <p class="wallet-warning">
-                  
+                  Demo address only. Do not send cryptocurrency.
+                  These addresses are not connected to a payment wallet.
                 </p>
 
               </div>
@@ -577,16 +587,16 @@
                   autocomplete="off"
                 >
 
-                <button class=
+                <button class="demo-submit"
                   id="submitBtn" type="button">
-                  Submit transaction
+                  Submit demo transaction
                 </button>
 
                 <div class="pending-box" id="pendingBox" hidden>
 
-                  <strong>◷  reference received</strong>
+                  <strong>◷ Demo reference received</strong>
 
-                  Your transaction reference has been submitted.
+                  Your sample transaction reference has been submitted.
 
                   <p style="margin-top:10px">
                     Reference:
@@ -595,7 +605,7 @@
                   </p>
 
                   <p style="margin-top:8px">
-                    Status: PENDING
+                    Status: DEMO PENDING
                   </p>
 
                   <p style="margin-top:10px">
@@ -693,24 +703,24 @@ const DEMO_WALLETS = {
   ETH: {
     name: "Ethereum (ETH)",
     network: "Ethereum Network",
-    address: "0x395E6b0c4e7538D1A0A605F92B"
+    address: "DEMO_ETH_ADDRESS_NOT_FOR_DEPOSITS"
   },
 
   BTC: {
     name: "Bitcoin (BTC)",
     network: "Bitcoin Network",
-    address: "bc1qc3ugu5fxs2495gcxvfa-"
+    address: "DEMO_BTC_ADDRESS_NOT_FOR_DEPOSITS"
   },
 
   USDT: {
     name: "Tether (USDT)",
     network: "TRON — TRC-20",
-    address: "TC2L7GhcWMVwYrfnEuppJus-"
+    address: "DEMO_TRC20_ADDRESS_NOT_FOR_DEPOSITS"
   }
 };
 
 
-/* BANK DETAILS */
+/* DEMO BANK DETAILS */
 
 const BANK_DEMO = {
   bankName: "DEMO BANK",
@@ -959,7 +969,7 @@ document.querySelectorAll(".crypto-option")
 $("copyBtn").addEventListener("click", () => {
 
   copyText(
-    WALLETS[selectedCoin].address,
+    DEMO_WALLETS[selectedCoin].address,
     $("copyBtn"),
     "Copy address"
   );
@@ -967,7 +977,7 @@ $("copyBtn").addEventListener("click", () => {
 });
 
 
-/* CRYPTO SUBMISSION */
+/* CRYPTO DEMO SUBMISSION */
 
 $("submitBtn").addEventListener("click", () => {
 
@@ -990,7 +1000,7 @@ $("submitBtn").addEventListener("click", () => {
   if (hash.length < 8 || hash.length > 200) {
 
     $("formError").textContent =
-      "Please enter a valid-looking reference.";
+      "Please enter a valid-looking demo reference.";
 
     $("formError").hidden = false;
     return;
