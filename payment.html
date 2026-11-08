@@ -16,9 +16,7 @@
   <link rel="stylesheet" href="style.css?v=10">
 
   <style>
-    [hidden] {
-      display: none !important;
-    }
+    [hidden] { display: none !important; }
 
     .demo-banner {
       padding: 13px 16px;
@@ -31,11 +29,10 @@
       line-height: 1.7;
     }
 
-    .method {
-      cursor: pointer;
-    }
+    .method { cursor: pointer; }
 
     .means {
+      display: block;
       margin: 12px 0 18px;
       padding: 15px;
       border: 1px solid rgba(255,255,255,.1);
@@ -50,14 +47,20 @@
       margin-top: 10px;
     }
 
-    .crypto-options {
+    .crypto-options,
+    .bank-options {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 10px;
       margin-bottom: 18px;
     }
 
-    .crypto-option {
+    .bank-options {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .crypto-option,
+    .bank-option {
       padding: 14px 7px;
       border: 1px solid rgba(255,255,255,.13);
       border-radius: 8px;
@@ -69,30 +72,36 @@
     }
 
     .crypto-option:hover,
-    .crypto-option.active {
+    .crypto-option.active,
+    .bank-option:hover,
+    .bank-option.active {
       border-color: #c9a45c;
       background: rgba(201,164,92,.09);
     }
 
-    .crypto-option strong {
+    .crypto-option strong,
+    .bank-option strong {
       display: block;
-      font-size: 15px;
+      font-size: 14px;
       margin-bottom: 5px;
     }
 
-    .crypto-option small {
+    .crypto-option small,
+    .bank-option small {
       color: #aaa;
       font-size: 10px;
     }
 
-    .wallet-box {
+    .wallet-box,
+    .bank-details {
       padding: 17px;
       border: 1px solid rgba(201,164,92,.3);
       border-radius: 8px;
       background: rgba(255,255,255,.025);
     }
 
-    .wallet-heading {
+    .wallet-heading,
+    .bank-heading {
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -101,7 +110,8 @@
       margin-bottom: 15px;
     }
 
-    .wallet-heading strong {
+    .wallet-heading strong,
+    .bank-heading strong {
       color: #e5c47e;
       font-size: 14px;
     }
@@ -120,7 +130,8 @@
       margin-bottom: 9px;
     }
 
-    .wallet-address {
+    .wallet-address,
+    .bank-detail-value {
       overflow-wrap: anywhere;
       padding: 13px;
       border-radius: 6px;
@@ -131,18 +142,39 @@
       line-height: 1.7;
     }
 
-    .copy-btn {
-      margin-top: 12px;
-      padding: 10px 15px;
+    .copy-btn,
+    .bank-copy {
+      margin-top: 10px;
+      padding: 9px 13px;
       border: 1px solid #c9a45c;
       border-radius: 5px;
       background: transparent;
       color: #e5c47e;
       cursor: pointer;
-      font-size: 12px;
+      font-size: 11px;
     }
 
-    .wallet-warning {
+    .bank-detail-row {
+      margin-bottom: 14px;
+    }
+
+    .bank-detail-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .bank-detail-label {
+      display: block;
+      color: #aaa;
+      font-size: 11px;
+      margin-bottom: 6px;
+    }
+
+    .bank-detail-value {
+      display: block;
+    }
+
+    .wallet-warning,
+    .bank-warning {
       margin-top: 13px;
       color: #d5b979;
       font-size: 11px;
@@ -220,13 +252,9 @@
     }
 
     @media(max-width:480px) {
-      .crypto-options {
-        gap: 6px;
-      }
-
-      .crypto-option {
-        padding: 12px 4px;
-      }
+      .crypto-options { gap: 6px; }
+      .crypto-option { padding: 12px 4px; }
+      .means { margin-left: 0; }
     }
   </style>
 </head>
@@ -252,8 +280,9 @@
       <div class="demo-banner">
         <strong>CROWN CAPITAL — TEST ENVIRONMENT</strong><br>
         This checkout is currently running in demo mode.
-        No real cryptocurrency deposits are accepted.
-        Submitting a transaction reference does not activate an investment.
+        The bank and cryptocurrency details displayed here are placeholders.
+        Do not send real funds. Submitting a reference does not verify payment
+        or activate an investment.
       </div>
 
       <div class="checkout" id="checkout">
@@ -332,22 +361,152 @@
               </p>
             </div>
 
-            <!-- BANK -->
+            <!-- BANK TRANSFER -->
             <label class="method">
               <input type="radio" name="method" value="bank">
               <span>
                 <strong>Bank transfer</strong>
-                <span>ACH or wire</span>
+                <span>ACH or wire transfer</span>
               </span>
             </label>
 
             <div class="means" data-for="bank" hidden>
-              <span class="mean" aria-disabled="true">ACH transfer</span>
-              <span class="mean" aria-disabled="true">Wire transfer</span>
 
-              <p class="means__note">
-                Bank transfers are temporarily unavailable.
+              <p style="font-size:12px;color:#aaa;margin-bottom:15px">
+                Select a bank transfer type.
               </p>
+
+              <div class="bank-options">
+
+                <button class="bank-option active"
+                  type="button" data-bank="ach">
+                  <strong>ACH Transfer</strong>
+                  <small>US domestic transfer</small>
+                </button>
+
+                <button class="bank-option"
+                  type="button" data-bank="wire">
+                  <strong>Wire Transfer</strong>
+                  <small>Bank wire payment</small>
+                </button>
+
+              </div>
+
+              <div class="bank-details">
+
+                <div class="bank-heading">
+                  <strong id="bankTitle">ACH Transfer Details</strong>
+                  <span class="network-label" id="bankTypeLabel">
+                    ACH
+                  </span>
+                </div>
+
+                <div class="bank-detail-row">
+                  <span class="bank-detail-label">Bank name</span>
+                  <span class="bank-detail-value" id="bankName">
+                    DEMO BANK
+                  </span>
+                  <button class="bank-copy" type="button"
+                    data-copy="bankName">Copy bank name</button>
+                </div>
+
+                <div class="bank-detail-row">
+                  <span class="bank-detail-label">Account name</span>
+                  <span class="bank-detail-value" id="bankAccountName">
+                    DEMO ACCOUNT
+                  </span>
+                  <button class="bank-copy" type="button"
+                    data-copy="bankAccountName">Copy account name</button>
+                </div>
+
+                <div class="bank-detail-row">
+                  <span class="bank-detail-label">Routing number</span>
+                  <span class="bank-detail-value" id="bankRouting">
+                    DEMO_ROUTING_NUMBER
+                  </span>
+                  <button class="bank-copy" type="button"
+                    data-copy="bankRouting">Copy routing number</button>
+                </div>
+
+                <div class="bank-detail-row">
+                  <span class="bank-detail-label">Account number</span>
+                  <span class="bank-detail-value" id="bankAccountNumber">
+                    DEMO_ACCOUNT_NUMBER
+                  </span>
+                  <button class="bank-copy" type="button"
+                    data-copy="bankAccountNumber">Copy account number</button>
+                </div>
+
+                <div class="bank-detail-row" id="wireRoutingRow" hidden>
+                  <span class="bank-detail-label">Wire routing number</span>
+                  <span class="bank-detail-value" id="bankWireRouting">
+                    DEMO_WIRE_ROUTING_NUMBER
+                  </span>
+                  <button class="bank-copy" type="button"
+                    data-copy="bankWireRouting">Copy wire routing</button>
+                </div>
+
+                <div class="bank-detail-row" id="swiftRow" hidden>
+                  <span class="bank-detail-label">SWIFT / BIC</span>
+                  <span class="bank-detail-value" id="bankSwift">
+                    DEMO_SWIFT_CODE
+                  </span>
+                  <button class="bank-copy" type="button"
+                    data-copy="bankSwift">Copy SWIFT code</button>
+                </div>
+
+                <p class="bank-warning">
+                  DEMO DETAILS ONLY. This is not a real bank account.
+                  Do not initiate a transfer using these placeholders.
+                </p>
+
+              </div>
+
+              <div class="transaction-area">
+
+                <h3>Transfer reference</h3>
+
+                <label for="bankReference">
+                  Bank transaction reference
+                </label>
+
+                <input
+                  id="bankReference"
+                  type="text"
+                  placeholder="Enter a sample bank reference"
+                  autocomplete="off"
+                >
+
+                <button class="demo-submit"
+                  id="bankSubmitBtn" type="button">
+                  Submit demo bank reference
+                </button>
+
+                <div class="pending-box" id="bankPendingBox" hidden>
+
+                  <strong>◷ Demo reference received</strong>
+
+                  Your sample bank reference has been submitted.
+
+                  <p style="margin-top:10px">
+                    Reference:
+                    <span class="pending-reference"
+                      id="bankReferenceDisplay"></span>
+                  </p>
+
+                  <p style="margin-top:8px">
+                    Status: DEMO PENDING
+                  </p>
+
+                  <p style="margin-top:10px">
+                    No bank payment has been checked or verified.
+                    No investment has been activated.
+                  </p>
+
+                </div>
+
+              </div>
+
             </div>
 
             <!-- CRYPTO -->
@@ -387,12 +546,10 @@
 
               </div>
 
-              <!-- WALLET DISPLAY -->
               <div class="wallet-box">
 
                 <div class="wallet-heading">
                   <strong id="coinName">Ethereum (ETH)</strong>
-
                   <span class="network-label" id="networkName">
                     Ethereum Network
                   </span>
@@ -415,7 +572,6 @@
 
               </div>
 
-              <!-- TRANSACTION REFERENCE -->
               <div class="transaction-area">
 
                 <h3>Transaction details</h3>
@@ -431,18 +587,16 @@
                   autocomplete="off"
                 >
 
-                <button
-                  class="demo-submit"
-                  id="submitBtn"
-                  type="button">
+                <button class="demo-submit"
+                  id="submitBtn" type="button">
                   Submit demo transaction
                 </button>
 
                 <div class="pending-box" id="pendingBox" hidden>
 
-                  <strong>◷ Pending verification</strong>
+                  <strong>◷ Demo reference received</strong>
 
-                  Your demo transaction reference has been submitted.
+                  Your sample transaction reference has been submitted.
 
                   <p style="margin-top:10px">
                     Reference:
@@ -467,7 +621,8 @@
 
           </fieldset>
 
-          <p class="form-error" id="formError" role="alert" hidden></p>
+          <p class="form-error" id="formError"
+            role="alert" hidden></p>
 
         </div>
 
@@ -542,10 +697,9 @@ const PLANS = {
 };
 
 
-/* DEMO WALLET DETAILS */
+/* DEMO CRYPTO WALLETS */
 
 const DEMO_WALLETS = {
-
   ETH: {
     name: "Ethereum (ETH)",
     network: "Ethereum Network",
@@ -563,7 +717,26 @@ const DEMO_WALLETS = {
     network: "TRON — TRC-20",
     address: "DEMO_TRC20_ADDRESS_NOT_FOR_DEPOSITS"
   }
+};
 
+
+/* DEMO BANK DETAILS */
+
+const BANK_DEMO = {
+  bankName: "DEMO BANK",
+  accountName: "DEMO ACCOUNT",
+
+  ach: {
+    routing: "DEMO_ROUTING_NUMBER",
+    account: "DEMO_ACCOUNT_NUMBER"
+  },
+
+  wire: {
+    routing: "DEMO_ROUTING_NUMBER",
+    account: "DEMO_ACCOUNT_NUMBER",
+    wireRouting: "DEMO_WIRE_ROUTING_NUMBER",
+    swift: "DEMO_SWIFT_CODE"
+  }
 };
 
 
@@ -586,7 +759,7 @@ const day = t =>
   });
 
 
-/* READ SELECTED PLAN */
+/* SELECTED PLAN */
 
 const planName =
   new URLSearchParams(location.search).get("plan");
@@ -606,7 +779,7 @@ const payout = plan
   : 0;
 
 
-/* RENDER CHECKOUT SUMMARY */
+/* RENDER PLAN SUMMARY */
 
 function renderSummary() {
 
@@ -671,6 +844,7 @@ onAuthStateChanged(auth, async user => {
       $("formError").hidden = false;
 
       $("submitBtn").disabled = true;
+      $("bankSubmitBtn").disabled = true;
 
     }
 
@@ -711,6 +885,48 @@ document.querySelectorAll('input[name="method"]')
   });
 
 
+/* SHARED COPY FUNCTION */
+
+async function copyText(value, button, originalText) {
+
+  try {
+
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(value);
+    } else {
+
+      const temporaryInput = document.createElement("textarea");
+
+      temporaryInput.value = value;
+      temporaryInput.style.position = "fixed";
+      temporaryInput.style.opacity = "0";
+
+      document.body.appendChild(temporaryInput);
+      temporaryInput.select();
+
+      const copied = document.execCommand("copy");
+
+      temporaryInput.remove();
+
+      if (!copied) throw new Error("Copy failed");
+
+    }
+
+    button.textContent = "Copied!";
+
+  } catch (error) {
+
+    button.textContent = "Copy unavailable";
+
+  }
+
+  setTimeout(() => {
+    button.textContent = originalText;
+  }, 1800);
+
+}
+
+
 /* CRYPTO CURRENCY SELECTION */
 
 let selectedCoin = "ETH";
@@ -724,7 +940,6 @@ function selectCoin(coin) {
   $("coinName").textContent = wallet.name;
   $("networkName").textContent = wallet.network;
   $("walletAddress").textContent = wallet.address;
-
   $("copyBtn").textContent = "Copy address";
 
   document.querySelectorAll(".crypto-option")
@@ -743,55 +958,26 @@ document.querySelectorAll(".crypto-option")
   .forEach(button => {
 
     button.addEventListener("click", () => {
-
       selectCoin(button.dataset.coin);
-
     });
 
   });
 
 
-/* COPY DEMO ADDRESS */
+/* COPY CRYPTO ADDRESS */
 
-$("copyBtn").addEventListener("click", async () => {
+$("copyBtn").addEventListener("click", () => {
 
-  const address = DEMO_WALLETS[selectedCoin].address;
-
-  try {
-
-    await navigator.clipboard.writeText(address);
-
-    $("copyBtn").textContent = "Copied!";
-
-  } catch (error) {
-
-    const temporaryInput = document.createElement("textarea");
-
-    temporaryInput.value = address;
-
-    document.body.appendChild(temporaryInput);
-
-    temporaryInput.select();
-
-    try {
-
-      document.execCommand("copy");
-      $("copyBtn").textContent = "Copied!";
-
-    } catch {
-
-      $("copyBtn").textContent = "Copy unavailable";
-
-    }
-
-    temporaryInput.remove();
-
-  }
+  copyText(
+    DEMO_WALLETS[selectedCoin].address,
+    $("copyBtn"),
+    "Copy address"
+  );
 
 });
 
 
-/* DEMO TRANSACTION SUBMISSION */
+/* CRYPTO DEMO SUBMISSION */
 
 $("submitBtn").addEventListener("click", () => {
 
@@ -807,7 +993,6 @@ $("submitBtn").addEventListener("click", () => {
       "Please enter a transaction reference to continue.";
 
     $("formError").hidden = false;
-
     return;
 
   }
@@ -818,7 +1003,6 @@ $("submitBtn").addEventListener("click", () => {
       "Please enter a valid-looking demo reference.";
 
     $("formError").hidden = false;
-
     return;
 
   }
@@ -830,15 +1014,13 @@ $("submitBtn").addEventListener("click", () => {
   // No investment activation.
 
   const reference =
-    "DEMO-" + Date.now().toString(36).toUpperCase();
+    "DEMO-CRYPTO-" + Date.now().toString(36).toUpperCase();
 
   $("referenceDisplay").textContent = reference;
-
   $("pendingBox").hidden = false;
 
   $("submitBtn").textContent = "Demo submitted";
   $("submitBtn").disabled = true;
-
   $("transactionHash").disabled = true;
 
   $("pendingBox").scrollIntoView({
@@ -849,9 +1031,146 @@ $("submitBtn").addEventListener("click", () => {
 });
 
 
+/* BANK TRANSFER TYPE SELECTION */
+
+let selectedBankType = "ach";
+
+function selectBank(type) {
+
+  selectedBankType = type;
+
+  const details = BANK_DEMO[type];
+
+  $("bankTitle").textContent =
+    type === "ach"
+      ? "ACH Transfer Details"
+      : "Wire Transfer Details";
+
+  $("bankTypeLabel").textContent =
+    type === "ach" ? "ACH" : "WIRE";
+
+  $("bankName").textContent = BANK_DEMO.bankName;
+  $("bankAccountName").textContent = BANK_DEMO.accountName;
+
+  $("bankRouting").textContent = details.routing;
+  $("bankAccountNumber").textContent = details.account;
+
+  $("wireRoutingRow").hidden = type !== "wire";
+  $("swiftRow").hidden = type !== "wire";
+
+  if (type === "wire") {
+    $("bankWireRouting").textContent = details.wireRouting;
+    $("bankSwift").textContent = details.swift;
+  }
+
+  document.querySelectorAll(".bank-option")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.bank === type
+      );
+
+    });
+
+}
+
+document.querySelectorAll(".bank-option")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+      selectBank(button.dataset.bank);
+    });
+
+  });
+
+
+/* COPY BANK DETAILS */
+
+document.querySelectorAll(".bank-copy")
+  .forEach(button => {
+
+    button.addEventListener("click", () => {
+
+      const target = $(button.dataset.copy);
+
+      if (!target) return;
+
+      const originalText = button.textContent;
+
+      copyText(
+        target.textContent.trim(),
+        button,
+        originalText
+      );
+
+    });
+
+  });
+
+
+/* BANK DEMO SUBMISSION */
+
+$("bankSubmitBtn").addEventListener("click", () => {
+
+  if (accountBlocked) return;
+
+  const referenceInput = $("bankReference");
+  const referenceValue = referenceInput.value.trim();
+
+  $("formError").hidden = true;
+
+  if (!referenceValue) {
+
+    $("formError").textContent =
+      "Please enter a sample bank reference.";
+
+    $("formError").hidden = false;
+    return;
+
+  }
+
+  if (
+    referenceValue.length < 5 ||
+    referenceValue.length > 150
+  ) {
+
+    $("formError").textContent =
+      "Please enter a valid-looking demo reference.";
+
+    $("formError").hidden = false;
+    return;
+
+  }
+
+  // DEMO ONLY:
+  // No bank account is connected.
+  // No bank transfer is checked or verified.
+  // No Firestore write is performed.
+  // No investment is activated.
+
+  const demoReference =
+    "DEMO-BANK-" + Date.now().toString(36).toUpperCase();
+
+  $("bankReferenceDisplay").textContent = demoReference;
+  $("bankPendingBox").hidden = false;
+
+  $("bankSubmitBtn").textContent = "Demo submitted";
+  $("bankSubmitBtn").disabled = true;
+  referenceInput.disabled = true;
+
+  $("bankPendingBox").scrollIntoView({
+    behavior: "smooth",
+    block: "nearest"
+  });
+
+});
+
+
 /* INITIAL STATE */
 
 selectCoin("ETH");
+selectBank("ach");
 
 </script>
 
