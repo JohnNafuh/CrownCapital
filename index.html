@@ -1,400 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Crown Capital — Your Empire Starts Here</title>
-  <meta name="description" content="A modern investment platform designed for smart financial growth. Track profits, manage portfolios and grow your capital." />
-  <meta name="theme-color" content="#0A0A0A" />
-  <link rel="icon" href="logo-mark.png" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECLUSE</title>
+<meta name="description" content="RECLUSE — minimal, limited streetwear. Built in silence. Worn with intention.">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link data-cc-fonts rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" />
-  <link rel="stylesheet" href="style.css?v=10" />
+<!-- link preview on WhatsApp / Instagram / X -->
+<meta property="og:title" content="RECLUSE">
+<meta property="og:description" content="Limited streetwear for those who move differently.">
+<meta property="og:image" content="https://johnnafuh.github.io/recluse52-site/sleeveless-drop.jpeg">
+<meta property="og:url" content="https://johnnafuh.github.io/recluse52-site/">
+
+<link rel="stylesheet" href="style.css?v=21">
 </head>
 
 <body>
 
-<!-- HEADER -->
-<div class="site-header"></div>
-<script type="module" src="header.js?v=10"></script>
-
-<!-- PRICE TICKER -->
-<div class="ticker" aria-label="Market prices">
-  <div class="ticker__track" id="tickerTrack"></div>
-</div>
-
-<main>
-
-<!-- HERO -->
-<section class="home-hero">
-  <div class="wrap home-hero__grid">
-
-    <div>
-      <h1>Grow Wealth. Track ROI. Build Freedom.</h1>
-      <p class="home-hero__lead">
-        A modern investment platform designed for smart financial growth.
-        Track profits, manage portfolios, and grow your capital with confidence.
-      </p>
-
-      <div class="home-hero__ctas">
-        <a class="btn" href="dashboard.html">Enter Dashboard</a>
-        <a class="btn btn--ghost" href="#how-it-works" data-show="out">How it works</a>
-      </div>
-
-      <div class="trust">
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
-          256-bit encryption
-        </span>
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-          Two-step login
-        </span>
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/></svg>
-          Card, bank transfer and crypto
-        </span>
-        <span>
-          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-          Support around the clock
-        </span>
-      </div>
-    </div>
-
-    <!-- LIVE PORTFOLIO CARD -->
-    <div class="home-hero__card">
-      <div class="market-card">
-        <div class="market-header">
-          <h3>Portfolio Performance</h3>
-          <span class="live-dot">Live</span>
-        </div>
-
-        <p id="price"><span class="currency">$</span><span id="priceValue">125,000.00</span></p>
-        <p id="dayChange" class="market-sub num up">+$1,520.00 (+1.23%) today</p>
-
-        <div class="chart">
-          <svg viewBox="0 0 300 100" preserveAspectRatio="none" aria-hidden="true">
-            <defs>
-              <linearGradient id="chartFill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0" stop-color="#D4AF37" stop-opacity="0.32"/>
-                <stop offset="1" stop-color="#D4AF37" stop-opacity="0"/>
-              </linearGradient>
-            </defs>
-            <path id="chartArea" d="" fill="url(#chartFill)"/>
-            <polyline id="chartLine" points="" fill="none" stroke="#D4AF37" stroke-width="2"
-              stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
-          </svg>
-        </div>
-
-        <div class="market-stats">
-          <div>
-            <h4>Total Growth</h4>
-            <p id="growth">+0.00%</p>
-          </div>
-          <div>
-            <h4>Profit</h4>
-            <p id="profit">$0.00</p>
-          </div>
-          <div>
-            <h4>Loss</h4>
-            <p id="loss">$0.00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
+<nav class="nav">
+  <div class="nav-links">
+    <a href="shop.html">SHOP</a>
+    <a href="shop.html#sleeveless">DROPS</a>
+    <a href="#about">ABOUT</a>
   </div>
-</section>
+  <a href="cart.html">CART (<span data-cart-count>0</span>)</a>
+</nav>
 
-<!-- STATS -->
-<section class="section--tight">
-  <div class="wrap">
-    <div class="stats">
-      <div class="stat">
-        <h3>Total Users</h3>
-        <p class="stat__value" data-count="12480" data-suffix="+">12,480+</p>
-        <svg class="spark" viewBox="0 0 200 42" preserveAspectRatio="none" aria-hidden="true"></svg>
+<header class="masthead">
+  <h1 class="wordmark">RECLUSE</h1>
+  <p class="tagline">BUILT IN SILENCE · WORN WITH INTENTION</p>
+</header>
+
+<main class="wrap">
+
+  <!-- current drop -->
+  <section class="drop-box">
+    <img src="sleeveless-drop.jpeg" alt="RECLUSE sleeveless essentials in navy, grey, black, beige and white">
+    <div class="drop-content">
+      <div>
+        <span class="drop-label">DROP 02</span>
+        <h2 class="drop-title">SLEEVELESS ESSENTIALS</h2>
+        <p class="drop-sub">Limited release. No restock.</p>
       </div>
-      <div class="stat">
-        <h3>Average ROI</h3>
-        <p class="stat__value" data-count="18.6" data-decimals="1" data-prefix="+" data-suffix="%">+18.6%</p>
-        <svg class="spark" viewBox="0 0 200 42" preserveAspectRatio="none" aria-hidden="true"></svg>
-      </div>
-      <div class="stat">
-        <h3>Assets Managed</h3>
-        <p class="stat__value" data-count="48.2" data-decimals="1" data-prefix="$" data-suffix="M+">$48.2M+</p>
-        <svg class="spark" viewBox="0 0 200 42" preserveAspectRatio="none" aria-hidden="true"></svg>
-      </div>
+      <a class="btn" href="shop.html#sleeveless">SHOP THE DROP</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<hr class="rule" />
-
-<!-- PLANS PREVIEW -->
-<section class="section">
-  <div class="wrap">
-    <div class="section__head section__head--center">
-      <h2>Investment Plans</h2>
-      <p>Choose the plan that fits your goals and how long you want to invest.</p>
+  <!-- exclusive rail: display only, filled by rail.js -->
+  <section class="section" aria-label="Exclusive pieces">
+    <div class="section-head">
+      <h2>EXCLUSIVE</h2>
+      <button type="button" class="motion-toggle" id="motionToggle" aria-pressed="true">MOTION ON</button>
     </div>
-
-    <div class="plans plans--mini">
-      <div class="plan">
-        <h3>Starter</h3>
-        <p class="plan__roi">5% <small>daily</small></p>
-      </div>
-      <div class="plan plan--featured">
-        <h3>Pro</h3>
-        <p class="plan__roi">8% <small>daily</small></p>
-      </div>
-      <div class="plan">
-        <h3>Elite</h3>
-        <p class="plan__roi">10% <small>daily</small></p>
-      </div>
+    <div class="rail" id="rail">
+      <div class="rail-bar" aria-hidden="true"></div>
+      <p class="rail-loading">HANGING THE COLLECTION…</p>
+      <div class="rail-track" id="railTrack"></div>
     </div>
+  </section>
 
-    <div class="plans__more">
-      <a class="btn" href="plans.html">Compare all plans</a>
+  <!-- products (filled from products.js) -->
+  <section class="section">
+    <div class="section-head">
+      <h2>NEW PIECES</h2>
     </div>
-  </div>
-</section>
-
-<hr class="rule" />
-
-<!-- TRADING DESK -->
-<section class="section">
-  <div class="wrap">
-    <div class="section__head">
-      <h2>Live Trading Desk</h2>
-      <p>Institutional-level trading activity across global markets.</p>
+    <div class="grid teaser" id="homeGrid"></div>
+    <div class="view-all">
+      <a class="btn" href="shop.html" id="viewAll">VIEW ALL PIECES</a>
     </div>
+  </section>
 
-    <div class="desk">
-      <div class="desk__item">
-        <h3>Open Positions</h3>
-        <p class="desk__big up">+6</p>
-        <p class="desk__small">Active trades</p>
-      </div>
-      <div class="desk__item">
-        <h3>Live Orders</h3>
-        <p class="desk__big" style="color: var(--gold-light);">$8.7M</p>
-        <p class="desk__small">12 buy, 5 sell</p>
-      </div>
-      <div class="desk__item">
-        <h3>Daily PnL</h3>
-        <p class="desk__big up">+$642,310</p>
-        <p class="desk__small">+4.92% growth</p>
-      </div>
+  <!-- wall frames intro -->
+  <section class="section section-compact" aria-label="Wall frames">
+    <div class="section-head"><h2>WALL FRAMES</h2></div>
+    <div class="wall" id="wall"></div>
+    <div class="view-all">
+      <a class="btn btn-sm" href="shop.html#extras">VIEW FRAMES</a>
     </div>
-  </div>
-</section>
+  </section>
 
-<hr class="rule" />
-
-<!-- HOW IT WORKS -->
-<section class="section" id="how-it-works">
-  <div class="wrap">
-    <div class="section__head">
-      <h2>Smart Investing Made Simple</h2>
-      <p>From sign-up to your first return in three steps.</p>
+  <!-- about -->
+  <section class="section" id="about">
+    <div class="section-head">
+      <h2>ABOUT RECLUSE</h2>
     </div>
-
-    <div class="steps">
-      <div class="step" data-show="out">
-        <h3>Create your account</h3>
-        <p>Sign up with your email in under a minute and secure it with a password only you know.</p>
-      </div>
-      <div class="step">
-        <h3>Choose a plan</h3>
-        <p>Pick Starter, Pro or Elite based on how much you want to invest and for how long.</p>
-      </div>
-      <div class="step" data-show="in">
-        <h3>Pay securely</h3>
-        <p>Complete payment by card, bank transfer or crypto. Your plan starts right away.</p>
-      </div>
-      <div class="step">
-        <h3>Watch it grow</h3>
-        <p>Follow your balance, profit and every trade live from your dashboard.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<hr class="rule" />
-
-<!-- TESTIMONIALS -->
-<section class="section">
-  <div class="wrap">
-    <div class="section__head">
-      <h2>What Our Investors Say</h2>
-    </div>
-
-    <div class="quotes">
-      <figure class="quote">
-        <blockquote>I started on Starter to test it. Seeing every trade on the dashboard is what made me move up to Pro.</blockquote>
-        <figcaption>
-          <span class="avatar" aria-hidden="true">M</span>
-          <div><strong>Marcus J.</strong><span>Pro Plan, Atlanta</span></div>
-        </figcaption>
-      </figure>
-      <figure class="quote">
-        <blockquote>Clean, fast and I always know where my money is. No chasing anyone for updates.</blockquote>
-        <figcaption>
-          <span class="avatar" aria-hidden="true">D</span>
-          <div><strong>Daniel K.</strong><span>Elite Plan, Chicago</span></div>
-        </figcaption>
-      </figure>
-      <figure class="quote">
-        <blockquote>Signing up took minutes and support answered my first question at 2am.</blockquote>
-        <figcaption>
-          <span class="avatar" aria-hidden="true">E</span>
-          <div><strong>Emily R.</strong><span>Starter Plan, Austin</span></div>
-        </figcaption>
-      </figure>
-    </div>
-  </div>
-</section>
-
-<hr class="rule" />
-
-<!-- RECENT TRADES -->
-<section class="section section--compact">
-  <div class="wrap">
-    <details class="trades-toggle">
-      <summary>
-        <span class="trades-toggle__title">Recent Trades</span>
-        <span class="trades-toggle__meta">7 closed today</span>
-        <span class="trades-toggle__btn" aria-hidden="true"></span>
-      </summary>
-
-    <div class="table-wrap">
-      <table class="trades">
-        <caption class="sr-only">Recent Trades</caption>
-        <thead>
-          <tr>
-            <th scope="col">Time</th>
-            <th scope="col">Asset</th>
-            <th scope="col">Type</th>
-            <th scope="col">Amount</th>
-            <th scope="col">P/L</th>
-            <th scope="col">Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td class="muted">14:32</td>
-            <td>AAPL</td>
-            <td><span class="pill pill--buy">Buy</span></td>
-            <td>$120,000</td>
-            <td class="up">+$14,240</td>
-            <td class="status">Closed</td>
-          </tr>
-          <tr>
-            <td class="muted">13:58</td>
-            <td>GBP/USD</td>
-            <td><span class="pill pill--sell">Sell</span></td>
-            <td>$85,000</td>
-            <td class="up">+$6,120</td>
-            <td class="status">Closed</td>
-          </tr>
-          <tr>
-            <td class="muted">13:15</td>
-            <td>NASDAQ</td>
-            <td><span class="pill pill--buy">Buy</span></td>
-            <td>$250,000</td>
-            <td class="up">+$18,980</td>
-            <td class="status">Closed</td>
-          </tr>
-          <tr>
-            <td class="muted">12:47</td>
-            <td>GOLD</td>
-            <td><span class="pill pill--buy">Buy</span></td>
-            <td>$64,000</td>
-            <td class="down">-$1,310</td>
-            <td class="status">Closed</td>
-          </tr>
-          <tr>
-            <td class="muted">11:20</td>
-            <td>EUR/USD</td>
-            <td><span class="pill pill--sell">Sell</span></td>
-            <td>$140,000</td>
-            <td class="up">+$3,870</td>
-            <td class="status">Closed</td>
-          </tr>
-          <tr>
-            <td class="muted">10:05</td>
-            <td>MSFT</td>
-            <td><span class="pill pill--buy">Buy</span></td>
-            <td>$42,500</td>
-            <td class="up">+$2,915</td>
-            <td class="status">Closed</td>
-          </tr>
-          <tr>
-            <td class="muted">09:31</td>
-            <td>S&amp;P 500</td>
-            <td><span class="pill pill--buy">Buy</span></td>
-            <td>$310,000</td>
-            <td class="up">+$9,460</td>
-            <td class="status">Closed</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    </details>
-  </div>
-</section>
-
-<hr class="rule" />
-
-<!-- FAQ -->
-<section class="section">
-  <div class="wrap faq-grid">
-    <div class="section__head">
-      <h2>Questions, answered</h2>
-      <p>Can't find what you need? Reach our team at support@crowncapital.com.</p>
-    </div>
-
-    <div class="faq">
-      <details data-show="out">
-        <summary>How do I start investing?</summary>
-        <p>Create an account, choose a plan and complete payment. Your investment shows on your dashboard straight away.</p>
-      </details>
-      <details>
-        <summary>When can I withdraw my returns?</summary>
-        <p>Once your plan's term ends (7, 14 or 30 days), your capital and returns move to your dashboard balance, ready to withdraw.</p>
-      </details>
-      <details>
-        <summary>Which payment methods can I use?</summary>
-        <p>Card, bank transfer and crypto. All payments are processed over an encrypted connection.</p>
-      </details>
-      <details>
-        <summary>Can I run more than one plan?</summary>
-        <p>One plan runs at a time. As soon as it pays out, you can start your next one.</p>
-      </details>
-    </div>
-  </div>
-</section>
-
-<!-- CTA (only shown to logged-out visitors) -->
-<section class="section--tight" data-show="out">
-  <div class="wrap">
-    <div class="cta-band">
-      <h2>Your Empire Starts Here</h2>
-      <p>Open an account today and put your capital to work with Crown Capital.</p>
-      <a class="btn" href="signup.html">Create your account</a>
-    </div>
-  </div>
-</section>
+    <p class="about-text">
+      RECLUSE is a minimal streetwear label focused on identity, silence, and exclusivity.
+      No mass production. No noise. Every drop is intentional and limited.
+    </p>
+  </section>
 
 </main>
 
-<!-- FOOTER (built by header.js) -->
-<div class="site-footer-slot"></div>
+<footer class="footer">
+  <span>© RECLUSE</span>
+  <div class="footer-links">
+    <a href="privacy.html">PRIVACY</a>
+    <a href="terms.html">TERMS</a>
+    <a href="#">INSTAGRAM</a>
+    <a href="https://wa.me/2347038547668" target="_blank" rel="noopener">WHATSAPP</a>
+  </div>
+</footer>
 
+<script src="products.js?v=17"></script>
+<script src="cart.js?v=5"></script>
+<script src="rail.js?v=3"></script>
+<script>
+  // teaser: the 2 products marked featured: true
+  // gallery wall: frames marked wall: true, hung salon-style (left %, top %, width %)
+  const wallSpots = [[36, 5, 28], [11, 11, 21], [68, 11, 21], [17, 56, 16], [67, 56, 16]];
+  const wallEl = document.getElementById("wall");
+  listProducts("frames").filter(p => p.wall).slice(0, 5).forEach((p, i) => {
+    const [l, tp, w] = wallSpots[i];
+    wallEl.insertAdjacentHTML("beforeend",
+      `<a class="wall-piece" href="product.html?id=${p.id}" aria-label="${p.name}"
+          style="left:${l}%;top:${tp}%;width:${w}%;animation-delay:-${(i * 1.3).toFixed(1)}s">
+         <span class="frame"><img src="${p.images[0]}" alt="${p.name}" loading="lazy" draggable="false"></span>
+       </a>`);
+  });
 
-<script src="market.js?v=10"></script>
+  document.getElementById("homeGrid").innerHTML =
+    listProducts().filter(p => p.featured).slice(0, 2).map(productCard).join("");
+
+</script>
+
 </body>
 </html>
